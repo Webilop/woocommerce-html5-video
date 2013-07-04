@@ -68,16 +68,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           echo '<h2>' . $this->mensaje . '</h2>';
           echo '<h2>' . __("Video","html5_video") . '</h2>';
           //aqui se podria hacer trato especial a un codigo embebido o html5
-          /* if($this->video_type=='embebido')
-            {
-            //$embed = new WP_Embed(); // Since version 1.2
-            //echo $embed->autoembed(apply_filters('woocommerce_video_product',$this->codigo_video,'tab_video')); // Altered in version 1.2
-            echo $this->codigo_video;
-            }
-            else
-            {
-            echo $this->codigo_video;
-            } */
           echo $this->codigo_video;
           echo '</div>';
         }
@@ -425,21 +415,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
               $checkbox_selected = true;
               break;
 
-              /* case "flv":
-                $url = $_POST['wo_di_video_url_flv'];
-                update_post_meta($post_id, 'wo_di_video_url_flv', $url);
-                update_post_meta($post_id, 'wo_di_video_check_flv', 't');
-                $nameOfVideo = $this->getNameOfVideo($url);
-                $cadena_tag_video_html5.='<object width="160" height="90" data="video.flv">
-                <param name="movie" value="' . $nameOfVideo . '">
-                <embed src="' . $url . '" width="160" height="90">
-                </object>';
-
-                /* $cadena.='<object type="application/x-shockwave-flash" data="http://flv-player.net/medias/player_flv.swf" width="300" height="220">
-                <param name="movie" value="http://flv-player.net/medias/player_flv.swf" />
-                <param name="allowFullScreen" value="true" />
-                <param name="FlashVars" value="flv='.$url.'" />
-                </object>'; */
               break;
           }
         }
