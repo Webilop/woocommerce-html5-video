@@ -1,0 +1,73 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: html5_video\n"
+"POT-Creation-Date: 2013-07-04 10:59-0500\n"
+"PO-Revision-Date: 2013-07-04 10:59-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;_;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: WooCommerce-HTML5-Video.php:54 WooCommerce-HTML5-Video.php:69
+#: WooCommerce-HTML5-Video.php:109
+msgid "Video"
+msgstr ""
+
+#: WooCommerce-HTML5-Video.php:126
+msgid "Embed Code"
+msgstr "Insertar código"
+
+#: WooCommerce-HTML5-Video.php:126
+msgid "Place your embedded video code here."
+msgstr "Copie el código embebido el video aquí."
+
+#: WooCommerce-HTML5-Video.php:221
+msgid "Select video source:"
+msgstr "Seleccione la fuente del video:"
+
+#: WooCommerce-HTML5-Video.php:224
+msgid "Embedded code"
+msgstr "Código embebido"
+
+#: WooCommerce-HTML5-Video.php:228 WooCommerce-HTML5-Video.php:241
+msgid "Upload video"
+msgstr "Subir video"
+
+#: WooCommerce-HTML5-Video.php:229
+msgid "Supported video formats"
+msgstr "Formatos de video soportados"
+
+#: WooCommerce-HTML5-Video.php:242
+msgid "Select video"
+msgstr "Seleccionar video"
+
+#: WooCommerce-HTML5-Video.php:243
+msgid "Video dimensions"
+msgstr "Dimensiones del video"
+
+#: WooCommerce-HTML5-Video.php:245
+msgid "Width"
+msgstr "Ancho"
+
+#: WooCommerce-HTML5-Video.php:246
+msgid "Height"
+msgstr "Alto"
+
+#: WooCommerce-HTML5-Video.php:447
+msgid "Your browser does not support HTML5"
+msgstr "Su navegador no soporta HTML5"
+
+#: WooCommerce-HTML5-Video.php:616
+msgid ""
+"WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to "
+"work. Please install and activate <a href=\""
+msgstr ""
+"WooCommerce HTML5 Video requiere que <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> sea activado. Por favor "
+"instale y active <a href=\""
