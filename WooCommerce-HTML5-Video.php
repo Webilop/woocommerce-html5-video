@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/wp-plugins/woocommerce-html5-video/
- * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. At the moment, the supported video formats are MP4, Ogg and Webm.
+ * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are MP4, Ogg and Webm.
  * Author: Webilop
  * Author URI: http://www.webilop.com
  * Version: 1.0
@@ -41,19 +41,33 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         add_action('woocommerce_product_write_panels', array($this, 'product_write_panel'));
         add_action('woocommerce_process_product_meta', array($this, 'product_save_data'), 10, 2);
         // frontend stuff
-        add_action('woocommerce_product_tabs', array($this, 'video_product_tabs'), 25);
+        add_filter('woocommerce_product_tabs', array($this,'video_product_tabs'),25);
         add_action('woocommerce_product_tab_panels', array($this, 'video_product_tabs_panel'), 25);
       }
-
       /**
        * creates the tab if the product has an associated video.          
        */
-      public function video_product_tabs() {
-        global $product;
-        if ($this->product_has_video_tabs($product)) {
-          echo "<li><a href=\"#tab_video\">" . __('Video','html5_video') . "</a></li>";
+       /** Add extra tabs to front end product page **/
+        function video_product_tabs( $tabs ) {
+                global $post, $product;
+
+                $custom_tab_options = array(
+                        'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
+                        'title' => get_post_meta($post->ID, 'custom_tab_title', true),
+                        'content' => get_post_meta($post->ID, 'custom_tab_content', true),
+                );
+
+                if ( $custom_tab_options['enabled'] != 'no' ){
+                        $tabs['html5_video'] = array(
+                           'title'    => __('Video','html5_video'),
+                           'priority' => 25,
+                           'callback' => 'htmlvideotabcontent',
+                           'content'  => $custom_tab_options['content']
+                         );
+                 }
+
+                return $tabs;
         }
-      }
 
       /**
        * make the div which will show the video in html5 or embedded code.
@@ -61,15 +75,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       public function video_product_tabs_panel() {
         global $product;
 
-
         if ($this->product_has_video_tabs($product)) {
-
-          echo '<div class="panel" id="tab_video">';
-          echo '<h2>' . $this->mensaje . '</h2>';
           echo '<h2>' . __("Video","html5_video") . '</h2>';
+          echo '<p>' . $this->mensaje . '</p>';
           //aqui se podria hacer trato especial a un codigo embebido o html5
           echo $this->codigo_video;
-          echo '</div>';
         }
       }
 
@@ -80,7 +90,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function product_has_video_tabs($product) {
         $this->video_type = get_post_meta($product->id, 'wo_di_video_type', true);
         if ($this->video_type == 'embebido') {
-          $this->mensaje = 'El video es embebido de alguna pagina como youtube';
+          $this->mensaje = __('The embedded code should be taken from a page like youtube', 'html5_video');
           $this->codigo_video = get_post_meta($product->id, 'wo_di_video_product', true);
           // tab must at least have a title to exist
           return !empty($this->codigo_video);
@@ -540,9 +550,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $navegadores.='Safari';
           }
         }
-        $mensaje = 'Este producto tiene videos para los formatos ';
+        $mensaje = __('This product contains videos in the following formats: ', 'html5_video');
         $mensaje.=$formatos;
-        $mensaje.=' y se pueden ver en: ' . $navegadores;
+        $mensaje.=__(', which can be seen in: ', 'html5_video') . $navegadores;
         return $mensaje;
       }
 
@@ -592,6 +602,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     }
   }
 }
+
   /**
   * Enqueue plugin style-file
   */
@@ -601,6 +612,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     wp_enqueue_style( 'html-style' );
   }
   add_action( 'admin_enqueue_scripts', 'add_my_stylesheet' );
+
   /**
   * Set up localization
   */
@@ -609,4 +621,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   }
   add_action('plugins_loaded', 'html5_textdomain');
 
+  /**
+  * Render the custom product tab panel content for the callback 'custom_product_tabs_panel_content'
+  */
+  function htmlvideotabcontent() {
+   $functions = new WooCommerce_HTML5_Video();
+   $var = $functions->video_product_tabs_panel();
+  }
 ?>

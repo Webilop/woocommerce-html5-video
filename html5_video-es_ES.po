@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: html5_video\n"
-"POT-Creation-Date: 2013-07-04 10:59-0500\n"
-"PO-Revision-Date: 2013-07-04 10:59-0500\n"
+"POT-Creation-Date: 2013-07-05 09:48-0500\n"
+"PO-Revision-Date: 2013-07-05 09:50-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -13,10 +13,15 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: WooCommerce-HTML5-Video.php:54 WooCommerce-HTML5-Video.php:69
+#: WooCommerce-HTML5-Video.php:62 WooCommerce-HTML5-Video.php:79
 #: WooCommerce-HTML5-Video.php:109
 msgid "Video"
+msgstr "Video del producto"
+
+#: WooCommerce-HTML5-Video.php:93
+msgid "The embedded code should be taken from a page like youtube"
 msgstr ""
+"El código embebido debe ser tomado de una página de videos como YouTube"
 
 #: WooCommerce-HTML5-Video.php:126
 msgid "Embed Code"
@@ -58,11 +63,19 @@ msgstr "Ancho"
 msgid "Height"
 msgstr "Alto"
 
-#: WooCommerce-HTML5-Video.php:447
+#: WooCommerce-HTML5-Video.php:432
 msgid "Your browser does not support HTML5"
 msgstr "Su navegador no soporta HTML5"
 
-#: WooCommerce-HTML5-Video.php:616
+#: WooCommerce-HTML5-Video.php:553
+msgid "This product contains videos in the following formats: "
+msgstr "Este producto contiene videos en los siguientes formatos:"
+
+#: WooCommerce-HTML5-Video.php:555
+msgid ", which can be seen in: "
+msgstr ", los cuales pueden ser vistos en:"
+
+#: WooCommerce-HTML5-Video.php:601
 msgid ""
 "WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
 "woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to "
