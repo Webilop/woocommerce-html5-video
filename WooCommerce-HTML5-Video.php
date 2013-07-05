@@ -90,7 +90,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function product_has_video_tabs($product) {
         $this->video_type = get_post_meta($product->id, 'wo_di_video_type', true);
         if ($this->video_type == 'embebido') {
-          $this->mensaje = __('The embedded code should be taken from a page like youtube', 'html5_video');
           $this->codigo_video = get_post_meta($product->id, 'wo_di_video_product', true);
           // tab must at least have a title to exist
           return !empty($this->codigo_video);
@@ -211,7 +210,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         <div class="options_group">
                             <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" ' . $radio_embebido . '>
                             <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>
-                            <p><textarea class="' . $field['class'] . '" name="' . $field['id'] . '" id="' . $field['id'] . '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea($field['value']) . '</textarea></p>
+                            <p><textarea class="' . $field['class'] . '" name="' . $field['id'] . '" id="' . $field['id'] . '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea($field['value']) . '</textarea></p>'.__('The embedded code should be taken from a video page like Youtube', 'html5_video').'
                             </div><div class="options_group">
                             <input class="radio" id="video_servidor" type="radio" value="servidor" name="wo_di_tipo_video" ' . $radio_servidor . '>
                             <label class="radio" for="video_servidor">'.__("Upload video","html5_video").'</label>

@@ -6,7 +6,6 @@
 }
 textarea#_tab_video, textarea#_tab_video_html5{
    height: 100px;
-   margin-bottom: 20px;
    width: 80%;
 }
 .woocommerce_options_panel input.radio{
@@ -20,6 +19,7 @@ textarea#_tab_video, textarea#_tab_video_html5{
 .woocommerce_options_panel label.check{
    line-height: 25px;
    padding-left: 8px;
+   width: 70px;
 }
 #video_tab legend{
    display: block;
@@ -33,6 +33,9 @@ p.form-field._tab_video_field{
 .woocommerce_options_panel .options_group{
    padding-top: 5px;
 }
+div#video_tab{
+   padding-bottom: 15px;
+}
 /*DL, DT, DD TAGS LIST DATA*/
 dl {
     float: left;
@@ -42,8 +45,7 @@ dl {
 }
 dl dt {
     float:left;
-    margin-right:10px;
-    padding:5px;
+    padding:5px 0px;
 
 }
 dl dd {
@@ -51,9 +53,9 @@ dl dd {
     padding:5px 0;
 }
 dt{
-   width: 25%;
+   width: 16%;
 }
 dd{
-   width: 70%;
+   width: 83%;
    float: left;
 }
