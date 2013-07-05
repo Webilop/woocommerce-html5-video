@@ -59,3 +59,10 @@ dd{
    width: 83%;
    float: left;
 }
+#video_tab textarea{
+  float: left;
+}
+#video_tab dl dt input.checkbox{
+  margin: 5px 0px 0px 0px;
+}
+
