@@ -517,7 +517,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $bool_agregar_coma = false;
         if ($bool_chrome) {
           $bool_agregar_coma = true;
-          $navegadores = 'Crhome';
+          $navegadores = 'Chrome';
         }
         if ($bool_firefox) {
           if ($bool_agregar_coma) {
