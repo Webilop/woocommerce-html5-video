@@ -1,7 +1,7 @@
 === Woocomerce HTML5 Video ===
 
 Contributors: webilop
-Tags: woocomerce add-on, online store, product video, html5 video
+Tags: woocomerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
 Tested up to: 3.5.1
 Stable tag: trunk
@@ -34,3 +34,8 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 == Screenshots ==
 
 1. screenshot1.jpg Illustrates the video options available in the 'Edit Product' pages in WP backend.
+
+== Changelog ==
+
+= 1.0 =
+* First general availability plug-in version
