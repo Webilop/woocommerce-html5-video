@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: html5_video\n"
-"POT-Creation-Date: 2013-07-05 09:48-0500\n"
-"PO-Revision-Date: 2013-07-05 09:50-0500\n"
+"POT-Creation-Date: 2013-07-05 15:21-0500\n"
+"PO-Revision-Date: 2013-07-05 15:21-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,51 +31,51 @@ msgstr "Insertar código"
 msgid "Place your embedded video code here."
 msgstr "Copie el código embebido el video aquí."
 
-#: WooCommerce-HTML5-Video.php:221
+#: WooCommerce-HTML5-Video.php:210
 msgid "Select video source:"
 msgstr "Seleccione la fuente del video:"
 
-#: WooCommerce-HTML5-Video.php:224
+#: WooCommerce-HTML5-Video.php:213
 msgid "Embedded code"
 msgstr "Código embebido"
 
-#: WooCommerce-HTML5-Video.php:228 WooCommerce-HTML5-Video.php:241
+#: WooCommerce-HTML5-Video.php:217 WooCommerce-HTML5-Video.php:227
 msgid "Upload video"
 msgstr "Subir video"
 
-#: WooCommerce-HTML5-Video.php:229
+#: WooCommerce-HTML5-Video.php:218
 msgid "Supported video formats"
 msgstr "Formatos de video soportados"
 
-#: WooCommerce-HTML5-Video.php:242
+#: WooCommerce-HTML5-Video.php:222 WooCommerce-HTML5-Video.php:225
+msgid "Supported by"
+msgstr "Soportado por"
+
+#: WooCommerce-HTML5-Video.php:228
 msgid "Select video"
 msgstr "Seleccionar video"
 
-#: WooCommerce-HTML5-Video.php:243
+#: WooCommerce-HTML5-Video.php:229
 msgid "Video dimensions"
 msgstr "Dimensiones del video"
 
-#: WooCommerce-HTML5-Video.php:245
+#: WooCommerce-HTML5-Video.php:231
 msgid "Width"
 msgstr "Ancho"
 
-#: WooCommerce-HTML5-Video.php:246
+#: WooCommerce-HTML5-Video.php:232
 msgid "Height"
 msgstr "Alto"
 
-#: WooCommerce-HTML5-Video.php:432
+#: WooCommerce-HTML5-Video.php:404
 msgid "Your browser does not support HTML5"
 msgstr "Su navegador no soporta HTML5"
 
-#: WooCommerce-HTML5-Video.php:553
+#: WooCommerce-HTML5-Video.php:513
 msgid "This product contains videos in the following formats: "
 msgstr "Este producto contiene videos en los siguientes formatos:"
 
-#: WooCommerce-HTML5-Video.php:555
-msgid ", which can be seen in: "
-msgstr ", los cuales pueden ser vistos en:"
-
-#: WooCommerce-HTML5-Video.php:601
+#: WooCommerce-HTML5-Video.php:561
 msgid ""
 "WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
 "woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to "
@@ -84,3 +84,6 @@ msgstr ""
 "WooCommerce HTML5 Video requiere que <a href=\"http://www.woothemes.com/"
 "woocommerce/\" target=\"_blank\">WooCommerce</a> sea activado. Por favor "
 "instale y active <a href=\""
+
+#~ msgid ", which can be seen in: "
+#~ msgstr ", los cuales pueden ser vistos en:"

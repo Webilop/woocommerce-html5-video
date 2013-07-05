@@ -10,8 +10,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Add videos to your products in your online store. This plugin uses HTML5 to render videos in your products description page. 
-The supported video formats are MP4, Ogg and Webm.
+Woocomerce HTML5 Video is a woocommerce add-on which allows you to add videos to your products in your online store. 
+This plugin uses HTML5 to render videos in your products description page. The supported video formats are MP4 and Ogg.
 
 == Installation ==
 
@@ -26,7 +26,7 @@ Select the video source: Embedded code or uploaded video.
 == Frequently Asked Questions ==
 
 = What video format can I upload? =
-The supported video formats are MP4, Ogg and Webm.
+The supported video formats are MP4 and Ogg.
 
 = I cannot see the video in the frontend =
 Make sure your browser supports HTML5 video. A list of browsers that have this feature can be found at http://www.w3schools.com/html/html5_video.asp

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/wp-plugins/woocommerce-html5-video/
- * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are MP4, Ogg and Webm.
+ * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are MP4 and Ogg.
  * Author: Webilop
  * Author URI: http://www.webilop.com
  * Version: 1.0
@@ -163,7 +163,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         //creating inputs for the videos urls
         $url_video_flv = get_post_meta($thepostid, 'wo_di_video_url_flv', true);
         $url_video_mp4 = get_post_meta($thepostid, 'wo_di_video_url_mp4', true);
-        $url_video_webm = get_post_meta($thepostid, 'wo_di_video_url_webm', true);
         $url_video_ogg = get_post_meta($thepostid, 'wo_di_video_url_ogg', true);
 
         $input_video_flv = '<input type="text" name="wo_di_video_url_flv"';
@@ -176,23 +175,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $input_video_mp4.='value="' . $url_video_mp4 . '"';
         }
         $input_video_mp4.=">";
-        $input_video_webm = '<input type="text" id="wo_di_video_url_webm" name="wo_di_video_url_webm"';
-        if (!empty($url_video_webm)) {
-          $input_video_webm.='value="' . $url_video_webm . '"';
-        }
-        $input_video_webm.=">";
         $input_video_ogg = '<input type="text" id="wo_di_video_url_ogg" name="wo_di_video_url_ogg"';
         if (!empty($url_video_ogg)) {
           $input_video_ogg.='value="' . $url_video_ogg . '"';
         }
         $input_video_ogg.=">";
 
-        //creating chechs for the videos urls
+        //creating checkboxes for the videos urls
         $checked_flv = get_post_meta($thepostid, 'wo_di_video_check_flv', true);
         ;
         $checked_mp4 = get_post_meta($thepostid, 'wo_di_video_check_mp4', true);
-        ;
-        $checked_webm = get_post_meta($thepostid, 'wo_di_video_check_webm', true);
         ;
         $checked_ogg = get_post_meta($thepostid, 'wo_di_video_check_ogg', true);
         if ($checked_flv == 't') {
@@ -200,9 +192,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         if ($checked_mp4 == 't') {
           $checked_mp4 = 'checked="checked"';
-        }
-        if ($checked_webm == 't') {
-          $checked_webm = 'checked="checked"';
         }
         if ($checked_ogg == 't') {
           $checked_ogg = 'checked="checked"';
@@ -229,24 +218,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             <legend>'.__("Supported video formats","html5_video").'</legend>
                            <p><dl>
                             <dt><input id="_checkbox_mp4" class="checkbox" type="checkbox" value="mp4" name="videos_soportados[]" ' . $checked_mp4 . '>
-                            <label class="check" for="_checkbox_mp4"> Mp4 </label></dt> 
-                            <dd>' . $input_video_mp4 . '</dd>
-                            <dt><input id="_checkbox_WEBM" class="checkbox" type="checkbox" value="webm" name="videos_soportados[]" ' . $checked_webm . '>
-                            <label class="check" for="_checkbox_WEBM"> Webm </label></dt> 
-                            <dd>' . $input_video_webm . '</dd>
-                            <dt><input id="_checkbox_OGG" class="checkbox" type="checkbox" value="ogg" name="videos_soportados[]" ' . $checked_ogg . '>                            
+                            <label class="check" for="_checkbox_mp4"> Mp4 </label></dt>
+                            <dd>' . $input_video_mp4 . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' IE 9+, Chrome 6+, Safari 5+" alt="info" /></dd>
+                            <dt><input id="_checkbox_OGG" class="checkbox" type="checkbox" value="ogg" name="videos_soportados[]" ' . $checked_ogg . '>
                             <label class="check" for="_checkbox_OGG"> Ogg </label></dt>
-                            <dd>' . $input_video_ogg . '</dd>
+                            <dd>' . $input_video_ogg . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'__("Supported by", "html5_video").' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dd>
                             </dl></p>
                             <input id="wo_di_upload_video" type="button" value="'.__("Upload video","html5_video").'" class="button tagadd">
                             <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd">
                             <legend> '.__("Video dimensions","html5_video").' </legend>
-                            <p><dl>
+                            <dl>
                             <dt><label for="width_video_woocommerce"> '.__("Width","html5_video").': </label></dt> <dd><input type="text" id="width_video_woocommerce" name="width_video_woocommerce" value="' . $width_video . '"> </dd>
                             <dt><label for="height_video_woocommerce"> '.__("Height","html5_video").': </label></dt> <dd><input type="text" id="height_video_woocommerce" name="height_video_woocommerce" value="' . $height_video . '"> </dd>
                             </dl>
                             <textarea cols="20" rows="2"
-                                placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea></p>
+                                placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>
                       </div>';
 
         //Product description, this is part of the woocommerce.
@@ -319,12 +305,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $name_checkbox = '_checkbox_mp4';
             break;
 
-          case 'webm':
-            $name_input = 'wo_di_video_url_webm';
-            $name_checkbox = '_checkbox_WEBM';
-            break;
-
-          case 'ogv':
+          case 'ogg':
             $name_input = 'wo_di_video_url_ogg';
             $name_checkbox = '_checkbox_OGG';
             break;
@@ -351,7 +332,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           ?>   
           <script type="text/javascript">
             /* <![CDATA[ */
-            alert('Usted ha seleccionado un archivo no compatible, debe ser un video con extension mp4, webm o ogg.');
+            alert('You have selected a non-compatible video format, the supported extensions are: mp4 and ogg.');
             var win = window.dialogArguments || opener || parent || top;
             win.tb_remove();
             /* ]]> */
@@ -393,7 +374,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $check_videos = $_POST['videos_soportados']; //array of check.
         $cadena_tag_video_html5 = '<video width="' . $width_video . '" height="' . $height_video . '" controls>';
         update_post_meta($post_id, 'wo_di_video_check_mp4', 'f');
-        update_post_meta($post_id, 'wo_di_video_check_webm', 'f');
         update_post_meta($post_id, 'wo_di_video_check_ogg', 'f');
         //update_post_meta($post_id, 'wo_di_video_check_flv', 'f');
         $checkbox_selected = false;
@@ -406,14 +386,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
               update_post_meta($post_id, 'wo_di_video_url_mp4', $url);
               update_post_meta($post_id, 'wo_di_video_check_mp4', 't');
               $cadena_tag_video_html5.='<source src="' . $url . '" type="video/mp4" />';
-              $checkbox_selected = true;
-              break;
-
-            case "webm":
-              $url = $_POST['wo_di_video_url_webm'];
-              update_post_meta($post_id, 'wo_di_video_url_webm', $url);
-              update_post_meta($post_id, 'wo_di_video_check_webm', 't');
-              $cadena_tag_video_html5.='<source src="' . $url . '" type="video/webm" />';
               $checkbox_selected = true;
               break;
 
@@ -468,7 +440,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function getMensajeVideoSupport($id_product) {
         $video_flv = get_post_meta($id_product, 'wo_di_video_check_flv', true);
         $video_mp4 = get_post_meta($id_product, 'wo_di_video_check_mp4', true);
-        $video_webm = get_post_meta($id_product, 'wo_di_video_check_webm', true);
         $video_ogg = get_post_meta($id_product, 'wo_di_video_check_ogg', true);
         $formatos = '';
         $bool_chrome = false;
@@ -490,17 +461,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $bool_explorer = true;
           $bool_chrome = true;
           $bool_safari = true;
-          $bool_agregar_coma = true;
-        }
-        if ($video_webm == 't') {
-          if ($bool_agregar_coma) {
-            $formatos.=',webm';
-          } else {
-            $formatos.='webm';
-          }
-          $bool_firefox = true;
-          $bool_chrome = true;
-          $bool_opera = true;
           $bool_agregar_coma = true;
         }
         if ($video_ogg == 't') {
@@ -552,7 +512,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         $mensaje = __('This product contains videos in the following formats: ', 'html5_video');
         $mensaje.=$formatos;
-        $mensaje.=__(', which can be seen in: ', 'html5_video') . $navegadores;
+        //$mensaje.=__(', which can be seen in: ', 'html5_video') . $navegadores;
         return $mensaje;
       }
 
