@@ -80,7 +80,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           echo '<p>' . $this->mensaje . '</p>';
           //aqui se podria hacer trato especial a un codigo embebido o html5
           echo $this->codigo_video;
-          echo '<p style="font-size:10px;color:#CCC;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';
+          echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';
         }
       }
 
