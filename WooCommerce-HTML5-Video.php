@@ -255,7 +255,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         //add the script and style for thickbox, I need to upload videos with javascritp.
         wp_enqueue_script('media-upload');
         wp_enqueue_script('thickbox');
-        wp_register_script('my-upload', plugins_url('button_actions.js', __FILE__), array('jquery', 'media-upload', 'thickbox'));
+        wp_register_script('my-upload', plugins_url('js/button_actions.js', __FILE__), array('jquery', 'media-upload', 'thickbox'));
         wp_enqueue_script('my-upload');
         wp_enqueue_style('thickbox');
       }
