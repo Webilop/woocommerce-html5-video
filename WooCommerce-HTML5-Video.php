@@ -209,14 +209,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $print = '<legend>'.__("Select video source:","html5_video").'</legend>
                         <div class="options_group">
                             <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" ' . $radio_embebido . '>
-                            <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>';
-         for ($i=0; $i<=2; $i++){
+                            <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>
+                            <p><textarea class="' . $field['class'] . '" name="' . $field['id'] .'[]" id="' . $field['id'] . '0" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea(get_post_meta($post->ID, 'wo_di_video_product0', true)) . '</textarea><a class="remove_video" href="#" onclick="remove_video(0);return false;" title="'.__("Clear", "html5_video").'">'.__("Delete", "html5_video").'</a></p>';
+         $show_link = true;
+         for ($i=1; $i<=2; $i++){
          $tab_data = get_post_meta($post->ID, 'wo_di_video_product'.$i, true);
             if( !empty($tab_data) ){
                   $print .= '<p><textarea class="' . $field['class'] . '" name="' . $field['id'] .'[]" id="' . $field['id'] . $i. '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea($tab_data) . '</textarea><a class="remove_video" href="#" onclick="remove_video('.$i.');return false;" title="'.__("Clear", "html5_video").'">'.__("Delete", "html5_video").'</a></p>';
+               if($i ==2) $show_link = false;
             }
          }
-        $print .= '<a id="clone_video" href="#" onclick="clone_embedded();return false;">'.__("Add another video", "html5_video").'</a><p>'.__('The embedded code should be taken from a video page like Youtube', 'html5_video').'</p>
+         if($show_link) $print .= '<a id="clone_video" href="#" onclick="clone_embedded();return false;">'.__("Add another video", "html5_video").'</a>';
+        $print .= '<p>'.__('The embedded code should be taken from a video page like Youtube', 'html5_video').'</p>
                             </div><div class="options_group">
                             <input class="radio" id="video_servidor" type="radio" value="servidor" name="wo_di_tipo_video" ' . $radio_servidor . '>
                             <label class="radio" for="video_servidor">'.__("Upload video","html5_video").'</label>
