@@ -237,7 +237,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             <dt><label for="height_video_woocommerce"> '.__("Height","html5_video").': </label></dt> <dd><input type="text" id="height_video_woocommerce" name="height_video_woocommerce" value="' . $height_video . '"> </dd>
                             </dl></div>
                             <div class="options_group">
-                            <legend> '.__("Generated code","html5_video").' </legend>
+                            <label for="_tab_video_html5"> '.__("Generated code","html5_video").' </label>
                             <textarea cols="20" rows="2"
                                 placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>
                       </div>';
