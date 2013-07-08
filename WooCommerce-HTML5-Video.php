@@ -80,6 +80,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           echo '<p>' . $this->mensaje . '</p>';
           //aqui se podria hacer trato especial a un codigo embebido o html5
           echo $this->codigo_video;
+          echo '<p style="font-size:10px;color:#CCC;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';
         }
       }
 
@@ -90,7 +91,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function product_has_video_tabs($product) {
         $this->video_type = get_post_meta($product->id, 'wo_di_video_type', true);
         if ($this->video_type == 'embebido') {
-          $this->codigo_video = get_post_meta($product->id, 'wo_di_video_product', true);
+          for ($i=0; $i<=2; $i++){
+            $this->codigo_video .= get_post_meta($product->id, 'wo_di_video_product'.$i, true);
+          }
           // tab must at least have a title to exist
           return !empty($this->codigo_video);
         } else {//servidor
@@ -109,25 +112,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       }
 
       /**
-       * built the panel for the administrator.
+       * build the panel for the administrator.
        */
       public function product_write_panel() {
         global $post;
 
         // Pull the video tab data out of the database
-        $tab_data = get_post_meta($post->ID, 'wo_di_video_product', true);
-
-        if (empty($tab_data)) {
-          $tab_data = '';
-        }
-
-        echo '<div id="video_tab" class="panel woocommerce_options_panel">';
-        $this->wo_di_form_admin_video(array('id' => '_tab_video', 'label' => __('Embed Code','html5_video'), 'placeholder' => __('Place your embedded video code here.','html5_video'), 'value' => $tab_data, 'style' => 'width:70%;height:21.5em;'));
-        echo '</div>';
+           if (empty($tab_data)) {
+             $tab_data = '';
+           }
+           echo '<div id="video_tab" class="panel woocommerce_options_panel">';
+           $this->wo_di_form_admin_video(array('id' => '_tab_video', 'label' => __('Embed Code','html5_video'), 'placeholder' => __('Place your embedded video code here.','html5_video'), 'style' => 'width:70%;height:21.5em;'));
+           echo '</div>';
       }
 
       /*
-       * built form to the administrator.
+       * build form to the administrator.
        */
 
       private function wo_di_form_admin_video($field) {
@@ -141,7 +141,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $field['placeholder'] = '';
         }
         if (!isset($field['class'])) {
-          $field['class'] = 'short';
+          $field['class'] = 'html5_video';
         }
         if (!isset($field['value'])) {
           $field['value'] = get_post_meta($thepostid, 'wo_di_video_product', true);
@@ -206,33 +206,42 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $width_video = self::$width_video;
         }
         //html code
-        echo '<legend>'.__("Select video source:","html5_video").'</legend>
+        $print = '<legend>'.__("Select video source:","html5_video").'</legend>
                         <div class="options_group">
                             <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" ' . $radio_embebido . '>
-                            <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>
-                            <p><textarea class="' . $field['class'] . '" name="' . $field['id'] . '" id="' . $field['id'] . '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea($field['value']) . '</textarea></p>'.__('The embedded code should be taken from a video page like Youtube', 'html5_video').'
+                            <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>';
+         for ($i=0; $i<=2; $i++){
+         $tab_data = get_post_meta($post->ID, 'wo_di_video_product'.$i, true);
+            if( !empty($tab_data) ){
+                  $print .= '<p><textarea class="' . $field['class'] . '" name="' . $field['id'] .'[]" id="' . $field['id'] . $i. '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea($tab_data) . '</textarea><a class="remove_video" href="#" onclick="remove_video('.$i.');return false;" title="'.__("Clear", "html5_video").'">'.__("Delete", "html5_video").'</a></p>';
+            }
+         }
+        $print .= '<a id="clone_video" href="#" onclick="clone_embedded();return false;">'.__("Add another video", "html5_video").'</a><p>'.__('The embedded code should be taken from a video page like Youtube', 'html5_video').'</p>
                             </div><div class="options_group">
                             <input class="radio" id="video_servidor" type="radio" value="servidor" name="wo_di_tipo_video" ' . $radio_servidor . '>
                             <label class="radio" for="video_servidor">'.__("Upload video","html5_video").'</label>
                             <legend>'.__("Supported video formats","html5_video").'</legend>
-                           <p><dl>
+                           <dl>
                             <dt><input id="_checkbox_mp4" class="checkbox" type="checkbox" value="mp4" name="videos_soportados[]" ' . $checked_mp4 . '>
                             <label class="check" for="_checkbox_mp4"> Mp4 </label></dt>
                             <dd>' . $input_video_mp4 . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' IE 9+, Chrome 6+, Safari 5+" alt="info" /></dd>
                             <dt><input id="_checkbox_OGG" class="checkbox" type="checkbox" value="ogg" name="videos_soportados[]" ' . $checked_ogg . '>
                             <label class="check" for="_checkbox_OGG"> Ogg </label></dt>
                             <dd>' . $input_video_ogg . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dd>
-                            </dl></p>
+                            </dl>
                             <input id="wo_di_upload_video" type="button" value="'.__("Upload video","html5_video").'" class="button tagadd">
                             <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd">
                             <legend> '.__("Video dimensions","html5_video").' </legend>
                             <dl>
                             <dt><label for="width_video_woocommerce"> '.__("Width","html5_video").': </label></dt> <dd><input type="text" id="width_video_woocommerce" name="width_video_woocommerce" value="' . $width_video . '"> </dd>
                             <dt><label for="height_video_woocommerce"> '.__("Height","html5_video").': </label></dt> <dd><input type="text" id="height_video_woocommerce" name="height_video_woocommerce" value="' . $height_video . '"> </dd>
-                            </dl>
+                            </dl></div>
+                            <div class="options_group">
+                            <legend> '.__("Generated code","html5_video").' </legend>
                             <textarea cols="20" rows="2"
                                 placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>
                       </div>';
+         echo $print;
 
         //Product description, this is part of the woocommerce.
         if (isset($field['description']) && $field['description']) {
@@ -346,14 +355,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
       public function product_save_data($post_id, $post) {
 
-        $tab_video = stripslashes($_POST['_tab_video']);
+        $tab_video = $_POST['_tab_video'];
         $radio_video_embebido = $_POST['wo_di_tipo_video'];
         //updte the video embedded
         //if it is empty the text area, and there is something in the database, I must delete it.
         if (empty($tab_video) && get_post_meta($post_id, 'wo_di_video_product', true)) {
           delete_post_meta($post_id, 'wo_di_video_product');
-        } elseif (!empty($tab_video)) {
-          update_post_meta($post_id, 'wo_di_video_product', $tab_video);
+        }
+        $videos = $_POST['_tab_video'];
+        $length = count(videos);
+        foreach($videos as $key=>$video){
+          if(!empty($video)) update_post_meta($post_id, 'wo_di_video_product'.$key, stripslashes($video));
+          else delete_post_meta($post_id, 'wo_di_video_product'.$key);
         }
 
         //update the video html5
@@ -565,12 +578,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   /**
   * Enqueue plugin style-file
   */
-  function add_my_stylesheet() {
+  function add_my_scripts() {
     // Respects SSL, Style.css is relative to the current file
     wp_register_style( 'html-style', plugins_url('css/style.css', __FILE__) );
+    wp_register_script( 'js-script', plugins_url('js/js-script.js', __FILE__), array('jquery') );
     wp_enqueue_style( 'html-style' );
+    wp_enqueue_script( 'js-script' );
   }
-  add_action( 'admin_enqueue_scripts', 'add_my_stylesheet' );
+  add_action( 'admin_enqueue_scripts', 'add_my_scripts' );
 
   /**
   * Set up localization

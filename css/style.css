@@ -4,8 +4,8 @@
    padding:5px 5px 5px 28px;
    text-shadow:0 1px 1px #FFFFFF;
 }
-textarea#_tab_video, textarea#_tab_video_html5{
-   height: 100px;
+.woocommerce_options_panel textarea.html5_video, textarea#_tab_video_html5{
+   height: 80px;
    width: 80%;
 }
 .woocommerce_options_panel input.radio{
@@ -24,17 +24,34 @@ textarea#_tab_video, textarea#_tab_video_html5{
 #video_tab legend{
    display: block;
    font-style: italic;
-   margin-top: 7px;
+   margin-top: 10px;
    width: 100%;
 }
 p.form-field._tab_video_field{
    margin-bottom: 0px;
 }
 .woocommerce_options_panel .options_group{
-   padding-top: 5px;
+   padding-top: 10px;
+   float: left;
+   width: 100%;
 }
 div#video_tab{
    padding-bottom: 15px;
+}
+.plugin-copyright {
+   font-size: 10px;
+   color: #CCC;
+}
+a.remove_video{
+   background: url('../images/delete_icon.png') no-repeat;
+   height: 22px;
+   width: 22px;
+   float: left;
+   margin-left: 10px;
+   text-indent: 999px;
+}
+a#clone_video{
+   padding-left: 12px;
 }
 /*DL, DT, DD TAGS LIST DATA*/
 dl {
