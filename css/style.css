@@ -15,6 +15,7 @@
    font-weight: bold;
    line-height: 15px;
    padding-left: 8px;
+   margin-bottom: 10px;
 }
 .woocommerce_options_panel label.check{
    line-height: 25px;
@@ -77,6 +78,7 @@ dd{
    float: left;
 }
 #video_tab textarea{
+  clear: both;
   float: left;
 }
 #video_tab dl dt input.checkbox{
