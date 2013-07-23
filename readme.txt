@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocomerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: trunk
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,3 +39,6 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 
 = 1.0 =
 * First general availability plug-in version
+
+= 1.1 =
+* Settings page was added.
