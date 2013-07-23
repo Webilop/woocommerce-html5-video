@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/wp-plugins/woocommerce-html5-video/
- * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are MP4 and Ogg.
+ * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are: MP4, Ogg and YouTube videos.
  * Author: Webilop
  * Author URI: http://www.webilop.com
  * Version: 1.0
@@ -21,8 +21,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private $codigo_video = ''; //Variable to save the video code.
       private $video_type = '';
       private $mensaje = ''; //informational message to the user when viewing the video.
-      static private $width_video = '400';
-      static private $height_video = '400';
 
       /**
        * Gets things started by adding an action to initialize this plugin once
@@ -196,15 +194,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $checked_ogg = 'checked="checked"';
         }
 
-        //video dimensions
-        $height_video = get_post_meta($thepostid, 'height_video_woocommerce', true);
-        $width_video = get_post_meta($thepostid, 'width_video_woocommerce', true);
-        if (empty($height_video)) {
-          $height_video = self::$height_video;
-        }
-        if (empty($width_video)) {
-          $width_video = self::$width_video;
-        }
         //html code
         $print = '<legend>'.__("Select video source:","html5_video").'</legend>
                         <div class="options_group">
@@ -234,12 +223,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             <dd>' . $input_video_ogg . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dd>
                             </dl>
                             <input id="wo_di_upload_video" type="button" value="'.__("Upload video","html5_video").'" class="button tagadd">
-                            <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd">
-                            <legend> '.__("Video dimensions","html5_video").' </legend>
-                            <dl>
-                            <dt><label for="width_video_woocommerce"> '.__("Width","html5_video").': </label></dt> <dd><input type="text" id="width_video_woocommerce" name="width_video_woocommerce" value="' . $width_video . '"> </dd>
-                            <dt><label for="height_video_woocommerce"> '.__("Height","html5_video").': </label></dt> <dd><input type="text" id="height_video_woocommerce" name="height_video_woocommerce" value="' . $height_video . '"> </dd>
-                            </dl></div>
+                            <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd"></div>
                             <div class="options_group">
                             <label for="_tab_video_html5"> '.__("Generated code","html5_video").' </label>
                             <textarea cols="20" rows="2"
@@ -374,21 +358,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
 
         //update the video html5
-        //save dimention of video
-        $height_video = $_POST['height_video_woocommerce'];
-        $width_video = $_POST['width_video_woocommerce'];
-        if (empty($height_video)) {
-          $height_video = self::$height_video;
-        }
-        if (empty($width_video)) {
-          $width_video = self::$width_video;
-        }
-        update_post_meta($post_id, 'height_video_woocommerce', $height_video);
-        update_post_meta($post_id, 'width_video_woocommerce', $width_video);
 
         //generate HTML5 code according to the available videos.
         $check_videos = $_POST['videos_soportados']; //array of check.
-        $cadena_tag_video_html5 = '<video width="' . $width_video . '" height="' . $height_video . '" controls>';
+        $cadena_tag_video_html5 = '<video width="' . get_option('video_width') . '" height="' . get_option('video_height') . '" controls>';
         update_post_meta($post_id, 'wo_di_video_check_mp4', 'f');
         update_post_meta($post_id, 'wo_di_video_check_ogg', 'f');
         //update_post_meta($post_id, 'wo_di_video_check_flv', 'f');
@@ -568,6 +541,27 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     add_filter('attachment_fields_to_edit', array($woocommerce_video_tab, 'wo_di_action_button'), 20, 2);
     add_filter('media_send_to_editor', array($woocommerce_video_tab, 'wo_di_image_selected'), 10, 3);
   }
+  //add settings page
+  add_action( 'admin_menu', 'my_plugin_menu' );
+
+  /** Function to register plugin settings*/
+  function register_my_setting() {
+   register_setting( 'dimensions_group', 'video_width', 'intval' );
+   register_setting( 'dimensions_group', 'video_height', 'intval' );
+  }
+  add_action( 'admin_init', 'register_my_setting' );
+
+  /** Function to add settngs link in plugins page */
+  function plugin_add_settings_link( $links ) {
+   $settings_link = '<a href="options-general.php?page=html5-video-settings">Settings</a>';
+   array_push( $links, $settings_link );
+   $docs_link = '<a title="documentation" target="_blank" href="http://www.webilop.com/products/woocommerce-html5-video/">Docs</a>';
+   array_push( $links, $docs_link);
+   return $links;
+  }
+  $plugin = plugin_basename( __FILE__ );
+  add_filter( "plugin_action_links_$plugin", 'plugin_add_settings_link' );
+
 } else {//end if,if installed woocommerce
   add_action('admin_notices', 'wc_video_tab_error_notice');
 
@@ -578,7 +572,46 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     }
   }
 }
+/** Function to add a plugin configuration page */
+function my_plugin_menu() {
+   add_options_page( 'Html5 Video Settings', 'Woocommerce html5 video', 'manage_options', 'html5-video-settings', 'my_plugin_options' );
+}
 
+/** Function to create the content of the configuration page */
+function my_plugin_options() {
+   if ( !current_user_can( 'manage_options' ) )  {
+      wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+   }?>
+   <div class="wrap"><?php screen_icon(); ?><h2>Woocommerce Html5 Video Settings</h2>
+   <form class="html5_video" method="post" action="options.php">
+   <?php settings_fields( 'dimensions_group' );
+   do_settings_fields( 'dimensions_group','html5-video-settings' )?>
+   <p><strong>Configure the video dimensions.</strong></p>
+   <table class="form-table">
+        <tr valign="top">
+        <th scope="row">Video Width:</th>
+        <td><input type="text" name="video_width" value="<?php echo get_option('video_width'); ?>" /></td>
+        </tr>
+        <tr valign="top">
+        <th scope="row">Video Height:</th>
+        <td><input type="text" name="video_height" value="<?php echo get_option('video_height'); ?>" /></td>
+        </tr>
+    </table>
+   <?php submit_button();?>
+   <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/">Woocommerce Html5 Video Documentation</a></span>
+   </form>
+    <div class="about-webilop">
+    <h3 class="hndle"><?php _e('About','html5_video');?></h3>
+    <div class="inside">
+    <p><strong>Woocommerce Html5 video </strong><?php _e('was developed by ', 'html5_video');?><a title="Webilop. web and mobile development" href="http://www.webilop.com">Webilop</a></p>
+    <p><?php _e('Webilop is a company focused on web and mobile solutions. We develop custom mobile applications and templates and plugins for CMSs such as Wordpress and Joomla!.', 'html5_video');?></p>
+   <div><h4><?php _e('Follow us', 'html5_video')?></h4><a title="Facebook" href="https://www.facebook.com/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/facebook.png"></a>
+<a title="LinkedIn" href="http://www.linkedin.com/company/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/linkedin.png"></a>
+<a title="Twitter" href="https://twitter.com/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/twitter.png"></a>
+<a title="Google Plus" href="https://plus.google.com/104606011635671696803" target="_blank" rel="publisher"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/gplus.png"></a></div>
+    </div></div></div>
+   <?php
+}
   /**
   * Enqueue plugin style-file
   */

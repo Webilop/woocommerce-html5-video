@@ -84,4 +84,14 @@ dd{
 #video_tab dl dt input.checkbox{
   margin: 5px 0px 0px 0px;
 }
-
+.about-webilop {
+   float: right;
+   width: 28%;
+   border: 1px solid #CCC;
+   padding: 0px 7px 7px;
+   background: #f5f5f5;
+   border-radius: 4px;
+}
+form.html5_video{
+   float: left;
+}
