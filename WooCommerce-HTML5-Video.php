@@ -21,7 +21,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private $codigo_video = ''; //Variable to save the video code.
       private $video_type = '';
       private $mensaje = ''; //informational message to the user when viewing the video.
-
+      static private $width_video = '400';
+      static private $height_video = '400';
+	  
       /**
        * Gets things started by adding an action to initialize this plugin once
        * WooCommerce is known to be active and initialized
@@ -194,6 +196,25 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $checked_ogg = 'checked="checked"';
         }
 
+        //video dimensions
+        $height_video = get_post_meta($thepostid, 'height_video_woocommerce', true);
+        $width_video = get_post_meta($thepostid, 'width_video_woocommerce', true);
+        $height_config = get_option('video_height');
+        $width_config = get_option('video_width');
+        if (empty($height_video)) {
+          if (empty($height_config)) {
+            $height_video = self::$height_video;
+          }else {
+            $height_video = $height_config;
+          }
+        }
+        if (empty($width_video)) {
+          if (empty($width_config)) {
+            $width_video = self::$width_video;
+          }else{
+            $width_video = $width_config;
+          }
+        }
         //html code
         $print = '<legend>'.__("Select video source:","html5_video").'</legend>
                         <div class="options_group">
@@ -223,7 +244,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             <dd>' . $input_video_ogg . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dd>
                             </dl>
                             <input id="wo_di_upload_video" type="button" value="'.__("Upload video","html5_video").'" class="button tagadd">
-                            <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd"></div>
+                            <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd">
+                            <legend> '.__("Video dimensions","html5_video").' </legend>
+                            <dl>
+                            <dt><label for="width_video_woocommerce"> '.__("Width","html5_video").': </label></dt> <dd><input type="text" id="width_video_woocommerce" name="width_video_woocommerce" value="' . $width_video . '"> </dd>
+                            <dt><label for="height_video_woocommerce"> '.__("Height","html5_video").': </label></dt> <dd><input type="text" id="height_video_woocommerce" name="height_video_woocommerce" value="' . $height_video . '"> </dd>
+                            </dl></div>
                             <div class="options_group">
                             <label for="_tab_video_html5"> '.__("Generated code","html5_video").' </label>
                             <textarea cols="20" rows="2"
@@ -358,10 +384,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
 
         //update the video html5
-
+        //save dimention of video
+        $height_video = $_POST['height_video_woocommerce'];
+        $width_video = $_POST['width_video_woocommerce'];
+        if (empty($height_video)) {
+          $height_video = self::$height_video;
+        }
+        if (empty($width_video)) {
+          $width_video = self::$width_video;
+        }
+        update_post_meta($post_id, 'height_video_woocommerce', $height_video);
+        update_post_meta($post_id, 'width_video_woocommerce', $width_video);
+		
         //generate HTML5 code according to the available videos.
         $check_videos = $_POST['videos_soportados']; //array of check.
-        $cadena_tag_video_html5 = '<video width="' . get_option('video_width') . '" height="' . get_option('video_height') . '" controls>';
+        $cadena_tag_video_html5 = '<video width="' .  $width_video . '" height="' . $height_video . '" controls>';
         update_post_meta($post_id, 'wo_di_video_check_mp4', 'f');
         update_post_meta($post_id, 'wo_di_video_check_ogg', 'f');
         //update_post_meta($post_id, 'wo_di_video_check_flv', 'f');
@@ -615,14 +652,14 @@ function my_plugin_options() {
   /**
   * Enqueue plugin style-file
   */
-  function add_my_scripts() {
+  function add_video_scripts() {
     // Respects SSL, Style.css is relative to the current file
     wp_register_style( 'html-style', plugins_url('css/style.css', __FILE__) );
     wp_register_script( 'js-script', plugins_url('js/js-script.js', __FILE__), array('jquery') );
     wp_enqueue_style( 'html-style' );
     wp_enqueue_script( 'js-script' );
   }
-  add_action( 'admin_enqueue_scripts', 'add_my_scripts' );
+  add_action( 'admin_enqueue_scripts', 'add_video_scripts' );
 
   /**
   * Set up localization
