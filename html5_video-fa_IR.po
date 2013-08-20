@@ -1,0 +1,154 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: html5_video\n"
+"POT-Creation-Date: 2013-07-23 09:46-0500\n"
+"PO-Revision-Date: 2013-08-16 17:45+0330\n"
+"Last-Translator: \n"
+"Language-Team: Qooqnos <khalil.delavaran@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;_;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Persian\n"
+"X-Poedit-Country: IRAN, ISLAMIC REPUBLIC OF\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: copia -WooCommerce-HTML5-Video.php:62
+#: -WooCommerce-HTML5-Video.php:79
+#: -WooCommerce-HTML5-Video.php:111
+#: WooCommerce-HTML5-Video.php:60
+#: WooCommerce-HTML5-Video.php:77
+#: WooCommerce-HTML5-Video.php:109
+msgid "Video"
+msgstr "ویدیو"
+
+#: copia -WooCommerce-HTML5-Video.php:83
+#: WooCommerce-HTML5-Video.php:81
+msgid "Video embedding powered by"
+msgstr "کدهای جاسازی ویدیو ساخته شده از"
+
+#: copia -WooCommerce-HTML5-Video.php:125
+#: WooCommerce-HTML5-Video.php:123
+msgid "Embed Code"
+msgstr "جاسازی کد"
+
+#: copia -WooCommerce-HTML5-Video.php:125
+#: WooCommerce-HTML5-Video.php:123
+msgid "Place your embedded video code here."
+msgstr "جای کد ویدیو های جاسازی شده شما در اینجا"
+
+#: copia -WooCommerce-HTML5-Video.php:209
+#: WooCommerce-HTML5-Video.php:198
+msgid "Select video source:"
+msgstr "گزینش "
+
+#: copia -WooCommerce-HTML5-Video.php:212
+#: WooCommerce-HTML5-Video.php:201
+msgid "Embedded code"
+msgstr "کد جاسازی شده"
+
+#: copia -WooCommerce-HTML5-Video.php:213
+#: -WooCommerce-HTML5-Video.php:218
+#: WooCommerce-HTML5-Video.php:202
+#: WooCommerce-HTML5-Video.php:207
+msgid "Clear"
+msgstr "پاک کردن"
+
+#: copia -WooCommerce-HTML5-Video.php:213
+#: -WooCommerce-HTML5-Video.php:218
+#: WooCommerce-HTML5-Video.php:202
+#: WooCommerce-HTML5-Video.php:207
+msgid "Delete"
+msgstr "زدودن"
+
+#: copia -WooCommerce-HTML5-Video.php:222
+#: WooCommerce-HTML5-Video.php:211
+msgid "Add another video"
+msgstr "ویدیویی دیگر بیافزایید"
+
+#: copia -WooCommerce-HTML5-Video.php:223
+#: WooCommerce-HTML5-Video.php:212
+msgid "The embedded code should be taken from a video page like Youtube"
+msgstr "کد جاسازی شده باید از یک برگه ویدیو مانند یوتیوب گرفته شده باشد"
+
+#: copia -WooCommerce-HTML5-Video.php:226
+#: -WooCommerce-HTML5-Video.php:236
+#: WooCommerce-HTML5-Video.php:215
+#: WooCommerce-HTML5-Video.php:225
+msgid "Upload video"
+msgstr "بارگذاری ویدیو"
+
+#: copia -WooCommerce-HTML5-Video.php:227
+#: WooCommerce-HTML5-Video.php:216
+msgid "Supported video formats"
+msgstr "فرمت های ویدیویی پشتیبانی شده"
+
+#: copia -WooCommerce-HTML5-Video.php:231
+#: -WooCommerce-HTML5-Video.php:234
+#: WooCommerce-HTML5-Video.php:220
+#: WooCommerce-HTML5-Video.php:223
+msgid "Supported by"
+msgstr "پشتیبانی شده از"
+
+#: copia -WooCommerce-HTML5-Video.php:237
+#: WooCommerce-HTML5-Video.php:226
+msgid "Select video"
+msgstr "گزینش ویدیو"
+
+#: copia -WooCommerce-HTML5-Video.php:238
+msgid "Video dimensions"
+msgstr "اندازه های ویدیو"
+
+#: copia -WooCommerce-HTML5-Video.php:240
+msgid "Width"
+msgstr "پهنا"
+
+#: copia -WooCommerce-HTML5-Video.php:241
+msgid "Height"
+msgstr "درازا"
+
+#: copia -WooCommerce-HTML5-Video.php:244
+#: WooCommerce-HTML5-Video.php:228
+msgid "Generated code"
+msgstr "ساخت کد"
+
+#: copia -WooCommerce-HTML5-Video.php:420
+#: WooCommerce-HTML5-Video.php:393
+msgid "Your browser does not support HTML5"
+msgstr "مرورگر شما HTML5را پشتیبانی نمی کند"
+
+#: copia -WooCommerce-HTML5-Video.php:529
+#: WooCommerce-HTML5-Video.php:502
+msgid "This product contains videos in the following formats: "
+msgstr "این محصول درون مایه فیلم ها در فرمت های زیر می باشد:"
+
+#: copia -WooCommerce-HTML5-Video.php:587
+#: WooCommerce-HTML5-Video.php:571
+msgid "WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to work. Please install and activate <a href=\""
+msgstr "WooCommerce HTML5 Video نیازمند <a href=\"http://www.woothemes.com/woocommerce/\" target=\"_blank\">WooCommerce</a> به منظور به کار پویا شود. خواهشمند است برای نصب و پویاسازی اینجا را کلیک کنید"
+
+#: copia -WooCommerce-HTML5-Video.php:599
+#: WooCommerce-HTML5-Video.php:583
+msgid "You do not have sufficient permissions to access this page."
+msgstr "شما مجوز کافی برای دسترسی به این برگه را ندارید"
+
+#: WooCommerce-HTML5-Video.php:604
+msgid "About"
+msgstr "درباره ما"
+
+#: WooCommerce-HTML5-Video.php:606
+msgid "was developed by "
+msgstr "گسترش یافته از"
+
+#: WooCommerce-HTML5-Video.php:607
+msgid "Webilop is a company focused on web and mobile solutions. We develop custom mobile applications and templates and plugins for CMSs such as Wordpress and Joomla!."
+msgstr "Webilop یک شرکت متمرکز بر روی وب و راه حل های تلفن همراه است.ما در توسعه برنامه های کاربردی سفارشی تلفن همراه و قالب ها و افزونه های سیستم مدیریت محتوا مانند وردپرس و جوملا کار می کنیم!. همچنین این محصول توسط خلیل دلاوران khalil.delavaran@gmail.comبه زبان شیرین پارسی برگردان شده است."
+
+#: WooCommerce-HTML5-Video.php:608
+msgid "Follow us"
+msgstr "ما را دنبال کنید"
+
+#~ msgid ", which can be seen in: "
+#~ msgstr ", los cuales pueden ser vistos en:"

@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocomerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Woocomerce HTML5 Video is a woocommerce add-on which allows you to add videos to your products in your online store. 
 This plugin uses HTML5 to render videos in your products description page. The supported video formats are MP4 and Ogg.
+
+= Localization =
+
+This plugin is vailable in the following languages:
+*English
+*Spanish
+*Persian
+If you want to contribute with the localization of this plugin, you can send us your .mo and .po files to contact[at]webilop.com
 
 == Installation ==
 
@@ -42,3 +50,6 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 
 = 1.1 =
 * Settings page was added.
+
+= 1.2 =
+*Persian localization was added. Special thanks to Khalil Delavaran (khalil.delavaran[at]gmail.com) for this contribution.
