@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocomerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.2
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,11 +15,18 @@ This plugin uses HTML5 to render videos in your products description page. The s
 
 = Localization =
 
-This plugin is vailable in the following languages:
-*English
+*English (default).
+
 *Spanish
+
 *Persian
+
 If you want to contribute with the localization of this plugin, you can send us your .mo and .po files to contact[at]webilop.com
+
+= Documentation =
+
+To access the plugin documentation in English, visit http://www.webilop.com/products/woocommerce-html5-video/
+The documentation in Spanish is also availale at: http://www.webilop.com/es_ES/productos/woocommerce-html5-video-2/
 
 == Installation ==
 
@@ -27,7 +34,7 @@ If you want to contribute with the localization of this plugin, you can send us 
 1. Upload the `woocommerce-html5-video` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Create your products through 'the Products' menu option
-4. Go to the Edit page of one of the created products. Under the 'Product Data' box, select the 'Video' optoin at the bottom.
+4. Go to the Edit page of one of the created products. Under the 'Product Data' box, select the 'Video' option at the bottom.
 Select the video source: Embedded code or uploaded video.
 5. Update the product.
 
@@ -52,4 +59,10 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 * Settings page was added.
 
 = 1.2 =
-*Persian localization was added. Special thanks to Khalil Delavaran (khalil.delavaran[at]gmail.com) for this contribution.
+* Persian localization was added. Special thanks to Khalil Delavaran (khalil.delavaran[at]gmail.com) for this contribution.
+
+= 1.3 =
+* $ replaced with jQuery to avoid conflicts in javascript files
+
+= 1.3.1 =
+* Fix of bug loading styles and scripts. Organization of translation files in the folder structure.

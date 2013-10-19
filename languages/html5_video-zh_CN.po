@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: html5_video\n"
+"POT-Creation-Date: 2013-07-23 09:46-0500\n"
+"PO-Revision-Date: 2013-10-08 05:07+0800\n"
+"Last-Translator: cuijinlin <cuijinlin@gmail.com>\n"
+"Language-Team: cuijinlin <cuijinlin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;_;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"Language: zh_CN\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: copia -WooCommerce-HTML5-Video.php:62 -WooCommerce-HTML5-Video.php:79
+#: -WooCommerce-HTML5-Video.php:111 WooCommerce-HTML5-Video.php:60
+#: WooCommerce-HTML5-Video.php:77 WooCommerce-HTML5-Video.php:109
+msgid "Video"
+msgstr "视频"
+
+#: copia -WooCommerce-HTML5-Video.php:83 WooCommerce-HTML5-Video.php:81
+msgid "Video embedding powered by"
+msgstr "视频嵌入支持"
+
+#: copia -WooCommerce-HTML5-Video.php:125 WooCommerce-HTML5-Video.php:123
+msgid "Embed Code"
+msgstr "嵌入代码"
+
+#: copia -WooCommerce-HTML5-Video.php:125 WooCommerce-HTML5-Video.php:123
+msgid "Place your embedded video code here."
+msgstr "将您的嵌入视频代码粘贴到这里。"
+
+#: copia -WooCommerce-HTML5-Video.php:209 WooCommerce-HTML5-Video.php:198
+msgid "Select video source:"
+msgstr "选择视频源："
+
+#: copia -WooCommerce-HTML5-Video.php:212 WooCommerce-HTML5-Video.php:201
+msgid "Embedded code"
+msgstr "嵌入代码"
+
+#: copia -WooCommerce-HTML5-Video.php:213 -WooCommerce-HTML5-Video.php:218
+#: WooCommerce-HTML5-Video.php:202 WooCommerce-HTML5-Video.php:207
+msgid "Clear"
+msgstr "清除"
+
+#: copia -WooCommerce-HTML5-Video.php:213 -WooCommerce-HTML5-Video.php:218
+#: WooCommerce-HTML5-Video.php:202 WooCommerce-HTML5-Video.php:207
+msgid "Delete"
+msgstr "删除"
+
+#: copia -WooCommerce-HTML5-Video.php:222 WooCommerce-HTML5-Video.php:211
+msgid "Add another video"
+msgstr "添加另一个视频"
+
+#: copia -WooCommerce-HTML5-Video.php:223 WooCommerce-HTML5-Video.php:212
+msgid "The embedded code should be taken from a video page like Youtube"
+msgstr "此嵌入代码需要从类似优酷的视频页面获取"
+
+#: copia -WooCommerce-HTML5-Video.php:226 -WooCommerce-HTML5-Video.php:236
+#: WooCommerce-HTML5-Video.php:215 WooCommerce-HTML5-Video.php:225
+msgid "Upload video"
+msgstr "上传视频"
+
+#: copia -WooCommerce-HTML5-Video.php:227 WooCommerce-HTML5-Video.php:216
+msgid "Supported video formats"
+msgstr "支持的视频格式"
+
+#: copia -WooCommerce-HTML5-Video.php:231 -WooCommerce-HTML5-Video.php:234
+#: WooCommerce-HTML5-Video.php:220 WooCommerce-HTML5-Video.php:223
+msgid "Supported by"
+msgstr "支持"
+
+#: copia -WooCommerce-HTML5-Video.php:237 WooCommerce-HTML5-Video.php:226
+msgid "Select video"
+msgstr "选择视频"
+
+#: copia -WooCommerce-HTML5-Video.php:238
+msgid "Video dimensions"
+msgstr "视频尺寸"
+
+#: copia -WooCommerce-HTML5-Video.php:240
+msgid "Width"
+msgstr "宽度"
+
+#: copia -WooCommerce-HTML5-Video.php:241
+msgid "Height"
+msgstr "高度"
+
+#: copia -WooCommerce-HTML5-Video.php:244 WooCommerce-HTML5-Video.php:228
+msgid "Generated code"
+msgstr "生成的代码"
+
+#: copia -WooCommerce-HTML5-Video.php:420 WooCommerce-HTML5-Video.php:393
+msgid "Your browser does not support HTML5"
+msgstr "您的浏览器不支持HTML5"
+
+#: copia -WooCommerce-HTML5-Video.php:529 WooCommerce-HTML5-Video.php:502
+msgid "This product contains videos in the following formats: "
+msgstr "此产品包含以下格式的视频说明："
+
+#: copia -WooCommerce-HTML5-Video.php:587 WooCommerce-HTML5-Video.php:571
+msgid ""
+"WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to "
+"work. Please install and activate <a href=\""
+msgstr ""
+"WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to "
+"work. Please install and activate <a href=\""
+
+#: copia -WooCommerce-HTML5-Video.php:599 WooCommerce-HTML5-Video.php:583
+msgid "You do not have sufficient permissions to access this page."
+msgstr "您没有足够的权限访问此页面。"
+
+#: WooCommerce-HTML5-Video.php:604
+msgid "About"
+msgstr "About"
+
+#: WooCommerce-HTML5-Video.php:606
+msgid "was developed by "
+msgstr "was developed by "
+
+#: WooCommerce-HTML5-Video.php:607
+msgid ""
+"Webilop is a company focused on web and mobile solutions. We develop custom "
+"mobile applications and templates and plugins for CMSs such as Wordpress and "
+"Joomla!."
+msgstr ""
+"Webilop is a company focused on web and mobile solutions. We develop custom "
+"mobile applications and templates and plugins for CMSs such as Wordpress and "
+"Joomla!."
+
+#: WooCommerce-HTML5-Video.php:608
+msgid "Follow us"
+msgstr "Follow us"
+
+#~ msgid ", which can be seen in: "
+#~ msgstr ", los cuales pueden ser vistos en:"
