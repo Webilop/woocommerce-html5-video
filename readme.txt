@@ -65,4 +65,4 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 * $ replaced with jQuery to avoid conflicts in javascript files
 
 = 1.3.1 =
-* Fix of bug loading styles and scripts. Organization of translation files in the folder structure.
+* Fix of bug loading styles and scripts. Fix of bugs with the names of some functions. Organization of translation files in the folder structure.
