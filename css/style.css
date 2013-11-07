@@ -55,25 +55,25 @@ a#clone_video{
    padding-left: 12px;
 }
 /*DL, DT, DD TAGS LIST DATA*/
-dl {
+#video_tab dl {
     float: left;
     margin-bottom:10px;
     margin-top: 0px;
     width: 100%;
 }
-dl dt {
+#video_tab dl dt {
     float:left;
     padding:5px 0px;
 
 }
-dl dd {
+#video_tab dl dd {
     margin:2px 0;
     padding:5px 0;
 }
-dt{
+#video_tab dt{
    width: 16%;
 }
-dd{
+#video_tab dd{
    width: 83%;
    float: left;
 }

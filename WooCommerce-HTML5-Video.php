@@ -539,7 +539,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         //$mensaje = __('This product contains videos in the following formats: ', 'html5_video');
         //$mensaje.=$formatos;
         //$mensaje.=__(', which can be seen in: ', 'html5_video') . $navegadores;
-        return $mensaje;
+        //return $mensaje;
+        return "";
       }
 
     }
