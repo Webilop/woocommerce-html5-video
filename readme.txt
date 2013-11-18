@@ -1,10 +1,10 @@
-=== Woocomerce HTML5 Video ===
+﻿=== Woocomerce HTML5 Video ===
 
 Contributors: webilop
 Tags: woocomerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
 Tested up to: 3.5.1
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,8 @@ This plugin uses HTML5 to render videos in your products description page. The s
 *Spanish
 
 *Persian
+
+*Chinese 
 
 If you want to contribute with the localization of this plugin, you can send us your .mo and .po files to contact[at]webilop.com
 
@@ -67,4 +69,9 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 = 1.3.1 =
 * Fix of bug loading styles and scripts. Fix of bugs with the names of some functions. Organization of translation files in the folder structure.
 * Chinese localization was added. Special thanks to Jinlin Cui(崔金林) (cuijinlin@gmail.com) for this contribution.
+
+= 1.3.2 =
+* Fix of a bug that will always displays the video tab even if there is no video. 
+* Addition of the option in the video settings page to hide the video tab if there is no videos for the product.
+* Addition of description for the videos of a producto. You can use a tinyMCE editor to save a description of the videos, it will show the description above the videos in the video tab.
 

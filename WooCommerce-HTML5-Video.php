@@ -5,7 +5,7 @@
  * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are: MP4, Ogg and YouTube videos.
  * Author: Webilop
  * Author URI: http://www.webilop.com
- * Version: 1.3.1
+ * Version: 1.3.2
  * License: GPLv2 or later
  */
 // Exit if accessed directly
@@ -50,22 +50,23 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        /** Add extra tabs to front end product page **/
         function video_product_tabs( $tabs ) {
                 global $post, $product;
+                if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")!=1){
 
-                $custom_tab_options = array(
-                        'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
-                        'title' => get_post_meta($post->ID, 'custom_tab_title', true),
-                        'content' => get_post_meta($post->ID, 'custom_tab_content', true),
-                );
+                  $custom_tab_options = array(
+                          'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
+                          'title' => get_post_meta($post->ID, 'custom_tab_title', true),
+                          'content' => get_post_meta($post->ID, 'custom_tab_content', true),
+                  );
 
-                if ( $custom_tab_options['enabled'] != 'no' ){
-                        $tabs['html5_video'] = array(
-                           'title'    => __('Video','html5_video'),
-                           'priority' => 25,
-                           'callback' => 'woohv_htmlvideotabcontent',
-                           'content'  => $custom_tab_options['content']
-                         );
-                 }
-
+                  if ( $custom_tab_options['enabled'] != 'no' ){
+                          $tabs['html5_video'] = array(
+                             'title'    => __('Video','html5_video'),
+                             'priority' => 25,
+                             'callback' => 'woohv_htmlvideotabcontent',
+                             'content'  => $custom_tab_options['content']
+                           );
+                   }
+                }
                 return $tabs;
         }
 
@@ -74,13 +75,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
       public function video_product_tabs_panel() {
         global $product;
-
-        if ($this->product_has_video_tabs($product)) {
+        
+        if ($this->product_has_video_tabs($product)) {          
           echo '<h2>' . __("Video","html5_video") . '</h2>';
           echo '<p>' . $this->mensaje . '</p>';
+          
+          $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);  
+          echo '<div> '.$cadena_editormce.'</div>';
           //aqui se podria hacer trato especial a un codigo embebido o html5
-          echo $this->codigo_video;
-          echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';
+          echo $this->codigo_video;          
+          echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';                  
         }
       }
 
@@ -147,7 +151,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $field['value'] = get_post_meta($thepostid, 'wo_di_video_product', true);
         }
         $codigo_html = get_post_meta($thepostid, 'wo_di_video_product_html5', true);
-
+        $codigo_editor_video = get_post_meta($thepostid, 'wo_di_video_editormce_html5', true);
+        
         $type_video = get_post_meta($thepostid, 'wo_di_video_type', true);
         $radio_embebido = '';
         $radio_servidor = '';
@@ -194,8 +199,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         if ($checked_ogg == 't') {
           $checked_ogg = 'checked="checked"';
-        }
-
+        }        
         //video dimensions
         $height_video = get_post_meta($thepostid, 'height_video_woocommerce', true);
         $width_video = get_post_meta($thepostid, 'width_video_woocommerce', true);
@@ -215,6 +219,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $width_video = $width_config;
           }
         }
+        
+        $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
         //html code
         $print = '<legend>'.__("Select video source:","html5_video").'</legend>
                         <div class="options_group">
@@ -253,8 +259,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             <div class="options_group">
                             <label for="_tab_video_html5"> '.__("Generated code","html5_video").' </label>
                             <textarea cols="20" rows="2"
-                                placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>
-                      </div>';
+                                      placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>                            
+                            </div>
+                            <div class="options_group "> 
+                            <div><label for="_tab_video_html5"></div> 
+                            <div> '.__("Video tab description (it will appear above the videos in the Video tab)","html5_video").' </label> <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" > 
+                                    ' . $cadena_editormce . '
+                            </textarea></div></div>';
          echo $print;
 
         //Product description, this is part of the woocommerce.
@@ -439,6 +450,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         } else {
           update_post_meta($post_id, 'wo_di_video_type', 'servidor');
         }
+        //update text of tinymce editor
+        $cadena_editormce=$_POST['wo_di_editormce_video'];
+        update_post_meta($post_id, 'wo_di_editormce_video', $cadena_editormce);
       }
 
       /*
@@ -586,6 +600,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woohv_register_my_setting() {
    register_setting( 'dimensions_group', 'video_width', 'intval' );
    register_setting( 'dimensions_group', 'video_height', 'intval' );
+   register_setting( 'dimensions_group', 'wo_di_video_hide_tab', 'intval' );
   }
   add_action( 'admin_init', 'woohv_register_my_setting' );
 
@@ -625,15 +640,19 @@ function woohv_my_plugin_options() {
    <form class="html5_video" method="post" action="options.php">
    <?php settings_fields( 'dimensions_group' );
    do_settings_fields( 'dimensions_group','html5-video-settings' )?>
-   <p><strong>Configure the video dimensions.</strong></p>
+   <p><strong><?php echo __('Configure the video dimensions')?>:.</strong></p>
    <table class="form-table">
         <tr valign="top">
-        <th scope="row">Video Width:</th>
+        <th scope="row"><?php echo __('Video Width')?>:</th>
         <td><input type="text" name="video_width" value="<?php echo get_option('video_width'); ?>" /></td>
         </tr>
         <tr valign="top">
-        <th scope="row">Video Height:</th>
+        <th scope="row"><?php echo __('Video Height')?>:</th>
         <td><input type="text" name="video_height" value="<?php echo get_option('video_height'); ?>" /></td>
+        </tr>
+        <tr valign="top">
+        <th scope="row"><?php echo __('Hide video tab if there is no video','html5_video')?>:</th>
+        <td><input type="checkbox" name="wo_di_video_hide_tab" <?php if(get_option('wo_di_video_hide_tab')==1){echo "checked";} ?> value="1" /></td>
         </tr>
     </table>
    <?php submit_button();?>
