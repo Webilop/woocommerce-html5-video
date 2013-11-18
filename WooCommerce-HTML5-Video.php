@@ -75,17 +75,15 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
       public function video_product_tabs_panel() {
         global $product;
-        
+        echo '<h2>' . __("Video","html5_video") . '</h2>';
+        $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);  
+        echo '<div> '.$cadena_editormce.'</div>';
         if ($this->product_has_video_tabs($product)) {          
-          echo '<h2>' . __("Video","html5_video") . '</h2>';
           echo '<p>' . $this->mensaje . '</p>';
-          
-          $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);  
-          echo '<div> '.$cadena_editormce.'</div>';
           //aqui se podria hacer trato especial a un codigo embebido o html5
-          echo $this->codigo_video;          
-          echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';                  
+          echo $this->codigo_video;                              
         }
+        echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';
       }
 
       /**
@@ -221,8 +219,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         
         $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
+        //tynimce editor descrption of product
+        $print = '<div class="options_group "> 
+                            <div><label for="_tab_video_html5"></div> 
+                            <div> '.__("Video tab description (it will appear above the videos in the Video tab)","html5_video").' </label> <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" > 
+                                    ' . $cadena_editormce . '
+                            </textarea></div></div>';
         //html code
-        $print = '<legend>'.__("Select video source:","html5_video").'</legend>
+        $print .= '<legend>'.__("Select video source:","html5_video").'</legend>
                         <div class="options_group">
                             <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" ' . $radio_embebido . '>
                             <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>
@@ -260,12 +264,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             <label for="_tab_video_html5"> '.__("Generated code","html5_video").' </label>
                             <textarea cols="20" rows="2"
                                       placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>                            
-                            </div>
-                            <div class="options_group "> 
-                            <div><label for="_tab_video_html5"></div> 
-                            <div> '.__("Video tab description (it will appear above the videos in the Video tab)","html5_video").' </label> <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" > 
-                                    ' . $cadena_editormce . '
-                            </textarea></div></div>';
+                            </div>';
          echo $print;
 
         //Product description, this is part of the woocommerce.
