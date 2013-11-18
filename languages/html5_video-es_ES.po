@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: html5_video\n"
-"POT-Creation-Date: 2013-11-18 10:05-0500\n"
-"PO-Revision-Date: 2013-11-18 10:06-0500\n"
+"POT-Creation-Date: 2013-11-18 14:00-0500\n"
+"PO-Revision-Date: 2013-11-18 14:01-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -125,8 +125,8 @@ msgid "Video Height"
 msgstr "Altura del video"
 
 #: WooCommerce-HTML5-Video.php:654
-msgid "Hide video tab if there is no video"
-msgstr "Ocultar pestaña de vídeo si no hay vídeo"
+msgid "Show video tab if there is no video"
+msgstr "Mostrar pestaña de vídeo si no hay vídeo"
 
 #: WooCommerce-HTML5-Video.php:662
 msgid "About"

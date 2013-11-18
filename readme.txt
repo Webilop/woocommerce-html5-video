@@ -72,6 +72,6 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 
 = 1.3.2 =
 * Fix of a bug that will always displays the video tab even if there is no video. 
-* Addition of the option in the video settings page to hide the video tab if there is no videos for the product.
+* Addition of the option in the video settings page to Show the video tab if there is no videos for the product.
 * Addition of description for the videos of a producto. You can use a tinyMCE editor to save a description of the videos, it will show the description above the videos in the video tab.
 

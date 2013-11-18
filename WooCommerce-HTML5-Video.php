@@ -50,7 +50,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        /** Add extra tabs to front end product page **/
         function video_product_tabs( $tabs ) {
                 global $post, $product;
-                if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")!=1){
+                if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
 
                   $custom_tab_options = array(
                           'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
@@ -651,7 +651,7 @@ function woohv_my_plugin_options() {
         <td><input type="text" name="video_height" value="<?php echo get_option('video_height'); ?>" /></td>
         </tr>
         <tr valign="top">
-        <th scope="row"><?php echo __('Hide video tab if there is no video','html5_video')?>:</th>
+        <th scope="row"><?php echo __('Show video tab if there is no video','html5_video')?>:</th>
         <td><input type="checkbox" name="wo_di_video_hide_tab" <?php if(get_option('wo_di_video_hide_tab')==1){echo "checked";} ?> value="1" /></td>
         </tr>
     </table>
