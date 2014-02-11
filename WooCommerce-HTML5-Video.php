@@ -21,8 +21,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private $codigo_video = ''; //Variable to save the video code.
       private $video_type = '';
       private $mensaje = ''; //informational message to the user when viewing the video.
-      static private $width_video = '400';
-      static private $height_video = '400';
+      static private $width_video = '';
+      static private $height_video = '';
      
       /**
        * Gets things started by adding an action to initialize this plugin once
@@ -78,12 +78,50 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         echo '<h2>' . __("Video","html5_video") . '</h2>';
         $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);  
         echo '<div> '.$cadena_editormce.'</div>';
-        if ($this->product_has_video_tabs($product)) {          
-          echo '<p>' . $this->mensaje . '</p>';
-          //aqui se podria hacer trato especial a un codigo embebido o html5
-          echo $this->codigo_video;                              
+        if ($this->product_has_video_tabs($product)) {   
+                  
+          $videos=  json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
+          if(!is_null($videos)){
+            $width_config = get_option('wo_di_config_video_width');
+            $height_config = get_option('wo_di_config_video_height');
+            foreach ($videos as $video) {
+              echo '<h3> '.$video->title.'</h3>';
+              if($video->type=="Embedded"){
+                echo $video->embebido; 
+              }else{
+                if(empty($video->width)){                  
+                  if(!empty($width_config) && $width_config!=0){
+                   $width=$width_config; 
+                  }else{
+                    $width=$width_video;
+                  }                  
+                }else{
+                  $height=$video->width;
+                }
+                if(empty($video->height)){                  
+                  if(!empty($height_config) && $height_config!=0){
+                   $height=$height_config; 
+                  }else{
+                    $height=$height_video;
+                  }  
+                }else{
+                  $height=$video->height;
+                }              
+                $cadena_tag_video_html5 = '<video width="' .  $width . '" height="' . $height . '" controls>';
+                if($video->mp4!=""){
+                  $cadena_tag_video_html5.='<source src="' . $video->mp4 . '" type="video/mp4" />';
+                }
+                if($video->ogg!=""){
+                  $cadena_tag_video_html5.='<source src="' . $video->ogg . '" type="video/ogg" />';
+                }                            
+                $cadena_tag_video_html5.='<p>'.__("Your browser does not support HTML5","html5_video").'</p></video>';
+                echo $cadena_tag_video_html5;
+              }
+              echo '<br>';
+            }
+          }
         }
-        echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com">Webilop</a></p>';
+        echo '<p style="font-size:10px;color:#999;">'.__("Video embedding powered by","html5_video").' <a target="_blank" title="Web + mobile development" href="http://www.webilop.com/products/woocommerce-html5-video/">Webilop</a></p>';
       }
 
       /**
@@ -91,18 +129,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * also saves a message for use in method video_product_tabs_panel.
        */
       private function product_has_video_tabs($product) {
-        $this->video_type = get_post_meta($product->id, 'wo_di_video_type', true);
-        if ($this->video_type == 'embebido') {
-          for ($i=0; $i<=2; $i++){
-            $this->codigo_video .= get_post_meta($product->id, 'wo_di_video_product'.$i, true);
-          }
-          // tab must at least have a title to exist
-          return !empty($this->codigo_video);
-        } else {//servidor
-          //$this->mensaje='El video es html5, verifique que su navegador lo puede ejecutar. formatos posibles .......';
-          $this->mensaje = $this->getMensajeVideoSupport($product->id);
-          $this->codigo_video = get_post_meta($product->id, 'wo_di_video_product_html5', true);
-          return !empty($this->codigo_video);
+        $number_videos= get_post_meta($product->id, 'wo_di_number_of_videos', true);
+        if($number_videos>0){
+          return true;
+        }else{
+          return false;
         }
       }
 
@@ -126,160 +157,155 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
            echo '<div id="video_tab" class="panel woocommerce_options_panel">';
            $this->wo_di_form_admin_video(array('id' => '_tab_video', 'label' => __('Embed Code','html5_video'), 'placeholder' => __('Place your embedded video code here.','html5_video'), 'style' => 'width:70%;height:21.5em;'));
            echo '</div>';
-      }
-
+      }      
+            
       /*
        * build form to the administrator.
        */
 
       private function wo_di_form_admin_video($field) {
         global $thepostid, $post;
-        //wo_di_video_product Embed Code
-        //wo_di_video_product_html5 html5 code
-        //wo_di_video_type if using embedded or html5 code
+        ?>
+        <script>
+          var text_add_button = "<?php echo __("Add","html5_video"); ?>" ;
+          var text_edit_button = "<?php echo __("Edit","html5_video"); ?>" ;
+          var text_cancel_button = "<?php echo __("Cancel","html5_video"); ?>" ;
+          var text_error_min_html = "<?php echo __("It requires at least one video","html5_video"); ?>" ;
+          var text_error_insert_html = "<?php echo __("Embedded code is required","html5_video"); ?>" ;
+          var text_error_id = "<?php echo __("The id is required","html5_video"); ?>" ;
+          var text_error_dimension = "<?php echo __("height and width of the video is required","html5_video"); ?>" ;
+          //document.write("VariableJS = " + variableJS);
+        </script>
+        <?php
+        wp_enqueue_script('media-upload');
+        wp_enqueue_script('thickbox');
+        wp_register_script('my-upload', plugins_url('js/button_actions.js', __FILE__), array( 'jquery','media-upload', 'thickbox'));
+        wp_enqueue_script('my-upload');
+        wp_enqueue_style('thickbox');
+        wp_enqueue_script("jquery-ui-core");
+        wp_enqueue_script("jquery-ui-dialog");         
+        
+        wp_register_script('jquery-validate', plugins_url('js/jquery.validate.min.js', __FILE__));
+        wp_enqueue_script('jquery-validate');
+        wp_enqueue_style('thickbox');
+        
+        wp_enqueue_script('tiny_mce');
         if (!$thepostid)
           $thepostid = $post->ID;
         if (!isset($field['placeholder'])) {
           $field['placeholder'] = '';
-        }
-        if (!isset($field['class'])) {
-          $field['class'] = 'html5_video';
-        }
-        if (!isset($field['value'])) {
-          $field['value'] = get_post_meta($thepostid, 'wo_di_video_product', true);
-        }
-        $codigo_html = get_post_meta($thepostid, 'wo_di_video_product_html5', true);
-        $codigo_editor_video = get_post_meta($thepostid, 'wo_di_video_editormce_html5', true);
-        
-        $type_video = get_post_meta($thepostid, 'wo_di_video_type', true);
-        $radio_embebido = '';
-        $radio_servidor = '';
-        if ($type_video == 'embebido') {
-          $radio_embebido = 'checked="checked"';
-        } else {
-          if ($type_video = 'servidor') {
-            $radio_servidor = 'checked="checked"';
-          }
-        }
-
-        //creating inputs for the videos urls
-        $url_video_flv = get_post_meta($thepostid, 'wo_di_video_url_flv', true);
-        $url_video_mp4 = get_post_meta($thepostid, 'wo_di_video_url_mp4', true);
-        $url_video_ogg = get_post_meta($thepostid, 'wo_di_video_url_ogg', true);
-
-        $input_video_flv = '<input type="text" name="wo_di_video_url_flv"';
-        if (!empty($url_video_flv)) {
-          $input_video_flv.='value="' . $url_video_flv . '"';
-        }
-        $input_video_flv.=">";
-        $input_video_mp4 = '<input type="text" id="wo_di_video_url_mp4" name="wo_di_video_url_mp4"';
-        if (!empty($url_video_mp4)) {
-          $input_video_mp4.='value="' . $url_video_mp4 . '"';
-        }
-        $input_video_mp4.=">";
-        $input_video_ogg = '<input type="text" id="wo_di_video_url_ogg" name="wo_di_video_url_ogg"';
-        if (!empty($url_video_ogg)) {
-          $input_video_ogg.='value="' . $url_video_ogg . '"';
-        }
-        $input_video_ogg.=">";
-
-        //creating checkboxes for the videos urls
-        $checked_flv = get_post_meta($thepostid, 'wo_di_video_check_flv', true);
-        ;
-        $checked_mp4 = get_post_meta($thepostid, 'wo_di_video_check_mp4', true);
-        ;
-        $checked_ogg = get_post_meta($thepostid, 'wo_di_video_check_ogg', true);
-        if ($checked_flv == 't') {
-          $checked_flv = 'checked="checked"';
-        }
-        if ($checked_mp4 == 't') {
-          $checked_mp4 = 'checked="checked"';
-        }
-        if ($checked_ogg == 't') {
-          $checked_ogg = 'checked="checked"';
-        }        
-        //video dimensions
-        $height_video = get_post_meta($thepostid, 'height_video_woocommerce', true);
-        $width_video = get_post_meta($thepostid, 'width_video_woocommerce', true);
-        $height_config = get_option('video_height');
-        $width_config = get_option('video_width');
-        if (empty($height_video)) {
-          if (empty($height_config)) {
-            $height_video = self::$height_video;
-          }else {
-            $height_video = $height_config;
-          }
-        }
-        if (empty($width_video)) {
-          if (empty($width_config)) {
-            $width_video = self::$width_video;
-          }else{
-            $width_video = $width_config;
-          }
-        }
+        }             
         
         $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
         //tynimce editor descrption of product
-        $print = '<div class="options_group "> 
-                            <div><label for="_tab_video_html5"></div> 
-                            <div> '.__("Video tab description (it will appear above the videos in the Video tab)","html5_video").' </label> <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" > 
-                                    ' . $cadena_editormce . '
-                            </textarea></div></div>';
-        //html code
-        $print .= '<legend>'.__("Select video source:","html5_video").'</legend>
-                        <div class="options_group">
-                            <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" ' . $radio_embebido . '>
-                            <label class="radio" for="video_embebido">'.__("Embedded code","html5_video").'</label>
-                            <p><textarea class="' . $field['class'] . '" name="' . $field['id'] .'[]" id="' . $field['id'] . '0" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea(get_post_meta($post->ID, 'wo_di_video_product0', true)) . '</textarea><a class="remove_video" href="#" onclick="remove_video(0);return false;" title="'.__("Clear", "html5_video").'">'.__("Delete", "html5_video").'</a></p>';
-         $show_link = true;
-         for ($i=1; $i<=2; $i++){
-         $tab_data = get_post_meta($post->ID, 'wo_di_video_product'.$i, true);
-            if( !empty($tab_data) ){
-                  $print .= '<p><textarea class="' . $field['class'] . '" name="' . $field['id'] .'[]" id="' . $field['id'] . $i. '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20">' . esc_textarea($tab_data) . '</textarea><a class="remove_video" href="#" onclick="remove_video('.$i.');return false;" title="'.__("Clear", "html5_video").'">'.__("Delete", "html5_video").'</a></p>';
-               if($i ==2) $show_link = false;
+        ?> 
+        <div class="options_group "> 
+            <p>
+                <?php echo __("Video tab description (it will appear above the videos in the Video tab)","html5_video")?> 
+            </p>
+            <div>
+              <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" > 
+             <?php echo  $cadena_editormce ?>
+              </textarea>
+            </div>
+        </div>
+        <?php
+        $number_of_videos=get_post_meta($thepostid, 'wo_di_number_of_videos', true);
+        $tableBody="";
+        if(!empty($number_of_videos)){
+          $videos=  json_decode(get_post_meta($post->ID, 'wo_di_video_product_videos', true));
+          for($i=0;$i<$number_of_videos;$i++){
+            $video=$videos[$i];
+            $title=$video->title;
+            $type=$video->type;  
+            $id=$video->id;
+            //$formats=get_post_meta($post->ID, 'wo_di_video_product_formats_'.$i, true);
+            $class=($i%2==0) ? "class='alternate'":"";
+            if($type=="Embedded"){
+              $videoEmbebido=$video->embebido;
+              $height="-";
+              $width="-";
+              $dimension="-";
+              $formats="-";
+              $videoMp4="";
+              $videoOGG="";
+            }else{   
+              $videoEmbebido="";
+              $height=$video->height;
+              $width=$video->width;              
+              if($height=="" && $width==""){
+                 $dimension="Default"; 
+              }else{
+               $dimension=$height." X ".$width; 
+              }              
+              $videoMp4=$video->mp4;
+              $videoOGG=$video->ogg;
+              $formats="";
+              $b_video=false;
+              if($videoMp4!=""){
+                $formats=" MP4";
+                $b_video=true;
+              }
+              if($videoOGG!=""){
+                if($b_video){
+                  $formats.=", OGG";
+                }else{
+                  $formats=" OGG";
+                }
+              }
             }
-         }
-         if($show_link) $print .= '<a id="clone_video" href="#" onclick="clone_embedded();return false;">'.__("Add another video", "html5_video").'</a>';
-        $print .= '<p>'.__('The embedded code should be taken from a video page like Youtube', 'html5_video').'</p>
-                            </div><div class="options_group">
-                            <input class="radio" id="video_servidor" type="radio" value="servidor" name="wo_di_tipo_video" ' . $radio_servidor . '>
-                            <label class="radio" for="video_servidor">'.__("Upload video","html5_video").'</label>
-                            <legend>'.__("Supported video formats","html5_video").'</legend>
-                           <dl>
-                            <dt><input id="_checkbox_mp4" class="checkbox" type="checkbox" value="mp4" name="videos_soportados[]" ' . $checked_mp4 . '>
-                            <label class="check" for="_checkbox_mp4"> Mp4 </label></dt>
-                            <dd>' . $input_video_mp4 . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' IE 9+, Chrome 6+, Safari 5+" alt="info" /></dd>
-                            <dt><input id="_checkbox_OGG" class="checkbox" type="checkbox" value="ogg" name="videos_soportados[]" ' . $checked_ogg . '>
-                            <label class="check" for="_checkbox_OGG"> Ogg </label></dt>
-                            <dd>' . $input_video_ogg . '<img src="'.WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png" title="'.__("Supported by", "html5_video").' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dd>
-                            </dl>
-                            <input id="wo_di_upload_video" type="button" value="'.__("Upload video","html5_video").'" class="button tagadd">
-                            <input id="wo_di_select_video" type="button" value="'.__("Select video","html5_video").'" class="button tagadd">
-                            <legend> '.__("Video dimensions","html5_video").' </legend>
-                            <dl>
-                            <dt><label for="width_video_woocommerce"> '.__("Width","html5_video").': </label></dt> <dd><input type="text" id="width_video_woocommerce" name="width_video_woocommerce" value="' . $width_video . '"> </dd>
-                            <dt><label for="height_video_woocommerce"> '.__("Height","html5_video").': </label></dt> <dd><input type="text" id="height_video_woocommerce" name="height_video_woocommerce" value="' . $height_video . '"> </dd>
-                            </dl></div>
-                            <div class="options_group">
-                            <label for="_tab_video_html5"> '.__("Generated code","html5_video").' </label>
-                            <textarea cols="20" rows="2"
-                                      placeholder="Generated Html5 Code" id="_tab_video_html5" name="_tab_video_html5" class="short">' . $codigo_html . '</textarea>                            
-                            </div>';
+            $tableBody.="<tr id='wo_di_video_product_$i' $class>
+                          <td><input type=hidden name='wo_di_video_ids[]'/ value='$id' ><span>$id</span></td>
+                          <td><input type=hidden name='wo_di_video_titles[]'/ value='$title' ><span>$title</span></td>
+                          <td><input type=hidden name='wo_di_video_types[]'/ value='$type' > <span>$type</span></td>
+                          <td><input type=hidden name='wo_di_video_formats[]'/ value='$formats' ><span>$formats</span></td>
+                          <td><input type=hidden name='wo_di_video_heights[]'/ value='$height' >
+                              <input type=hidden name='wo_di_video_widths[]'/ value='$width' >
+                              <span> $dimension </span>
+                          </td> 
+                              <input type=hidden name='wo_di_video_embebido[]'/ value='$videoEmbebido' >
+                              <input type=hidden name='wo_di_video_mp4[]'/ value='$videoMp4' >
+                              <input type=hidden name='wo_di_video_ogg[]'/ value='$videoOGG' >                                                                                 
+                          <td><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span> <span class='ui-icon ui-icon-circle-triangle-s float-right' onclick='edit_row(this)'></span>  </td>                          
+                        </tr>";
+          }          
+        }else{
+          $number_of_videos=0;
+        }
+        $print.=" <div class='options_group'>
+                  <dl>
+                  <dd><p>".__("Attached videos")."</p></dd>                  
+                 ";
+        $table="<input id='wo_di_number_of_videos' name='wo_di_number_of_videos' type='hidden' value='$number_of_videos'/>";
+        $print.=$table;
+        $print.='<table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
+                  <thead>
+                  <tr>
+                    <th>'.__("Id").'</th>
+                    <th>'.__("Title").'</th>
+                    <th>'.__("Type").'</th>
+                    <th>'.__("Formats").'</th>
+                    <th>'.__("Dimensions").'</th>
+                    <th>'.__("Actions").'</th>
+                  </tr>
+                  </thead>                   
+                  <tbody>
+                   '.$tableBody.'
+                  </tbody>
+                </table>';
+              
+        $print.='<dd><button id="button_add_video">'.__("Add", 'html5_video').'</button></dd>
+            </dl>
+          </div>';
+              
          echo $print;
 
         //Product description, this is part of the woocommerce.
         if (isset($field['description']) && $field['description']) {
           echo '<span class="description">' . $field['description'] . '</span>';
         }
-
-        //add the script and style for thickbox, I need to upload videos with javascritp.
-        wp_enqueue_script('media-upload');
-        wp_enqueue_script('thickbox');
-        wp_register_script('my-upload', plugins_url('js/button_actions.js', __FILE__), array('jquery', 'media-upload', 'thickbox'));
-        wp_enqueue_script('my-upload');
-        wp_enqueue_style('thickbox');
-      }
-
+        
+      }            
       /*
        * filter where the tabs of media-uploader are loaded,I remove what do not need depending on context.
        * thanks to context, I can delete everything without worrying that called another form in wp.     
@@ -315,6 +341,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         //print_r($_GET['context']);
         $form_fields['buttons'] = array('tr' => "\t\t<tr class='submit'><td></td><td class='savesend'>$send</td></tr>\n");
         $form_fields['context'] = array('input' => 'hidden', 'value' => $_GET['context']);
+        $form_fields['action_video'] = array('input' => 'hidden', 'value' => $_GET['action_video']);
         return $form_fields;
       }
 
@@ -329,17 +356,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $extension = $this->getExtensionOfVideo($url);
         $validate_extension = true;
         $name_input = '';
-        $name_checkbox = '';
         //print "url: $url extension: $extension";
         switch ($extension) {
           case 'mp4':
-            $name_input = 'wo_di_video_url_mp4';
-            $name_checkbox = '_checkbox_mp4';
+            if($_REQUEST['action_video']=="add"){
+              $name_input = 'video_text_mp4';
+            }else{
+              $name_input = 'video_text_mp4_edit';
+            }
             break;
 
           case 'ogg':
-            $name_input = 'wo_di_video_url_ogg';
-            $name_checkbox = '_checkbox_OGG';
+            if($_REQUEST['action_video']=="add"){
+              $name_input = 'video_text_ogg';
+            }else{
+              $name_input = 'video_text_ogg_edit';
+            }
             break;
 
           default:
@@ -348,14 +380,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         if ($validate_extension) {
           ?>   
-          <script type="text/javascript">
+          <script type="text/javascript">            
             /* <![CDATA[ */
-            //alert('<?php echo $name_input; ?>');
-            //alert('<?php echo $url; ?>');
             var win = window.dialogArguments || opener || parent || top;
                                                               
             win.jQuery( '#<?php echo $name_input; ?>' ).val('<?php echo $url; ?>');
-            win.jQuery('#<?php echo $name_checkbox; ?>').attr('checked',true);
             win.tb_remove();
             /* ]]> */
           </script>
@@ -381,77 +410,33 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
         $tab_video = $_POST['_tab_video'];
         $radio_video_embebido = $_POST['wo_di_tipo_video'];
-        //updte the video embedded
-        //if it is empty the text area, and there is something in the database, I must delete it.
-        if (empty($tab_video) && get_post_meta($post_id, 'wo_di_video_product', true)) {
-          delete_post_meta($post_id, 'wo_di_video_product');
-        }
-        $videos = $_POST['_tab_video'];
-        $length = count(videos);
-        foreach($videos as $key=>$video){
-          if(!empty($video)) update_post_meta($post_id, 'wo_di_video_product'.$key, stripslashes($video));
-          else delete_post_meta($post_id, 'wo_di_video_product'.$key);
-        }
-
-        //update the video html5
-        //save dimention of video
-        $height_video = $_POST['height_video_woocommerce'];
-        $width_video = $_POST['width_video_woocommerce'];
-        if (empty($height_video)) {
-          $height_video = self::$height_video;
-        }
-        if (empty($width_video)) {
-          $width_video = self::$width_video;
-        }
-        update_post_meta($post_id, 'height_video_woocommerce', $height_video);
-        update_post_meta($post_id, 'width_video_woocommerce', $width_video);
-      
-        //generate HTML5 code according to the available videos.
-        $check_videos = $_POST['videos_soportados']; //array of check.
-        $cadena_tag_video_html5 = '<video width="' .  $width_video . '" height="' . $height_video . '" controls>';
-        update_post_meta($post_id, 'wo_di_video_check_mp4', 'f');
-        update_post_meta($post_id, 'wo_di_video_check_ogg', 'f');
-        //update_post_meta($post_id, 'wo_di_video_check_flv', 'f');
-        $checkbox_selected = false;
-        foreach ($check_videos as $video) {
-          $cadena_tag_video_html5.=$video;
-          switch ($video) {
-
-            case "mp4":
-              $url = $_POST['wo_di_video_url_mp4'];
-              update_post_meta($post_id, 'wo_di_video_url_mp4', $url);
-              update_post_meta($post_id, 'wo_di_video_check_mp4', 't');
-              $cadena_tag_video_html5.='<source src="' . $url . '" type="video/mp4" />';
-              $checkbox_selected = true;
-              break;
-
-            case "ogg":
-              $url = $_POST['wo_di_video_url_ogg'];
-              update_post_meta($post_id, 'wo_di_video_url_ogg', $url);
-              update_post_meta($post_id, 'wo_di_video_check_ogg', 't');
-              $cadena_tag_video_html5.='<source src="' . $url . '" type="video/ogg" />';
-              $checkbox_selected = true;
-              break;
-
-              break;
+        //update the videos        
+        $number_of_videos = $_POST['wo_di_number_of_videos'];               
+        //update he new videos
+        $arrayJson=array();
+        update_post_meta($post_id, 'wo_di_number_of_videos', $number_of_videos);
+        if($number_of_videos>0){
+          //$videos_contents=$_POST['wo_di_video_product_content'];
+          $video_types=$_POST['wo_di_video_types'];          
+          $video_titles=$_POST['wo_di_video_titles'];
+          
+          $video_embebido=$_POST['wo_di_video_embebido']; 
+          $video_mp4=$_POST['wo_di_video_mp4']; 
+          $video_ogg=$_POST['wo_di_video_ogg']; 
+          $video_width=$_POST['wo_di_video_widths']; 
+          $video_height=$_POST['wo_di_video_heights']; 
+          $video_ids=$_POST['wo_di_video_ids']; 
+          
+          foreach ($video_types as $key => $type) {
+            $arrayJson[]=array("id"=>$video_ids[$key],"type"=>$type,"title"=>$video_titles[$key],
+                              "width"=>$video_width[$key],"height"=>$video_height[$key],"embebido"=>$video_embebido[$key],
+                              "mp4"=>$video_mp4[$key],"ogg"=>$video_ogg[$key]);
           }
         }
-        if ($checkbox_selected) {
-          $cadena_tag_video_html5.='<p>'.__("Your browser does not support HTML5","html5_video").'</p></video>';
-          update_post_meta($post_id, 'wo_di_video_product_html5', $cadena_tag_video_html5);
-        } else {//delete meta wo_di_video_product_html5
-          update_post_meta($post_id, 'wo_di_video_product_html5', "");
-        }
-        //update the variable that tells me the type of video that will play
-        $radio_video_embebido = $_POST['wo_di_tipo_video'];
-        if ($radio_video_embebido == 'embebido') {
-          update_post_meta($post_id, 'wo_di_video_type', 'embebido');
-        } else {
-          update_post_meta($post_id, 'wo_di_video_type', 'servidor');
-        }
+        update_post_meta($post_id, 'wo_di_video_product_videos',json_encode($arrayJson));     
         //update text of tinymce editor
         $cadena_editormce=$_POST['wo_di_editormce_video'];
-        update_post_meta($post_id, 'wo_di_editormce_video', $cadena_editormce);
+        update_post_meta($post_id, 'wo_di_editormce_video', $cadena_editormce);        
       }
 
       /*
@@ -475,87 +460,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       /*
        * Gets the supported video message for browsers.
        */
-
-      private function getMensajeVideoSupport($id_product) {
-        $video_flv = get_post_meta($id_product, 'wo_di_video_check_flv', true);
-        $video_mp4 = get_post_meta($id_product, 'wo_di_video_check_mp4', true);
-        $video_ogg = get_post_meta($id_product, 'wo_di_video_check_ogg', true);
-        $formatos = '';
-        $bool_chrome = false;
-        $bool_firefox = false;
-        $bool_explorer = false;
-        $bool_opera = false;
-        $bool_safari = false;
-        $bool_agregar_coma = false;
-        if ($video_flv == 't') {
-          $formatos.='flv';
-          $bool_agregar_coma = true;
-        }
-        if ($video_mp4 == 't') {
-          if ($bool_agregar_coma) {
-            $formatos.=',mp4';
-          } else {
-            $formatos.='mp4';
-          }
-          $bool_explorer = true;
-          $bool_chrome = true;
-          $bool_safari = true;
-          $bool_agregar_coma = true;
-        }
-        if ($video_ogg == 't') {
-          if ($bool_agregar_coma) {
-            $formatos.=',ogg';
-          } else {
-            $formatos.='ogg';
-          }
-          $bool_firefox = true;
-          $bool_chrome = true;
-          $bool_opera = true;
-        }
-        $navegadores = "";
-        $bool_agregar_coma = false;
-        if ($bool_chrome) {
-          $bool_agregar_coma = true;
-          $navegadores = 'Chrome';
-        }
-        if ($bool_firefox) {
-          if ($bool_agregar_coma) {
-            $navegadores.=',Firefox';
-          } else {
-            $navegadores.='Firefox';
-          }
-          $bool_agregar_coma = true;
-        }
-        if ($bool_explorer) {
-          if ($bool_agregar_coma) {
-            $navegadores.=',Explorer';
-          } else {
-            $navegadores.='Explorer';
-          }
-          $bool_agregar_coma = true;
-        }
-        if ($bool_opera) {
-          if ($bool_agregar_coma) {
-            $navegadores.=',Opera';
-          } else {
-            $navegadores.='Opera';
-          }
-          $bool_agregar_coma = true;
-        }
-        if ($bool_safari) {
-          if ($bool_agregar_coma) {
-            $navegadores.=',Safari';
-          } else {
-            $navegadores.='Safari';
-          }
-        }
-        //$mensaje = __('This product contains videos in the following formats: ', 'html5_video');
-        //$mensaje.=$formatos;
-        //$mensaje.=__(', which can be seen in: ', 'html5_video') . $navegadores;
-        //return $mensaje;
-        return "";
-      }
-
     }
 
     //end of the class  
@@ -570,6 +474,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woohv_add_my_context_to_url($url, $type) {
     if (isset($_REQUEST['context'])) {
       $url = add_query_arg('context', $_REQUEST['context'], $url);
+    }
+    if (isset($_REQUEST['action_video'])) {
+      $url = add_query_arg('action_video', $_REQUEST['action_video'], $url);
     }
     return $url;
   }
@@ -597,12 +504,19 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
   /** Function to register plugin settings*/
   function woohv_register_my_setting() {
-   register_setting( 'dimensions_group', 'video_width', 'intval' );
-   register_setting( 'dimensions_group', 'video_height', 'intval' );
+   register_setting( 'dimensions_group', 'wo_di_config_video_width', 'intval' );
+   register_setting( 'dimensions_group', 'wo_di_config_video_height', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_video_hide_tab', 'intval' );
+   
   }
   add_action( 'admin_init', 'woohv_register_my_setting' );
-
+   add_action('admin_footer-edit.php','wo_di_print_popups');
+  // add_action('admin_footer-post-new.php', 'mr_fullscreen_preview_button');
+   add_action('admin_footer-post.php', 'wo_di_print_popups');
+   //add_action( 'edit_form_after_title', 'wo_di_print_popups' );
+  if(is_admin()){
+   
+  }
   /** Function to add settngs link in plugins page */
   function woohv_plugin_add_settings_link( $links ) {
     $settings_link = '<a href="options-general.php?page=html5-video-settings">Settings</a>';
@@ -643,11 +557,11 @@ function woohv_my_plugin_options() {
    <table class="form-table">
         <tr valign="top">
         <th scope="row"><?php echo __('Video Width')?>:</th>
-        <td><input type="text" name="video_width" value="<?php echo get_option('video_width'); ?>" /></td>
+        <td><input type="text" name="wo_di_config_video_width" value="<?php echo get_option('wo_di_config_video_width'); ?>" /></td>
         </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Video Height')?>:</th>
-        <td><input type="text" name="video_height" value="<?php echo get_option('video_height'); ?>" /></td>
+        <td><input type="text" name="wo_di_config_video_height" value="<?php echo get_option('wo_di_config_video_height'); ?>" /></td>
         </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Show video tab if there is no video','html5_video')?>:</th>
@@ -696,4 +610,101 @@ function woohv_my_plugin_options() {
    $functions = new WooCommerce_HTML5_Video();
    $var = $functions->video_product_tabs_panel();
   }
+  
+  /*
+       * popups for add y edit videos.
+       */
+      function wo_di_print_popups(){
+        $placeholder = __('Place your embedded video code here.','html5_video');
+        ?>
+      <div id="dialog_form_add_video" title="<?php echo __("Add Video", 'html5_video') ?>">
+        <form id="wo_di_form_add_video" action="<?php echo admin_url( 'admin-ajax.php' )?>" method="post" onsubmit="return false;">
+          <fieldset>                     
+              <div class="options_group">
+                <div id="div_errores_add_video"> </div>
+                <dl>
+                  <dt><label for="wo_di_video_id"><?php  echo __("Id","html5_video")?></label></dt>
+                  <dd><input class="wo_di_form_input" id="wo_di_video_id" name="wo_di_video_id" type="text"   required='required' ></dd>
+                  <dt><label for="wo_di_video_title"><?php echo __("Title for video","html5_video") ?></label></dt>
+                  <dd><input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" ></dd> 
+                </dl>
+              </div>              
+              <label><?php echo __("Select video source:","html5_video") ?></label>
+              <hr/>
+              <div class="options_group">
+                <dl>
+                  <dt><input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" checked="checked">
+                  <label class="radio" for="video_text_embebido"><?php echo __("Embedded code","html5_video") ?></label></dt>
+                  <dd><p><textarea class="wo_di_form_textarea" name="video_text_embebido" id="video_text_embebido" placeholder="<?php echo  $placeholder ?>" rows="2" cols="20"></textarea></p></dd>         
+                  <dd><p><?php echo __('The embedded code should be taken from a video page like Youtube', 'html5_video') ?> </p></dd>
+                </dl>
+              </div>                   
+
+              <div class="options_group">
+                <hr/>
+                <dl>
+                  <dt class="margin-bottom"><input class="radio" id="wo_di_video_servidor" type="radio" value="servidor" name="wo_di_tipo_video">
+                  <label class="radio" for="wo_di_video_servidor"><?php echo __("Upload video","html5_video") ?></label></dt>              
+                  <dt><label for="video_text_mp4"> Mp4 </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" /></dt>
+                  <dd><input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value=""></dd>
+                  <dt><label for="video_text_ogg"> Ogg </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video")?>' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dt>
+                  <dd><input class="wo_di_form_input" type="text" id="video_text_ogg" name="video_text_ogg" value=""></dd>                  
+                  <dd><input id="wo_di_upload_video" type="button" value="<?php echo __("Upload video","html5_video")?>" class="button tagadd">
+                  <input id="wo_di_select_video" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd"></dd>
+                  <dt><label for="width_video_woocommerce"> <?php echo __("Width","html5_video")?>: </label></dt> 
+                  <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce" name="width_video_woocommerce" value=""> </dd>
+                  <dt><label for="height_video_woocommerce"> <?php echo __("Height","html5_video")?>: </label></dt> 
+                  <dd><input type="text" class="wo_di_form_input" id="height_video_woocommerce" name="height_video_woocommerce" value=""> </dd>
+                </dl>
+              </div>
+           </fieldset>
+        </form>
+      </div> 
+
+
+        <div id="dialog_form_edit_video" title="<?php echo __("Edit Video", 'html5_video') ?> ">
+            <form id="wo_di_form_edit_video" action="<?php echo admin_url( 'admin-ajax.php' )?>" onsubmit="return false;" method="post">
+            <fieldset>                     
+                <div class="options_group">
+                  <dl>
+                    <dt><label for="wo_di_video_id_edit"><?php echo __("Id","html5_video") ?></label></dt>
+                    <dd><input class="wo_di_form_input" id="wo_di_video_id_edit" name="wo_di_video_id_edit" type="text"  value=""/></dd>
+                    <dt><label for="wo_di_video_title_edit"><?php echo __("Title for video","html5_video")?></label></dt>
+                    <dd><input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" /></dd>  
+                  </dl>
+                </div>
+                <br><label><?php echo __("Select video source:","html5_video") ?> </label>
+                <hr/>
+                <div class="options_group">
+                  <dl>
+                  <dt><input class="radio" id="wo_di_video_embebido_edit" type="radio"  value="embebido" name="wo_di_tipo_video_edit">
+                  <label class="radio" for="wo_di_video_text_embebido_edit"><?php echo __("Embedded code","html5_video")?> </label></dt>
+                  <dd><p><textarea class="wo_di_form_textarea" class="wo_di_form_textarea" name="video_text_embebido_edit" id="video_text_embebido_edit" placeholder="<?php echo $placeholder ?> '" rows="2" cols="20"></textarea></p></dd>         
+                  <dd><p><?php echo __('The embedded code should be taken from a video page like Youtube', 'html5_video') ?> </p></dd>
+                  </dl>
+                </div>                  
+
+            <div class="options_group">
+              <hr/>
+              <dl>
+                <dt><input class="radio" class="margin-bottom" id="wo_di_video_servidor_edit" type="radio" value="servidor" name="wo_di_tipo_video_edit">
+                <label class="radio" for="wo_di_video_servidor_edit"><?php echo __("Upload video","html5_video")?></label></dt>
+                <dd><span><?php echo __("Supported video formats","html5_video")?></span></dd>               
+                <dt><label class="check" for="video_text_mp4_edit"> Mp4 </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video") ?> IE 9+, Chrome 6+, Safari 5+" alt="info" /></dt>
+                <dd><input class="wo_di_form_input" type="text" id="video_text_mp4_edit" name="video_text_mp4_edit" value=""></dd>
+                <dt><label for="video_text_ogg_edit"> Ogg </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video") ?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dt>
+                <dd><input class="wo_di_form_input" type="text" id="video_text_ogg_edit" name="video_text_ogg_edit" value=""></dd>
+                <dd><input id="wo_di_upload_video_edit" type="button" value="<?php echo __("Upload video","html5_video")?>" class="button tagadd">
+                <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd"></dd>
+                <dt><label for="width_video_woocommerce_edit"> <?php echo __("Width","html5_video")?>: </label></dt>
+                <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" value=""> </dd>
+                <dt><label for="height_video_woocommerce_edit"> <?php echo __("Height","html5_video")?>: </label></dt> 
+                <dd><input type="text" class="wo_di_form_input" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" value=""> </dd>
+              </dl>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+          <?php
+      }
 ?>

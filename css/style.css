@@ -96,4 +96,26 @@ form.html5_video{
    float: left;
 }
 
+.wo_di_form_input{
+  width: 450px;
+}
 
+.wo_di_form_textarea{
+  width: 450px;
+  height: 150px;
+}
+
+.wo_di_table_videos{
+ width: 100%; 
+}
+
+.error{
+  color: red;
+}
+.margin-bottom{
+  margin-bottom: 10px;
+}
+
+.float-right{
+  float: left;
+}

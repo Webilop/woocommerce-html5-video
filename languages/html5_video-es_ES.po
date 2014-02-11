@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: html5_video\n"
-"POT-Creation-Date: 2013-11-18 14:00-0500\n"
-"PO-Revision-Date: 2013-11-18 14:01-0500\n"
+"POT-Creation-Date: 2014-02-11 11:46-0500\n"
+"PO-Revision-Date: 2014-02-11 11:50-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -13,92 +13,92 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: WooCommerce-HTML5-Video.php:63 WooCommerce-HTML5-Video.php:80
-#: WooCommerce-HTML5-Video.php:115
+#: WooCommerce-HTML5-Video.php:63 WooCommerce-HTML5-Video.php:78
+#: WooCommerce-HTML5-Video.php:144
 msgid "Video"
 msgstr "Video"
 
-#: WooCommerce-HTML5-Video.php:87
+#: WooCommerce-HTML5-Video.php:117
+msgid "Your browser does not support HTML5"
+msgstr "Su navegador no soporta HTML5"
+
+#: WooCommerce-HTML5-Video.php:124
 msgid "Video embedding powered by"
 msgstr "Extensión de videos implementada por"
 
-#: WooCommerce-HTML5-Video.php:129
+#: WooCommerce-HTML5-Video.php:158
 msgid "Embed Code"
 msgstr "Insertar código"
 
-#: WooCommerce-HTML5-Video.php:129
+#: WooCommerce-HTML5-Video.php:158 WooCommerce-HTML5-Video.php:707
 msgid "Place your embedded video code here."
 msgstr "Copie el código embebido el video aquí."
 
-#: WooCommerce-HTML5-Video.php:225
-msgid "Select video source:"
-msgstr "Seleccione la fuente del video:"
+#: WooCommerce-HTML5-Video.php:175 WooCommerce-HTML5-Video.php:305
+msgid "Add"
+msgstr "Adicionar"
 
-#: WooCommerce-HTML5-Video.php:228
-msgid "Embedded code"
-msgstr "Código embebido"
+#: WooCommerce-HTML5-Video.php:176
+msgid "Edit"
+msgstr "Editar"
 
-#: WooCommerce-HTML5-Video.php:229 WooCommerce-HTML5-Video.php:234
-msgid "Clear"
-msgstr "Borrar"
+#: WooCommerce-HTML5-Video.php:177
+msgid "Cancel"
+msgstr "Cancelar"
 
-#: WooCommerce-HTML5-Video.php:229 WooCommerce-HTML5-Video.php:234
-msgid "Delete"
-msgstr "Eliminar"
+#: WooCommerce-HTML5-Video.php:178
+msgid "It requires at least one video"
+msgstr "Se requiere al menos un vídeo"
 
-#: WooCommerce-HTML5-Video.php:238
-msgid "Add another video"
-msgstr "Adicionar otro video"
+#: WooCommerce-HTML5-Video.php:179
+msgid "Embedded code is required"
+msgstr "el Código embebido es obligatorio"
 
-#: WooCommerce-HTML5-Video.php:239
-msgid "The embedded code should be taken from a video page like Youtube"
-msgstr ""
-"El código embebido debe ser tomado de una página de videos como YouTube"
+#: WooCommerce-HTML5-Video.php:180
+msgid "The id is required"
+msgstr "El Id es obligatorio"
 
-#: WooCommerce-HTML5-Video.php:242 WooCommerce-HTML5-Video.php:252
-msgid "Upload video"
-msgstr "Subir video"
+#: WooCommerce-HTML5-Video.php:181
+msgid "height and width of the video is required"
+msgstr "se requiere la  altura y ancho del vídeo"
 
-#: WooCommerce-HTML5-Video.php:243
-msgid "Supported video formats"
-msgstr "Formatos de video soportados"
-
-#: WooCommerce-HTML5-Video.php:247 WooCommerce-HTML5-Video.php:250
-msgid "Supported by"
-msgstr "Soportado por"
-
-#: WooCommerce-HTML5-Video.php:253
-msgid "Select video"
-msgstr "Seleccionar video"
-
-#: WooCommerce-HTML5-Video.php:254
-msgid "Video dimensions"
-msgstr "Dimensiones del video"
-
-#: WooCommerce-HTML5-Video.php:256
-msgid "Width"
-msgstr "Ancho"
-
-#: WooCommerce-HTML5-Video.php:257
-msgid "Height"
-msgstr "Alto"
-
-#: WooCommerce-HTML5-Video.php:260
-msgid "Generated code"
-msgstr "Código generado"
-
-#: WooCommerce-HTML5-Video.php:266
+#: WooCommerce-HTML5-Video.php:212
 msgid ""
 "Video tab description (it will appear above the videos in the Video tab)"
 msgstr ""
 "Descripción del Video(aparecerá por encima de los videos en la pestaña de "
 "vídeo)"
 
-#: WooCommerce-HTML5-Video.php:441
-msgid "Your browser does not support HTML5"
-msgstr "Su navegador no soporta HTML5"
+#: WooCommerce-HTML5-Video.php:285
+msgid "Attached videos"
+msgstr "Videos adjuntos"
 
-#: WooCommerce-HTML5-Video.php:625
+#: WooCommerce-HTML5-Video.php:292 WooCommerce-HTML5-Video.php:715
+#: WooCommerce-HTML5-Video.php:759
+msgid "Id"
+msgstr "Id"
+
+#: WooCommerce-HTML5-Video.php:293
+msgid "Title"
+msgstr "Titulo"
+
+#: WooCommerce-HTML5-Video.php:294
+msgid "Type"
+msgstr "Tipo"
+
+#: WooCommerce-HTML5-Video.php:295
+msgid "Formats"
+msgstr "Formatos"
+
+#: WooCommerce-HTML5-Video.php:296
+msgid "Dimensions"
+msgstr "Dimensiones"
+
+#: WooCommerce-HTML5-Video.php:297
+msgid "Actions"
+msgstr "Acciones"
+
+#: WooCommerce-HTML5-Video.php:627
 msgid ""
 "WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
 "woocommerce/\" target=\"_blank\">WooCommerce</a> to be activated in order to "
@@ -108,35 +108,35 @@ msgstr ""
 "woocommerce/\" target=\"_blank\">WooCommerce</a> sea activado. Por favor "
 "instale y active <a href=\""
 
-#: WooCommerce-HTML5-Video.php:637
+#: WooCommerce-HTML5-Video.php:639
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Usted no posee permisos suficientes para acceder a esta página."
 
-#: WooCommerce-HTML5-Video.php:643
+#: WooCommerce-HTML5-Video.php:645
 msgid "Configure the video dimensions"
 msgstr "Configurar las dimensiones del video"
 
-#: WooCommerce-HTML5-Video.php:646
+#: WooCommerce-HTML5-Video.php:648
 msgid "Video Width"
 msgstr "Ancho del video"
 
-#: WooCommerce-HTML5-Video.php:650
+#: WooCommerce-HTML5-Video.php:652
 msgid "Video Height"
 msgstr "Altura del video"
 
-#: WooCommerce-HTML5-Video.php:654
+#: WooCommerce-HTML5-Video.php:656
 msgid "Show video tab if there is no video"
 msgstr "Mostrar pestaña de vídeo si no hay vídeo"
 
-#: WooCommerce-HTML5-Video.php:662
+#: WooCommerce-HTML5-Video.php:664
 msgid "About"
 msgstr "Acerca de"
 
-#: WooCommerce-HTML5-Video.php:664
+#: WooCommerce-HTML5-Video.php:666
 msgid "was developed by "
 msgstr "fue desarrollado por"
 
-#: WooCommerce-HTML5-Video.php:665
+#: WooCommerce-HTML5-Video.php:667
 msgid ""
 "Webilop is a company focused on web and mobile solutions. We develop custom "
 "mobile applications and templates and plugins for CMSs such as Wordpress and "
@@ -146,9 +146,72 @@ msgstr ""
 "Desarrollamos plantillas y plugins personalizados para CMSs como Wordpress y "
 "Joomla!"
 
-#: WooCommerce-HTML5-Video.php:666
+#: WooCommerce-HTML5-Video.php:668
 msgid "Follow us"
 msgstr "Síguenos"
+
+#: WooCommerce-HTML5-Video.php:709
+msgid "Add Video"
+msgstr "Adiccionar video"
+
+#: WooCommerce-HTML5-Video.php:717 WooCommerce-HTML5-Video.php:761
+msgid "Title for video"
+msgstr "Titulo del video"
+
+#: WooCommerce-HTML5-Video.php:721 WooCommerce-HTML5-Video.php:765
+msgid "Select video source:"
+msgstr "Seleccione la fuente del video:"
+
+#: WooCommerce-HTML5-Video.php:726 WooCommerce-HTML5-Video.php:770
+msgid "Embedded code"
+msgstr "Código embebido"
+
+#: WooCommerce-HTML5-Video.php:728 WooCommerce-HTML5-Video.php:772
+msgid "The embedded code should be taken from a video page like Youtube"
+msgstr ""
+"El código embebido se debe tomar desde una página de vídeo como Youtube"
+
+#: WooCommerce-HTML5-Video.php:736 WooCommerce-HTML5-Video.php:741
+#: WooCommerce-HTML5-Video.php:780 WooCommerce-HTML5-Video.php:786
+msgid "Upload video"
+msgstr "Subir video"
+
+#: WooCommerce-HTML5-Video.php:737 WooCommerce-HTML5-Video.php:739
+#: WooCommerce-HTML5-Video.php:782 WooCommerce-HTML5-Video.php:784
+msgid "Supported by"
+msgstr "Soportado por"
+
+#: WooCommerce-HTML5-Video.php:742 WooCommerce-HTML5-Video.php:787
+msgid "Select video"
+msgstr "Seleccionar video"
+
+#: WooCommerce-HTML5-Video.php:743 WooCommerce-HTML5-Video.php:788
+msgid "Width"
+msgstr "Ancho"
+
+#: WooCommerce-HTML5-Video.php:745 WooCommerce-HTML5-Video.php:790
+msgid "Height"
+msgstr "Alto"
+
+#: WooCommerce-HTML5-Video.php:754
+msgid "Edit Video"
+msgstr "Editar video"
+
+#: WooCommerce-HTML5-Video.php:781
+msgid "Supported video formats"
+msgstr "Formatos de video soportados"
+
+#~ msgid "Video dimensions"
+#~ msgstr "Dimensiones del video"
+
+#~ msgid "Clear"
+#~ msgstr "Borrar"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "Generated code"
+#~ msgstr "Código generado"
 
 #~ msgid "This product contains videos in the following formats: "
 #~ msgstr "Este producto contiene videos en los siguientes formatos:"
