@@ -49,7 +49,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       
       public function activate(){                                 
         $version=get_option('wo_di_config_version');        
-        if($version==false){
+        if(isset($version) && $version<2){
           //update BD to new version 2.0
           $products = get_posts( array(
             'post_type'      => array( 'product', 'product_variation' ),
@@ -68,7 +68,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                   //create video embebido
                   $arrayJson[]=array("id"=>$size,"type"=>"Embedded","title"=>"",
                                 "width"=>"-","height"=>"-","embebido"=>$video,
-                                "mp4"=>"","ogg"=>"");
+                                "mp4"=>"","ogg"=>"","active"=>1);
                 }
               }                                          
             } else {
@@ -85,8 +85,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 }
                 $size=1;                            
                 $arrayJson[]=array("id"=>$size,"type"=>"WP Library","title"=>"",
-                                "width"=>$width_video,"height"=>$height_video,"embebido"=>$video,
-                                "mp4"=>$mp4,"ogg"=>$ogg);
+                                "width"=>$width_video,"height"=>$height_video,"embebido"=>"",
+                                "mp4"=>$mp4,"ogg"=>$ogg,"active"=>1);
               }              
             }
             update_post_meta($id, 'wo_di_number_of_videos', $size);
@@ -164,7 +164,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
       public function video_product_tabs_panel() {
         global $product;
-        echo '<h2>' . __("Video","html5_video") . '</h2>';
         $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);  
         echo '<div> '.$cadena_editormce.'</div>';
         if ($this->product_has_video_tabs($product)) {   
@@ -174,39 +173,43 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $width_config = get_option('wo_di_config_video_width');
             $height_config = get_option('wo_di_config_video_height');
             foreach ($videos as $video) {
-              echo '<h3> '.$video->title.'</h3>';
-              if($video->type=="Embedded"){
-                echo $video->embebido; 
-              }else{
-                if(empty($video->width)){                  
-                  if(!empty($width_config) && $width_config!=0){
-                   $width=$width_config; 
-                  }else{
-                    $width=$width_video;
-                  }                  
+              if($video->active==1){
+                if(!empty($video->title)){
+                  echo '<h3>'.$video->title.'</h3>';
+                }                
+                if($video->type=="Embedded"){
+                  echo $video->embebido; 
                 }else{
-                  $height=$video->width;
-                }
-                if(empty($video->height)){                  
-                  if(!empty($height_config) && $height_config!=0){
-                   $height=$height_config; 
+                  if(empty($video->width)){                  
+                    if(!empty($width_config) && $width_config!=0){
+                     $width=$width_config; 
+                    }else{
+                      $width=$width_video;
+                    }                  
                   }else{
-                    $height=$height_video;
-                  }  
-                }else{
-                  $height=$video->height;
-                }              
-                $cadena_tag_video_html5 = '<video width="' .  $width . '" height="' . $height . '" controls>';
-                if($video->mp4!=""){
-                  $cadena_tag_video_html5.='<source src="' . $video->mp4 . '" type="video/mp4" />';
+                    $height=$video->width;
+                  }
+                  if(empty($video->height)){                  
+                    if(!empty($height_config) && $height_config!=0){
+                     $height=$height_config; 
+                    }else{
+                      $height=$height_video;
+                    }  
+                  }else{
+                    $height=$video->height;
+                  }              
+                  $cadena_tag_video_html5 = '<video width="' .  $width . '" height="' . $height . '" controls>';
+                  if($video->mp4!=""){
+                    $cadena_tag_video_html5.='<source src="' . $video->mp4 . '" type="video/mp4" />';
+                  }
+                  if($video->ogg!=""){
+                    $cadena_tag_video_html5.='<source src="' . $video->ogg . '" type="video/ogg" />';
+                  }                            
+                  $cadena_tag_video_html5.='<p>'.__("Your browser does not support HTML5","html5_video").'</p></video>';
+                  echo $cadena_tag_video_html5;
                 }
-                if($video->ogg!=""){
-                  $cadena_tag_video_html5.='<source src="' . $video->ogg . '" type="video/ogg" />';
-                }                            
-                $cadena_tag_video_html5.='<p>'.__("Your browser does not support HTML5","html5_video").'</p></video>';
-                echo $cadena_tag_video_html5;
+                echo '<br>';
               }
-              echo '<br>';
             }
           }
         }
@@ -220,7 +223,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function product_has_video_tabs($product) {
         $number_videos= get_post_meta($product->id, 'wo_di_number_of_videos', true);
         if($number_videos>0){
-          return true;
+          $videos=  json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
+          foreach ($videos as $video) {
+            if($video->active==1){
+              return true;
+            }
+          }
+          return false;
         }else{
           return false;
         }
@@ -343,18 +352,23 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 }
               }
             }
+            $checked="";
+            if($video->active==1){
+             $checked="checked='checked'"; 
+            }            
             $tableBody.="<tr id='wo_di_video_product_$i' $class>
-                          <td><input type=hidden name='wo_di_video_ids[]'/ value='$id' ><span>$id</span></td>
-                          <td><input type=hidden name='wo_di_video_titles[]'/ value='$title' ><span>$title</span></td>
-                          <td><input type=hidden name='wo_di_video_types[]'/ value='$type' > <span>$type</span></td>
-                          <td><input type=hidden name='wo_di_video_formats[]'/ value='$formats' ><span>$formats</span></td>
-                          <td><input type=hidden name='wo_di_video_heights[]'/ value='$height' >
-                              <input type=hidden name='wo_di_video_widths[]'/ value='$width' >
+                          <td><input type=hidden name='wo_di_video_ids[]' value='$id' /><span>$id</span></td>
+                          <td><input type=hidden name='wo_di_video_titles[]' value='$title' /><span>$title</span></td>
+                          <td><input type=hidden name='wo_di_video_types[]' value='$type' /> <span>$type</span></td>
+                          <td><input type=hidden name='wo_di_video_formats[]' value='$formats' /><span>$formats</span></td>
+                          <td><input type=hidden name='wo_di_video_heights[]' value='$height' />
+                              <input type=hidden name='wo_di_video_widths[]' value='$width' />
                               <span> $dimension </span>
                           </td> 
-                              <input type=hidden name='wo_di_video_embebido[]'/ value='$videoEmbebido' >
-                              <input type=hidden name='wo_di_video_mp4[]'/ value='$videoMp4' >
-                              <input type=hidden name='wo_di_video_ogg[]'/ value='$videoOGG' >                                                                                 
+                              <input type=hidden name='wo_di_video_embebido[]' value='$videoEmbebido' />
+                              <input type=hidden name='wo_di_video_mp4[]' value='$videoMp4' />
+                              <input type=hidden name='wo_di_video_ogg[]' value='$videoOGG' />  
+                          <td><input type=hidden name='wo_di_video_active[]' value='".$video->active."' /><input type='checkbox' value='active' $checked onchange='update_input_active(this)'/></td>
                           <td><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span> <span class='ui-icon ui-icon-circle-triangle-s float-right' onclick='edit_row(this)'></span>  </td>                          
                         </tr>";
           }          
@@ -375,6 +389,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     <th>'.__("Type").'</th>
                     <th>'.__("Formats").'</th>
                     <th>'.__("Dimensions").'</th>
+                    <th>'.__("Active").'</th>
                     <th>'.__("Actions").'</th>
                   </tr>
                   </thead>                   
@@ -515,11 +530,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $video_width=$_POST['wo_di_video_widths']; 
           $video_height=$_POST['wo_di_video_heights']; 
           $video_ids=$_POST['wo_di_video_ids']; 
-          
+          $video_active=$_POST['wo_di_video_active'];           
           foreach ($video_types as $key => $type) {
             $arrayJson[]=array("id"=>$video_ids[$key],"type"=>$type,"title"=>$video_titles[$key],
                               "width"=>$video_width[$key],"height"=>$video_height[$key],"embebido"=>$video_embebido[$key],
-                              "mp4"=>$video_mp4[$key],"ogg"=>$video_ogg[$key]);
+                              "mp4"=>$video_mp4[$key],"ogg"=>$video_ogg[$key],"active"=>$video_active[$key]);
           }
         }
         update_post_meta($post_id, 'wo_di_video_product_videos',json_encode($arrayJson));     
@@ -545,10 +560,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $extension = substr($url, strripos($url, '.') + 1);
         return $extension;
       }
-
-      /*
-       * Gets the supported video message for browsers.
-       */
     }
 
     //end of the class  

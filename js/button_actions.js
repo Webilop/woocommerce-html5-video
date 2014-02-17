@@ -8,7 +8,16 @@ var text_error_dimension;
 var type_of_action="";
 var tr_edit;
 
-function cleanInputsEdit(){
+function update_input_active(obj){
+  var input=jQuery(obj.parentNode).find("input[name='wo_di_video_active[]']");
+  if(jQuery(obj).is(":checked")){
+    jQuery(input).val(1);
+  }else{
+    jQuery(input).val(0);
+  }  
+}
+
+function clean_inputs_edit(){
   jQuery("#wo_di_video_title_edit").val(""); 
   jQuery("#height_video_woocommerce").val("");
   jQuery("#width_video_woocommerce").val("");
@@ -31,7 +40,7 @@ function delete_row(obj){
 }
 
 function edit_row(obj){  
-  cleanInputsEdit();
+  clean_inputs_edit();
   tr_edit=obj.parentNode.parentNode;
   var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
@@ -346,7 +355,7 @@ jQuery(document).ready(function()
           {
             text: text_cancel_button,
             click: function() {
-            cleanInputsEdit();
+            clean_inputs_edit();
             jQuery( this ).dialog( "close" );
             }
           }]
@@ -413,14 +422,15 @@ jQuery(document).ready(function()
 
               var title=jQuery("#wo_di_video_title").val();                  
               var video="<tr id='wo_di_video_product_"+number_of_videos+"' "+classColumn+">";
-              video+="<td><input type=hidden name='wo_di_video_ids[]'/ value='"+id+"' ><span>"+id+"</span></td>";
-              video+="<td><input type=hidden name='wo_di_video_titles[]'/ value='"+title+"' ><span>"+title+"</span></td>";
-              video+="<td><input type=hidden name='wo_di_video_types[]'/ value='"+type+"' ><span>"+type+"</span></td>";
-              video+="<td> <input type=hidden name='wo_di_video_formats[]'/ value='"+formats+"' ><span>"+formats+"</span></td>";
-              video+="<td> <input type=hidden name='wo_di_video_heights[]'/ value='"+height+"' ><input type=hidden name='wo_di_video_widths[]'/ value='"+width+"' ><span>"+dimension+"</span></td>";
+              video+="<td><input type=hidden name='wo_di_video_ids[]' value='"+id+"' /><span>"+id+"</span></td>";
+              video+="<td><input type=hidden name='wo_di_video_titles[]' value='"+title+"' /><span>"+title+"</span></td>";
+              video+="<td><input type=hidden name='wo_di_video_types[]' value='"+type+"' /><span>"+type+"</span></td>";
+              video+="<td> <input type=hidden name='wo_di_video_formats[]' value='"+formats+"' /><span>"+formats+"</span></td>";
+              video+="<td> <input type=hidden name='wo_di_video_heights[]' value='"+height+"' /><input type=hidden name='wo_di_video_widths[]' value='"+width+"' /><span>"+dimension+"</span></td>";
               video+="<input type=hidden name='wo_di_video_embebido[]'/ value='"+video_embebido+"' >";
-              video+="<input type=hidden name='wo_di_video_mp4[]'/ value='"+video_mp4+"' >";
-              video+="<input type=hidden name='wo_di_video_ogg[]'/ value='"+video_ogg+"' >";              
+              video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
+              video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />"; 
+              video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
               video+="<td><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span><span class='ui-icon ui-icon-circle-triangle-s' onclick='edit_row(this)'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
