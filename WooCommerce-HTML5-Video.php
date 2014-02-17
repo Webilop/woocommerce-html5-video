@@ -5,12 +5,19 @@
  * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are: MP4, Ogg and YouTube videos.
  * Author: Webilop
  * Author URI: http://www.webilop.com
- * Version: 1.3.2
+ * Version: 2
  * License: GPLv2 or later
  */
 // Exit if accessed directly
 if (!defined('ABSPATH'))
   exit;
+
+
+/*
+ * hook for install
+ */
+register_activation_hook( __FILE__, array( 'WooCommerce_HTML5_Video', 'activate' ) );
+register_uninstall_hook( __FILE__, array( 'WooCommerce_HTML5_Video', 'uninstall' ) );
 
 //Checks if the WooCommerce plugins is installed and active.
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -24,6 +31,88 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       static private $width_video = '';
       static private $height_video = '';
      
+      public function uninstall(){
+        $products = get_posts( array(
+            'post_type'      => array( 'product', 'product_variation' ),
+            'posts_per_page' => -1,
+            		'fields' => 'ids') );
+          foreach ($products as $id) {
+            delete_post_meta($id, 'wo_di_video_product_videos');
+            delete_post_meta($id, 'wo_di_number_of_videos');
+            delete_post_meta($id, 'wo_di_editormce_video');
+            delete_option( 'wo_di_config_version' );
+            delete_option( 'wo_di_video_hide_tab' );
+            delete_option( 'wo_di_config_video_height' );
+            delete_option( 'wo_di_config_video_width' );            
+          }
+      }
+      
+      public function activate(){                                 
+        $version=get_option('wo_di_config_version');        
+        if($version==false){
+          //update BD to new version 2.0
+          $products = get_posts( array(
+            'post_type'      => array( 'product', 'product_variation' ),
+            'posts_per_page' => -1,
+            		'fields' => 'ids') );
+          foreach ($products as $id) {          
+            $video_type = get_post_meta($id, 'wo_di_video_type', true);            
+            $arrayJson=array();
+            $size=0;
+            if ($video_type == 'embebido') {
+              for ($i=0; $i<=2; $i++){
+
+                $video= get_post_meta($id, 'wo_di_video_product'.$i, true);                 
+                if(!empty($video)){
+                  $size++;
+                  //create video embebido
+                  $arrayJson[]=array("id"=>$size,"type"=>"Embedded","title"=>"",
+                                "width"=>"-","height"=>"-","embebido"=>$video,
+                                "mp4"=>"","ogg"=>"");
+                }
+              }                                          
+            } else {
+              if($video_type=='servidor'){   
+                $mp4=get_post_meta($id, 'wo_di_video_url_mp4', true);
+                $ogg=get_post_meta($id, 'wo_di_video_url_ogg', true);              
+                $height_video=get_post_meta($id, 'height_video_woocommerce', true);               
+                $width_video=get_post_meta($id, 'width_video_woocommerce', true);                
+                if(empty($height_video)) { 
+                  $height_video="-";                 
+                }
+                if(empty($width_video)) { 
+                  $width_video="-";                 
+                }
+                $size=1;                            
+                $arrayJson[]=array("id"=>$size,"type"=>"WP Library","title"=>"",
+                                "width"=>$width_video,"height"=>$height_video,"embebido"=>$video,
+                                "mp4"=>$mp4,"ogg"=>$ogg);
+              }              
+            }
+            update_post_meta($id, 'wo_di_number_of_videos', $size);
+            update_post_meta($id, 'wo_di_video_product_videos',json_encode($arrayJson)); 
+            delete_post_meta($id, 'wo_di_video_type');
+            for ($i=0; $i<=2; $i++){
+              delete_post_meta($id, 'wo_di_video_product'.$i);
+            }
+            delete_post_meta($id, 'wo_di_video_product_html5');
+            delete_post_meta($id, 'height_video_woocommerce');
+            delete_post_meta($id, 'width_video_woocommerce');
+            delete_post_meta($id, 'wo_di_video_url_mp4');
+            delete_post_meta($id, 'wo_di_video_url_ogg');
+            delete_post_meta($id, 'wo_di_video_product_html5'); 
+            delete_post_meta($id, 'wo_di_video_check_mp4'); 
+            delete_post_meta($id, 'wo_di_video_check_ogg');             
+            //print_r($arrayJson);
+            //echo "<br> ******** <br>";            
+          }
+          //exit;
+          delete_option( 'video_height' );
+          delete_option( 'video_width' );
+        }
+        update_option('wo_di_config_version',2);
+      }
+      
       /**
        * Gets things started by adding an action to initialize this plugin once
        * WooCommerce is known to be active and initialized
@@ -271,8 +360,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           }          
         }else{
           $number_of_videos=0;
-        }
-        $print.=" <div class='options_group'>
+        }        
+        $print=" <div class='options_group'>
                   <dl>
                   <dd><p>".__("Attached videos")."</p></dd>                  
                  ";
