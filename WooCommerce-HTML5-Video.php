@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/wp-plugins/woocommerce-html5-video/
- * Description: Include videos in products of your online store. This plugin use HTML5 to render videos in your products. The supported video formats are: MP4, Ogg and YouTube videos.
- * Author: Webilop
+ * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
+ * Author: Webilop <contact@webilop.com>
  * Author URI: http://www.webilop.com
- * Version: 2
+ * Version: 2.0.0
  * License: GPLv2 or later
  */
 // Exit if accessed directly
@@ -635,13 +635,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woohv_video_tab_error_notice() {
     global $current_screen;
     if ($current_screen->parent_base == 'plugins') {
-      echo '<div class="error"><p>' . __('WooCommerce HTML5 Video requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="' . admin_url('plugin-install.php?tab=search&type=term&s=WooCommerce') . '" target="_blank">WooCommerce</a> first.','html5_video') . '</p></div>';
+      echo '<div class="error"><p>' . __('WooCommerce HTML5 Video requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> activated in order to work. Please install and activate <a href="' . admin_url('plugin-install.php?tab=search&type=term&s=WooCommerce') . '" target="_blank">WooCommerce</a> first.','html5_video') . '</p></div>';
     }
   }
 }
 /** Function to add a plugin configuration page */
 function woohv_my_plugin_menu() {
-   add_options_page( 'Html5 Video Settings', 'Woocommerce html5 video', 'manage_options', 'html5-video-settings', 'woohv_my_plugin_options' );
+   add_options_page( 'WooCommerce Html5 Video Settings', 'WooCommerce Html5 Video', 'manage_options', 'html5-video-settings', 'woohv_my_plugin_options' );
 }
 
 /** Function to create the content of the configuration page */
@@ -649,11 +649,11 @@ function woohv_my_plugin_options() {
    if ( !current_user_can( 'manage_options' ) )  {
       wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
    }?>
-   <div class="wrap"><?php screen_icon(); ?><h2>Woocommerce Html5 Video Settings</h2>
+   <div class="wrap"><?php screen_icon(); ?><h2>WooCommerce Html5 Video Settings</h2>
    <form class="html5_video" method="post" action="options.php">
    <?php settings_fields( 'dimensions_group' );
    do_settings_fields( 'dimensions_group','html5-video-settings' )?>
-   <p><strong><?php echo __('Configure the video dimensions')?>:.</strong></p>
+   <p><strong><?php echo __('Configure the default video dimensions')?>:</strong></p>
    <table class="form-table">
         <tr valign="top">
         <th scope="row"><?php echo __('Video Width')?>:</th>
@@ -669,17 +669,17 @@ function woohv_my_plugin_options() {
         </tr>
     </table>
    <?php submit_button();?>
-   <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/">Woocommerce Html5 Video Documentation</a></span>
+   <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/">WooCommerce Html5 Video Documentation</a></span>
    </form>
     <div class="about-webilop">
     <h3 class="hndle"><?php _e('About','html5_video');?></h3>
     <div class="inside">
-    <p><strong>Woocommerce Html5 video </strong><?php _e('was developed by ', 'html5_video');?><a title="Webilop. web and mobile development" href="http://www.webilop.com">Webilop</a></p>
-    <p><?php _e('Webilop is a company focused on web and mobile solutions. We develop custom mobile applications and templates and plugins for CMSs such as Wordpress and Joomla!.', 'html5_video');?></p>
+    <p><strong>WooCommerce Html5 video </strong><?php _e('was developed by ', 'html5_video');?><a title="Webilop. web and mobile development" href="http://www.webilop.com">Webilop</a></p>
+    <p><?php _e('Webilop is a company focused on web and mobile solutions. We develop custom mobile applications and templates and plugins for CMSs such as Wordpress and Joomla!', 'html5_video');?></p>
    <div><h4><?php _e('Follow us', 'html5_video')?></h4><a title="Facebook" href="https://www.facebook.com/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/facebook.png"></a>
 <a title="LinkedIn" href="http://www.linkedin.com/company/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/linkedin.png"></a>
 <a title="Twitter" href="https://twitter.com/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/twitter.png"></a>
-<a title="Google Plus" href="https://plus.google.com/104606011635671696803" target="_blank" rel="publisher"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/gplus.png"></a></div>
+<a title="Google Plus" href="https://www.google.com/+Webilop" target="_blank" rel="publisher"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/gplus.png"></a></div>
     </div></div></div>
    <?php
 }
@@ -744,7 +744,7 @@ function woohv_my_plugin_options() {
                 <hr/>
                 <dl>
                   <dt class="margin-bottom"><input class="radio" id="wo_di_video_servidor" type="radio" value="servidor" name="wo_di_tipo_video">
-                  <label class="radio" for="wo_di_video_servidor"><?php echo __("Upload video","html5_video") ?></label></dt>              
+                  <label class="radio" for="wo_di_video_servidor"><?php echo __("Uploaded video","html5_video") ?></label></dt>              
                   <dt><label for="video_text_mp4"> Mp4 </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" /></dt>
                   <dd><input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value=""></dd>
                   <dt><label for="video_text_ogg"> Ogg </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video")?>' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dt>
