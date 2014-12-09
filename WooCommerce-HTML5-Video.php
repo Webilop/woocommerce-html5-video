@@ -5,7 +5,7 @@
  * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
  * Author: Webilop <contact@webilop.com>
  * Author URI: http://www.webilop.com
- * Version: 2.0.0
+ * Version: 1.5.0
  * License: GPLv2 or later
  */
 // Exit if accessed directly
