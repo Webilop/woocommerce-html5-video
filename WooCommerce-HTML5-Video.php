@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WooCommerce HTML5 Video
- * Plugin URI: http://www.webilop.com/products/wp-plugins/woocommerce-html5-video/
+ * Plugin URI: http://www.webilop.com/products/woocommerce-html5-video/
  * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
  * Author: Webilop <contact@webilop.com>
  * Author URI: http://www.webilop.com
