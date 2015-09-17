@@ -86,7 +86,7 @@ a#clone_video{
 }
 .about-webilop {
    float: right;
-   width: 28%;
+   width: 100%;
    border: 1px solid #CCC;
    padding: 0px 7px 7px;
    background: #f5f5f5;
@@ -118,4 +118,42 @@ form.html5_video{
 
 .float-right{
   float: left;
+}
+
+.rate-div {
+   float: right;
+   width: 100%;
+   border: 1px solid #CCC;
+   padding: 0px 7px 7px;
+   background: #f5f5f5;
+   border-radius: 4px;
+}
+
+.rate-about-table{
+    width: 28%;
+    float: right;
+}
+
+.rating{
+  overflow: hidden;
+  display: inline-block;
+}
+
+.rating-input{
+  position: absolute;
+  left: 0;
+  top: -50px;
+}
+
+.rating-star{
+  display: block;
+  float: right;        
+  width: 16px;
+  height: 16px;
+  background: url('../images/star.png') 0 -16px;
+}
+
+.rating-star:hover,
+.rating-star:hover ~ .rating-star {
+    background-position: 0 0;
 }
