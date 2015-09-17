@@ -671,6 +671,7 @@ function woohv_my_plugin_options() {
         </tr>
     </table>
    <?php submit_button(); ?>
+   <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/" target="_blank">WooCommerce Html5 Video Documentation</a></span>
    </form>
 
    <table class="rate-about-table">

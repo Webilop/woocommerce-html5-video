@@ -9,3 +9,5 @@ function clone_embedded(){
 function remove_video(index){
    jQuery("textarea#_tab_video"+index).val("");
 }
+
+//alert("Hola");
