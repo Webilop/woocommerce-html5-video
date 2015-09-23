@@ -1,3 +1,13 @@
+
+
+$(document).ready(function() {
+
+//jQuery(".rating-input").click(function(){
+//	alert("hola");
+//}
+//);
+});
+
 function clone_embedded(){
    var length = jQuery('textarea[name="_tab_video[]"]').length;
    if(length <= 3){
@@ -9,5 +19,3 @@ function clone_embedded(){
 function remove_video(index){
    jQuery("textarea#_tab_video"+index).val("");
 }
-
-//alert("Hola");

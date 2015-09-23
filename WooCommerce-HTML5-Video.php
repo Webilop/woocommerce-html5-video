@@ -131,12 +131,45 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         // backend stuff
         add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab'));
+
+		//add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab1'));
+
         add_action('woocommerce_product_write_panels', array($this, 'product_write_panel'));
         add_action('woocommerce_process_product_meta', array($this, 'product_save_data'), 10, 2);
         // frontend stuff
         add_filter('woocommerce_product_tabs', array($this,'video_product_tabs'),25);
         add_action('woocommerce_product_tab_panels', array($this, 'video_product_tabs_panel'), 25);
+
+
+        //add_filter( 'woocommerce_product_tabs', array($this, 'woo_new_product_tab'), 25);
       }
+
+      /*
+        function woo_new_product_tab( $tabs ) {
+			
+			// Adds the new tab
+			
+			$tabs['test_tab'] = array(
+				//'title' 	=> __( 'New Product Tab', 'woocommerce' ),
+				'title' 	=> __( 'New Product Tab', 'html5_video' ),
+				'priority' 	=> 50,
+				'callback' 	=> 'woo_new_product_tab_content'
+			);
+
+			return $tabs;
+
+		}
+		function woo_new_product_tab_content() {
+
+			// The new tab content
+
+			echo '<h2>New Product Tab</h2>';
+			echo '<p>Here\'s your new product tab.</p>';
+			
+		}
+		*/
+		
+
       /**
        * creates the tab if the product has an associated video.
        */
@@ -243,8 +276,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * creates the tab for the administrator, where administered product videos.
        */
       public function product_write_panel_tab() {
-        echo "<li><a class='html5_video' href=\"#video_tab\">" . __('Video','html5_video') . "</a></li>";
+        echo "<li class='html5_video'><a href=\"#video_tab\">" . __('Video','html5_video') . "</a></li>";
       }
+
+/*      public function product_write_panel_tab1() {
+        echo "<li class='general_options general_tab hide_if_grouped active'><a href=\"#video_tab\">" . __('Videooooo','html5_video') . "</a></li>";
+      }*/
 
       /**
        * build the panel for the administrator.
@@ -307,7 +344,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             </p>
             <div>
               <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" >
-             <?php echo  $cadena_editormce ?>
+             <?php echo  $cadena_editormce ?> 
               </textarea>
             </div>
         </div>
