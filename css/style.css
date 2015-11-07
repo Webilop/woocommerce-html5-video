@@ -1,10 +1,10 @@
-#woocommerce-product-data ul.product_data_tabs li a.html5_video:before{
+/*#woocommerce-product-data ul.product_data_tabs li a.html5_video:before{
    background: url(../images/icon_video.png) no-repeat 5px 3px transparent;
    line-height:16px;
    padding:5px 5px 5px 28px;
    text-shadow:0 1px 1px #FFFFFF;
     .icon("\e013");
-}
+}*/
 .woocommerce_options_panel textarea.html5_video, textarea#_tab_video_html5{
    height: 80px;
    width: 80%;
@@ -151,21 +151,21 @@ form.html5_video{
   float: right;        
   width: 16px;
   height: 16px;
-  background: url('../images/star.png') 0 -16px;
+  background: url('../images/star.png') 0 0px;
 }
 
-.rating-star:hover,
+/*.rating-star:hover,
 .rating-star:hover ~ .rating-star {
     background-position: 0 0;
-}
+}*/
 
 @font-face {
   font-family: 'icomoon';
-  src:url('../../woocommerce/assets/fonts/icomoon.eot?rpefh2');
-  src:url('../../woocommerce/assets/fonts/icomoon.eot?#iefixrpefh2') format('embedded-opentype'),
-    url('../../woocommerce/assets/fonts/icomoon.ttf?rpefh2') format('truetype'),
-    url('../../woocommerce/assets/fonts/icomoon.woff?rpefh2') format('woff'),
-    url('../../woocommerce/assets/fonts/icomoon.svg?rpefh2#icomoon') format('svg');
+  src:url('../fonts/icomoon.eot?rpefh2');
+  src:url('../fonts/icomoon.eot?#iefixrpefh2') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?rpefh2') format('truetype'),
+    url('../fonts/icomoon.woff?rpefh2') format('woff'),
+    url('../fonts/icomoon.svg?rpefh2#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
