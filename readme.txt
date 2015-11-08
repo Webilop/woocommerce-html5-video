@@ -59,7 +59,9 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 
 == Screenshots ==
 
-1. screenshot1.jpg Illustrates the video options available in the 'Edit Product' pages in WP backend.
+1. Options available in the 'Edit Product' pages in WP backend.
+2. Addition of viedo to a product.
+3. Rendering of video in product page.
 
 == Changelog ==
 
