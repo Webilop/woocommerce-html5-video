@@ -1,19 +1,24 @@
-﻿=== WooCommerce HTML5 Video ===
+=== WooCommerce HTML5 Video ===
 
 Contributors: webilop
-Tags: woocommerce, woocommerce add-on, online store, product video, html5 video, mp4, ogg
+Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
 Tested up to: 4.0.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-** IMPORTANT: Before upgrade your plugin to the latest version(1.5.0), it is highly recommended to create a backup of your database **
+> #### IMPORTANT:
+> If your plugin has a version less than 1.5.0, then it is highly recommended to create a backup of your database before upgrade.
 
-WooCommerce HTML5 Video is a WooCommerce add-on which allows you to add videos to your products in your online store. 
-This plugin uses HTML5 to render videos in your products description page. The supported video formats are MP4 and Ogg. It also support embedded videos from web sites like youtube or vimeo.
+> #### Collaboration
+> [The plugin is available in Github](https://github.com/Webilop/woocommerce-html5-video). We receive patches to fix bugs and translation files.
+
+WooCommerce HTML5 Video is a WooCommerce add-on which allows you to add videos to products in your online store. The plugin creates a new tab in the product description page where all videos related to the product are placed.
+
+This plugin uses HTML5 to render videos in your products. The supported video formats are MP4 and Ogg. It also support embedded videos from websites like [youtube](https://support.google.com/youtube/answer/171780?hl=en), [vimeo](https://vimeo.com/help/faq/sharing-videos/embedding-videos) and others.
 
 = Localization =
 
@@ -25,17 +30,15 @@ This plugin uses HTML5 to render videos in your products description page. The s
 
 *Chinese 
 
-If you want to contribute with the localization of this plugin, you can send us your .mo and .po files to contact[at]webilop.com
+If you want to contribute with the localization of this plugin, you can contribute in the [Github repository](https://github.com/Webilop/woocommerce-html5-video) or send us your .mo and .po files to contact[at]webilop.com
 
 = Documentation =
 
-To access the plugin documentation in English, visit http://www.webilop.com/products/woocommerce-html5-video/
-
-The documentation in Spanish is also availale in: http://www.webilop.com/es_ES/productos/woocommerce-html5-video-2/
+The plugin has [documentation available in English](http://www.webilop.com/products/woocommerce-html5-video/) and the [documentation in Spanish](http://www.webilop.com/es_ES/productos/woocommerce-html5-video-2/) is also available.
 
 == Installation ==
 
-1. Install and activate the woocommerce plugin available in https://wordpress.org/plugins/woocommerce-html5-video/ or http://www.woothemes.com/woocommerce/
+1. Install and activate the [woocommerce plugin](https://wordpress.org/plugins/woocommerce/).
 1. Upload the `woocommerce-html5-video` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Create your products through 'the Products' menu option
@@ -52,7 +55,7 @@ The supported video formats are MP4 and Ogg.
 Yes, you can. When you are including videos in your products, just select the option to include embedded videos.
 
 = I cannot see the video in the frontend =
-Make sure your browser supports HTML5 video. A list of browsers that have this feature can be found at http://www.w3schools.com/html/html5_video.asp
+Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html5_video.asp).
 
 == Screenshots ==
 
@@ -89,3 +92,7 @@ Make sure your browser supports HTML5 video. A list of browsers that have this f
 
 = 1.5.1 =
 * Adjustment in powered by Webilop link to not affect SEO in websites.
+
+= 1.5.2 =
+* Fix of video icon in product addition and edition pages.
+* Creation of [Github repository with the plugin code](https://github.com/Webilop/woocommerce-html5-video).
