@@ -131,12 +131,45 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
         // backend stuff
         add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab'));
+
+		//add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab1'));
+
         add_action('woocommerce_product_write_panels', array($this, 'product_write_panel'));
         add_action('woocommerce_process_product_meta', array($this, 'product_save_data'), 10, 2);
         // frontend stuff
         add_filter('woocommerce_product_tabs', array($this,'video_product_tabs'),25);
         add_action('woocommerce_product_tab_panels', array($this, 'video_product_tabs_panel'), 25);
+
+
+        //add_filter( 'woocommerce_product_tabs', array($this, 'woo_new_product_tab'), 25);
       }
+
+      /*
+        function woo_new_product_tab( $tabs ) {
+			
+			// Adds the new tab
+			
+			$tabs['test_tab'] = array(
+				//'title' 	=> __( 'New Product Tab', 'woocommerce' ),
+				'title' 	=> __( 'New Product Tab', 'html5_video' ),
+				'priority' 	=> 50,
+				'callback' 	=> 'woo_new_product_tab_content'
+			);
+
+			return $tabs;
+
+		}
+		function woo_new_product_tab_content() {
+
+			// The new tab content
+
+			echo '<h2>New Product Tab</h2>';
+			echo '<p>Here\'s your new product tab.</p>';
+			
+		}
+		*/
+		
+
       /**
        * creates the tab if the product has an associated video.
        */
@@ -243,8 +276,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * creates the tab for the administrator, where administered product videos.
        */
       public function product_write_panel_tab() {
-        echo "<li><a class='html5_video' href=\"#video_tab\">" . __('Video','html5_video') . "</a></li>";
+        echo "<li class='html5_video'><a href=\"#video_tab\">" . __('Video','html5_video') . "</a></li>";
       }
+
+/*      public function product_write_panel_tab1() {
+        echo "<li class='general_options general_tab hide_if_grouped active'><a href=\"#video_tab\">" . __('Videooooo','html5_video') . "</a></li>";
+      }*/
 
       /**
        * build the panel for the administrator.
@@ -307,7 +344,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             </p>
             <div>
               <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" >
-             <?php echo  $cadena_editormce ?>
+             <?php echo  $cadena_editormce ?> 
               </textarea>
             </div>
         </div>
@@ -670,19 +707,59 @@ function woohv_my_plugin_options() {
         <td><input type="checkbox" name="wo_di_video_hide_tab" <?php if(get_option('wo_di_video_hide_tab')==1){echo "checked";} ?> value="1" /></td>
         </tr>
     </table>
-   <?php submit_button();?>
-   <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/">WooCommerce Html5 Video Documentation</a></span>
+   <?php submit_button(); ?>
+   <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/" target="_blank">WooCommerce Html5 Video Documentation</a></span>
    </form>
+
+   <table class="rate-about-table">
+   <tr>
+    <td>
+    <div class="rate-div"> 
+   	  <h3 class="hndle"> <?php _e('Rate it!', 'html5_video') ?></h3>
+
+   	  <p><?php _e('If you like this plugin please'); ?> <a title="rate it" href="https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video" target="_blank">leave us a rating</a>. In advance, thanks from Webilop team! &nbsp; 
+	  <span class="rating">
+        <input type="radio" class="rating-input"
+            id="rating-input-1-5" name="rating-input-1" onclick="window.open('https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video')">
+        <label for="rating-input-1-5" class="rating-star"></label>
+        <input type="radio" class="rating-input"
+            id="rating-input-1-4" name="rating-input-1" onclick="window.open('https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video')">
+        <label for="rating-input-1-4" class="rating-star"></label>
+        <input type="radio" class="rating-input"
+            id="rating-input-1-3" name="rating-input-1" onclick="window.open('https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video')">
+        <label for="rating-input-1-3" class="rating-star"></label>
+        <input type="radio" class="rating-input"
+            id="rating-input-1-2" name="rating-input-1" onclick="window.open('https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video')">
+        <label for="rating-input-1-2" class="rating-star"></label>
+        <input type="radio" class="rating-input"
+            id="rating-input-1-1" name="rating-input-1" onclick="window.open('https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video')">
+        <label for="rating-input-1-1" class="rating-star"></label>
+   	   </span>
+	  </p>
+    </div>
+
+    </td>
+    </tr>
+
+   <tr><td>
+
     <div class="about-webilop">
     <h3 class="hndle"><?php _e('About','html5_video');?></h3>
     <div class="inside">
-    <p><strong>WooCommerce Html5 video </strong><?php _e('was developed by ', 'html5_video');?><a title="Webilop. web and mobile development" href="http://www.webilop.com">Webilop</a></p>
+    <p><strong>WooCommerce Html5 video </strong><?php _e('was developed by ', 'html5_video');?><a title="Webilop. web and mobile development" href="http://www.webilop.com" target="_blank">Webilop</a></p>
     <p><?php _e('Webilop is a company focused on web and mobile solutions. We develop custom mobile applications and templates and plugins for CMSs such as Wordpress and Joomla!', 'html5_video');?></p>
    <div><h4><?php _e('Follow us', 'html5_video')?></h4><a title="Facebook" href="https://www.facebook.com/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/facebook.png"></a>
 <a title="LinkedIn" href="http://www.linkedin.com/company/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/linkedin.png"></a>
 <a title="Twitter" href="https://twitter.com/webilop" target="_blank"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/twitter.png"></a>
 <a title="Google Plus" href="https://www.google.com/+Webilop" target="_blank" rel="publisher"><img src="<?php echo WP_PLUGIN_URL;?>/woocommerce-html5-video/images/gplus.png"></a></div>
-    </div></div></div>
+    </div></div>
+
+    </td>
+    </tr>
+
+    </table>
+
+    </div>
    <?php
 }
   /**
