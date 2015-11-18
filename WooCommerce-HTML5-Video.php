@@ -400,7 +400,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
              $checked="checked='checked'";
             }
             $tableBody.="<tr id='wo_di_video_product_$i' $class>
-                          <!--td><input type=hidden name='wo_di_video_ids[]' value='$name' /><span>$name</span></td-->
                           <td><input type=hidden name='wo_di_video_titles[]' value='$title' /><span>$title</span></td>
                           <td><input type=hidden name='wo_di_video_types[]' value='$type' /> <span>$type</span></td>
                           <td><input type=hidden name='wo_di_video_formats[]' value='$formats' /><span>$formats</span></td>
@@ -427,7 +426,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $print.='<table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
                   <thead>
                   <tr>
-                    <!--th>'.__("Name").'</th-->
                     <th>'.__("Title").'</th>
                     <th>'.__("Type").'</th>
                     <th>'.__("Formats").'</th>
@@ -807,8 +805,6 @@ function woohv_my_plugin_options() {
                 <div class="options_group">
                   <div id="div_errores_add_video"> </div>
                   <dl>
-                    <!--dt><label for="wo_di_video_id"><?php  echo __("Name","html5_video")?></label></dt>
-                    <dd><input class="wo_di_form_input" id="wo_di_video_id" name="wo_di_video_id" type="text"   required='required' ></dd-->
                     <dt><label for="wo_di_video_title"><?php echo __("Title for video","html5_video") ?></label></dt>
                     <dd><input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" ></dd>
                   </dl>
@@ -851,8 +847,6 @@ function woohv_my_plugin_options() {
               <fieldset>
                   <div class="options_group">
                     <dl>
-                      <!--dt><label for="wo_di_video_id_edit"><?php echo __("Name","html5_video") ?></label></dt>
-                      <dd><input class="wo_di_form_input" id="wo_di_video_id_edit" name="wo_di_video_id_edit" type="text"  value=""/></dd-->
                       <dt><label for="wo_di_video_title_edit"><?php echo __("Title for video","html5_video")?></label></dt>
                       <dd><input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" /></dd>
                     </dl>
