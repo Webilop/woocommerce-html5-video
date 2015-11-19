@@ -342,10 +342,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             <p>
                 <?php echo __("Video tab description (it will appear above the videos in the Video tab)","html5_video")?>
             </p>
+            
+            
             <div>
-              <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" >
-             <?php echo  $cadena_editormce ?> 
-              </textarea>
+              <?php wp_editor($cadena_editormce, "wo_di_editormce_video", array('textarea_name' => 'wo_di_editormce_video',
+                                                                                'textarea_rows' => 2,
+                                                                                'editor_class' => 'mceEditorVideoHtml',
+                                                                                'editor_height' => 280 )); ?>
             </div>
         </div>
         <?php
