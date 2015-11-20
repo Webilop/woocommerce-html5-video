@@ -305,7 +305,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function wo_di_form_admin_video($field) {
         global $thepostid, $post;
         ?>
-        <script>
+        <script type="text/javascript">
           var text_add_button = "<?php echo __("Add","html5_video"); ?>" ;
           var text_edit_button = "<?php echo __("Edit","html5_video"); ?>" ;
           var text_cancel_button = "<?php echo __("Cancel","html5_video"); ?>" ;
@@ -338,17 +338,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
         //tynimce editor descrption of product
         ?>
-        <div class="options_group ">
-            <p>
-                <?php echo __("Video tab description (it will appear above the videos in the Video tab)","html5_video")?>
-            </p>
-            
+        <div class="options_group wohv-description-container">
+            <h4 class="wohv-title"><?php echo __("Description", "html5_video"); ?></h4>
+            <p class="wohv-description"><?php echo __("It will appear above the videos in the video tab","html5_video"); ?></p>
             
             <div>
               <?php wp_editor($cadena_editormce, "wo_di_editormce_video", array('textarea_name' => 'wo_di_editormce_video',
-                                                                                'textarea_rows' => 2,
-                                                                                'editor_class' => 'mceEditorVideoHtml',
-                                                                                'editor_height' => 280 )); ?>
+                                                                                'textarea_rows' => 10)); ?>
             </div>
         </div>
         <?php
@@ -419,10 +415,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }else{
           $number_of_videos=0;
         }
-        $print=" <div class='options_group'>
-                  <dl>
-                  <dd><p>".__("Attached videos")."</p></dd>
-                 ";
+        $print=" <div class='options_group'>"
+          . "<h4 class='wohv-title'>" . __("Attached videos") . "</h4>";
         $table="<input id='wo_di_number_of_videos' name='wo_di_number_of_videos' type='hidden' value='$number_of_videos'/>";
         $print.=$table;
         $print.='<table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
@@ -442,8 +436,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                   </tbody>
                 </table>';
 
-        $print.='<dd><button id="button_add_video">'.__("Add", 'html5_video').'</button></dd>
-            </dl>
+        $print.='<button id="button_add_video">'.__("Add", 'html5_video').'</button>
           </div>';
 
          echo $print;
