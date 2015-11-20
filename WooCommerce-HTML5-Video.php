@@ -68,7 +68,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 if(!empty($video)){
                   $size++;
                   //create video embebido
-                  $arrayJson[]=array("name"=>$nameVideo." ".$size,"type"=>"Embedded","title"=>"",
+                  $arrayJson[]=array(//"name"=>$nameVideo." ".$size,
+                                "type"=>"Embedded","title"=>"",
                                 "width"=>"-","height"=>"-","embebido"=>$video,
                                 "mp4"=>"","ogg"=>"","active"=>1);
                 }
@@ -86,7 +87,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                   $width_video="-";
                 }
                 $size=1;
-                $arrayJson[]=array("name"=>$nameVideo." ".$size,"type"=>"WP Library","title"=>"",
+                $arrayJson[]=array(//"name"=>$nameVideo." ".$size,
+                                  "type"=>"WP Library","title"=>"",
                                 "width"=>$width_video,"height"=>$height_video,"embebido"=>"",
                                 "mp4"=>$mp4,"ogg"=>$ogg,"active"=>1);
               }
@@ -357,7 +359,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $video=$videos[$i];
             $title=$video->title;
             $type=$video->type;
-            $name=$video->name;
+            //$name=$video->name;
             //$formats=get_post_meta($post->ID, 'wo_di_video_product_formats_'.$i, true);
             $class=($i%2==0) ? "class='alternate'":"";
             if($type=="Embedded"){
@@ -398,7 +400,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
              $checked="checked='checked'";
             }
             $tableBody.="<tr id='wo_di_video_product_$i' $class>
-                          <td><input type=hidden name='wo_di_video_ids[]' value='$name' /><span>$name</span></td>
                           <td><input type=hidden name='wo_di_video_titles[]' value='$title' /><span>$title</span></td>
                           <td><input type=hidden name='wo_di_video_types[]' value='$type' /> <span>$type</span></td>
                           <td><input type=hidden name='wo_di_video_formats[]' value='$formats' /><span>$formats</span></td>
@@ -425,7 +426,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $print.='<table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
                   <thead>
                   <tr>
-                    <th>'.__("Name").'</th>
                     <th>'.__("Title").'</th>
                     <th>'.__("Type").'</th>
                     <th>'.__("Formats").'</th>
@@ -573,7 +573,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $video_ids=$_POST['wo_di_video_ids'];
           $video_active=$_POST['wo_di_video_active'];
           foreach ($video_types as $key => $type) {
-            $arrayJson[]=array("name"=>$video_ids[$key],"type"=>$type,"title"=>$video_titles[$key],
+            $arrayJson[]=array(//"name"=>$video_ids[$key],
+                              "type"=>$type,"title"=>$video_titles[$key],
                               "width"=>$video_width[$key],"height"=>$video_height[$key],"embebido"=>$video_embebido[$key],
                               "mp4"=>$video_mp4[$key],"ogg"=>$video_ogg[$key],"active"=>$video_active[$key]);
           }
@@ -804,8 +805,6 @@ function woohv_my_plugin_options() {
                 <div class="options_group">
                   <div id="div_errores_add_video"> </div>
                   <dl>
-                    <dt><label for="wo_di_video_id"><?php  echo __("Name","html5_video")?></label></dt>
-                    <dd><input class="wo_di_form_input" id="wo_di_video_id" name="wo_di_video_id" type="text"   required='required' ></dd>
                     <dt><label for="wo_di_video_title"><?php echo __("Title for video","html5_video") ?></label></dt>
                     <dd><input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" ></dd>
                   </dl>
@@ -848,8 +847,6 @@ function woohv_my_plugin_options() {
               <fieldset>
                   <div class="options_group">
                     <dl>
-                      <dt><label for="wo_di_video_id_edit"><?php echo __("Name","html5_video") ?></label></dt>
-                      <dd><input class="wo_di_form_input" id="wo_di_video_id_edit" name="wo_di_video_id_edit" type="text"  value=""/></dd>
                       <dt><label for="wo_di_video_title_edit"><?php echo __("Title for video","html5_video")?></label></dt>
                       <dd><input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" /></dd>
                     </dl>
