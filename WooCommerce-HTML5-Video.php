@@ -44,6 +44,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             delete_option( 'wo_di_video_hide_tab' );
             delete_option( 'wo_di_config_video_height' );
             delete_option( 'wo_di_config_video_width' );
+            delete_option( 'wo_di_config_video_tab_name' );
           }
       }
 
@@ -175,25 +176,27 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
        /** Add extra tabs to front end product page **/
         function video_product_tabs( $tabs ) {
-                global $post, $product;
-                if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
+          global $post, $product;
+          if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
+            $tabname_config = get_option('wo_di_config_video_tab_name');
+          
+            $custom_tab_options = array(
+                    'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
+                    'title' => get_post_meta($post->ID, 'custom_tab_title', true),
+                    'content' => get_post_meta($post->ID, 'custom_tab_content', true),
+            );
 
-                  $custom_tab_options = array(
-                          'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
-                          'title' => get_post_meta($post->ID, 'custom_tab_title', true),
-                          'content' => get_post_meta($post->ID, 'custom_tab_content', true),
-                  );
-
-                  if ( $custom_tab_options['enabled'] != 'no' ){
-                          $tabs['html5_video'] = array(
-                             'title'    => __('Video','html5_video'),
-                             'priority' => 25,
-                             'callback' => 'woohv_htmlvideotabcontent',
-                             'content'  => $custom_tab_options['content']
-                           );
-                   }
-                }
-                return $tabs;
+            if ( $custom_tab_options['enabled'] != 'no' ){
+                    $tabs['html5_video'] = array(
+                        //'title'    => __('Video','html5_video'),
+                        'title'    => __($tabname_config,'html5_video'),
+                        'priority' => 25,
+                        'callback' => 'woohv_htmlvideotabcontent',
+                        'content'  => $custom_tab_options['content']
+                      );
+              }
+          }
+          return $tabs;
         }
 
       /**
@@ -647,6 +650,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
   function woohv_register_my_setting() {
    register_setting( 'dimensions_group', 'wo_di_config_video_width', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_config_video_height', 'intval' );
+   register_setting( 'dimensions_group', 'wo_di_config_video_tab_name' );
    register_setting( 'dimensions_group', 'wo_di_video_hide_tab', 'intval' );
 
   }
@@ -692,8 +696,12 @@ function woohv_my_plugin_options() {
    <form class="html5_video" method="post" action="options.php">
    <?php settings_fields( 'dimensions_group' );
    do_settings_fields( 'dimensions_group','html5-video-settings' )?>
-   <p><strong><?php echo __('Configure the default video dimensions')?>:</strong></p>
+   <p><strong><?php echo __('Configure the default video dimensions and the video tab name')?>:</strong></p>
    <table class="form-table">
+        <tr valign="top">
+        <th scope="row"><?php echo __('Video Tab Name')?>:</th>
+        <td><input type="text" name="wo_di_config_video_tab_name" value="<?php if(strcmp(get_option('wo_di_config_video_tab_name'), "")) echo get_option('wo_di_config_video_tab_name'); else echo "Video"; ?>" /></td>
+        </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Video Width')?>:</th>
         <td><input type="text" name="wo_di_config_video_width" value="<?php echo get_option('wo_di_config_video_width'); ?>" /></td>
