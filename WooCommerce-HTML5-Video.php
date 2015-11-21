@@ -178,7 +178,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         function video_product_tabs( $tabs ) {
           global $post, $product;
           if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
-            $tabname_config = get_option('wo_di_config_video_tab_name');
+            $tabname_config = strcmp(get_option('wo_di_config_video_tab_name'), "") ? get_option('wo_di_config_video_tab_name') : "Video";
           
             $custom_tab_options = array(
                     'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
@@ -343,7 +343,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         ?>
         <div class="options_group ">
             <p>
-                <?php echo __("Video tab description (it will appear above the videos in the Video tab)","html5_video")?>
+                <?php echo __("Video tab description (it will appear above the videos in the Video tab)","html5_video");?>
             </p>
             <div>
               <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" >
