@@ -243,7 +243,7 @@ function initiate_rules(){
 }
 
 jQuery(document).ready(function()
-    {
+    { 
         initiate_rules();
         jQuery('#wo_di_upload_video_edit').click(function()
         {

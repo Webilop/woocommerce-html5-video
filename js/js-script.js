@@ -1,7 +1,7 @@
 
 
 $(document).ready(function() {
-
+  
 //jQuery(".rating-input").click(function(){
 //	alert("hola");
 //}
