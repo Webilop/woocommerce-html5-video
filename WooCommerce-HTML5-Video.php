@@ -281,7 +281,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * creates the tab for the administrator, where administered product videos.
        */
       public function product_write_panel_tab() {
-        echo "<li class='html5_video'><a href=\"#video_tab\">" . __('Video','html5_video') . "</a></li>";
+      echo "<li class='html5_video'><a href='#video_tab'>" . __('Video','html5_video') . "</a></li>";
+        //echo "<li class='ui-state-highlight html5_video'><a href='#video_tab'><i class='ui-icon ui-icon-video'></i>" . __('Video','html5_video') . "</a></li>";
+        //echo "<li class='html5_video'><span class='ui-icon ui-icon-video' style='dispaly:inline;'></span><span style='dispaly:inline;'>" . __('Video','html5_video') . "</span></li>";
       }
 
 /*      public function product_write_panel_tab1() {
@@ -413,7 +415,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                               <input type=hidden name='wo_di_video_mp4[]' value='$videoMp4' />
                               <input type=hidden name='wo_di_video_ogg[]' value='$videoOGG' />
                           <td><input type=hidden name='wo_di_video_active[]' value='".$video->active."' /><input type='checkbox' value='active' $checked onchange='update_input_active(this)'/></td>
-                          <td><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span> <span class='ui-icon ui-icon-circle-triangle-s float-right' onclick='edit_row(this)'></span>  </td>
+                          <td><span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span> <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>  </td>
                         </tr>";
           }
         }else{

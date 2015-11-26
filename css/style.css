@@ -193,6 +193,11 @@ form.html5_video{
 }
 
 #woocommerce-product-data ul.product_data_tabs li.html5_video a:before{content:"\e600"; font-family: 'icomoon'}
+/*#woocommerce-product-data ul.product_data_tabs li.html5_video a:before{content:none;}*/
+
+.ui-icon{
+ cursor: pointer; 
+}
 
 .wohv-description-container .wohv-title{
   margin: 0;
