@@ -180,7 +180,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         function video_product_tabs( $tabs ) {
           global $post, $product;
           if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
-            $tabname_config = get_option('wo_di_config_video_tab_name');
+            $tabname_config = strcmp(get_option('wo_di_config_video_tab_name'), "") ? get_option('wo_di_config_video_tab_name') : "Video";
           
             $custom_tab_options = array(
                     'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
