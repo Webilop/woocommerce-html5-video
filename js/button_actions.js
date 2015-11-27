@@ -243,7 +243,7 @@ function initiate_rules(){
 }
 
 jQuery(document).ready(function()
-    {
+    { 
         initiate_rules();
         jQuery('#wo_di_upload_video_edit').click(function()
         {
@@ -422,7 +422,7 @@ jQuery(document).ready(function()
 
               var title=jQuery("#wo_di_video_title").val();
               var video="<tr id='wo_di_video_product_"+number_of_videos+"' "+classColumn+">";
-              video+="<td><input type=hidden name='wo_di_video_ids[]' value='"+id+"' /><span>"+id+"</span></td>";
+              //video+="<td><input type=hidden name='wo_di_video_ids[]' value='"+id+"' /><span>"+id+"</span></td>";
               video+="<td><input type=hidden name='wo_di_video_titles[]' value='"+title+"' /><span>"+title+"</span></td>";
               video+="<td><input type=hidden name='wo_di_video_types[]' value='"+type+"' /><span>"+type+"</span></td>";
               video+="<td> <input type=hidden name='wo_di_video_formats[]' value='"+formats+"' /><span>"+formats+"</span></td>";
@@ -459,6 +459,3 @@ jQuery(document).ready(function()
         return false;
       });
     });
-
-
-

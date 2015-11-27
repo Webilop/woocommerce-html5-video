@@ -5,7 +5,7 @@
  * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
  * Author: Webilop <contact@webilop.com>
  * Author URI: http://www.webilop.com
- * Version: 1.5.2
+ * Version: 1.5.3
  * License: GPLv2 or later
  */
 // Exit if accessed directly
@@ -69,7 +69,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 if(!empty($video)){
                   $size++;
                   //create video embebido
-                  $arrayJson[]=array("name"=>$nameVideo." ".$size,"type"=>"Embedded","title"=>"",
+                  $arrayJson[]=array(//"name"=>$nameVideo." ".$size,
+                                "type"=>"Embedded","title"=>"",
                                 "width"=>"-","height"=>"-","embebido"=>$video,
                                 "mp4"=>"","ogg"=>"","active"=>1);
                 }
@@ -87,7 +88,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                   $width_video="-";
                 }
                 $size=1;
-                $arrayJson[]=array("name"=>$nameVideo." ".$size,"type"=>"WP Library","title"=>"",
+                $arrayJson[]=array(//"name"=>$nameVideo." ".$size,
+                                  "type"=>"WP Library","title"=>"",
                                 "width"=>$width_video,"height"=>$height_video,"embebido"=>"",
                                 "mp4"=>$mp4,"ogg"=>$ogg,"active"=>1);
               }
@@ -178,7 +180,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         function video_product_tabs( $tabs ) {
           global $post, $product;
           if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
-            $tabname_config = get_option('wo_di_config_video_tab_name');
+            $tabname_config = strcmp(get_option('wo_di_config_video_tab_name'), "") ? get_option('wo_di_config_video_tab_name') : "Video";
           
             $custom_tab_options = array(
                     'enabled' => get_post_meta($post->ID, 'custom_tab_enabled', true),
@@ -279,7 +281,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        * creates the tab for the administrator, where administered product videos.
        */
       public function product_write_panel_tab() {
-        echo "<li class='html5_video'><a href=\"#video_tab\">" . __('Video','html5_video') . "</a></li>";
+      echo "<li class='html5_video'><a href='#video_tab'>" . __('Video','html5_video') . "</a></li>";
+        //echo "<li class='ui-state-highlight html5_video'><a href='#video_tab'><i class='ui-icon ui-icon-video'></i>" . __('Video','html5_video') . "</a></li>";
+        //echo "<li class='html5_video'><span class='ui-icon ui-icon-video' style='dispaly:inline;'></span><span style='dispaly:inline;'>" . __('Video','html5_video') . "</span></li>";
       }
 
 /*      public function product_write_panel_tab1() {
@@ -308,7 +312,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       private function wo_di_form_admin_video($field) {
         global $thepostid, $post;
         ?>
-        <script>
+        <script type="text/javascript">
           var text_add_button = "<?php echo __("Add","html5_video"); ?>" ;
           var text_edit_button = "<?php echo __("Edit","html5_video"); ?>" ;
           var text_cancel_button = "<?php echo __("Cancel","html5_video"); ?>" ;
@@ -341,14 +345,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
         //tynimce editor descrption of product
         ?>
-        <div class="options_group ">
-            <p>
-                <?php echo __("Video tab description (it will appear above the videos in the Video tab)","html5_video")?>
-            </p>
+        <div class="options_group wohv-description-container">
+            <h4 class="wohv-title"><?php echo __("Description", "html5_video"); ?></h4>
+            <p class="wohv-description"><?php echo __("It will appear above the videos in the video tab","html5_video"); ?></p>
+            
             <div>
-              <textarea id="wo_di_editormce_video" class="mceEditorVideoHtml" name="wo_di_editormce_video" cols="20" rows="2" >
-             <?php echo  $cadena_editormce ?> 
-              </textarea>
+              <?php wp_editor($cadena_editormce, "wo_di_editormce_video", array('textarea_name' => 'wo_di_editormce_video',
+                                                                                'textarea_rows' => 10)); ?>
             </div>
         </div>
         <?php
@@ -360,7 +363,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $video=$videos[$i];
             $title=$video->title;
             $type=$video->type;
-            $name=$video->name;
+            //$name=$video->name;
             //$formats=get_post_meta($post->ID, 'wo_di_video_product_formats_'.$i, true);
             $class=($i%2==0) ? "class='alternate'":"";
             if($type=="Embedded"){
@@ -401,7 +404,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
              $checked="checked='checked'";
             }
             $tableBody.="<tr id='wo_di_video_product_$i' $class>
-                          <td><input type=hidden name='wo_di_video_ids[]' value='$name' /><span>$name</span></td>
                           <td><input type=hidden name='wo_di_video_titles[]' value='$title' /><span>$title</span></td>
                           <td><input type=hidden name='wo_di_video_types[]' value='$type' /> <span>$type</span></td>
                           <td><input type=hidden name='wo_di_video_formats[]' value='$formats' /><span>$formats</span></td>
@@ -413,22 +415,19 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                               <input type=hidden name='wo_di_video_mp4[]' value='$videoMp4' />
                               <input type=hidden name='wo_di_video_ogg[]' value='$videoOGG' />
                           <td><input type=hidden name='wo_di_video_active[]' value='".$video->active."' /><input type='checkbox' value='active' $checked onchange='update_input_active(this)'/></td>
-                          <td><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span> <span class='ui-icon ui-icon-circle-triangle-s float-right' onclick='edit_row(this)'></span>  </td>
+                          <td><span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span> <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>  </td>
                         </tr>";
           }
         }else{
           $number_of_videos=0;
         }
-        $print=" <div class='options_group'>
-                  <dl>
-                  <dd><p>".__("Attached videos")."</p></dd>
-                 ";
+        $print=" <div class='options_group'>"
+          . "<h4 class='wohv-title'>" . __("Attached videos") . "</h4>";
         $table="<input id='wo_di_number_of_videos' name='wo_di_number_of_videos' type='hidden' value='$number_of_videos'/>";
         $print.=$table;
         $print.='<table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
                   <thead>
                   <tr>
-                    <th>'.__("Name").'</th>
                     <th>'.__("Title").'</th>
                     <th>'.__("Type").'</th>
                     <th>'.__("Formats").'</th>
@@ -442,8 +441,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                   </tbody>
                 </table>';
 
-        $print.='<dd><button id="button_add_video">'.__("Add", 'html5_video').'</button></dd>
-            </dl>
+        $print.='<button id="button_add_video">'.__("Add", 'html5_video').'</button>
           </div>';
 
          echo $print;
@@ -576,7 +574,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $video_ids=$_POST['wo_di_video_ids'];
           $video_active=$_POST['wo_di_video_active'];
           foreach ($video_types as $key => $type) {
-            $arrayJson[]=array("name"=>$video_ids[$key],"type"=>$type,"title"=>$video_titles[$key],
+            $arrayJson[]=array(//"name"=>$video_ids[$key],
+                              "type"=>$type,"title"=>$video_titles[$key],
                               "width"=>$video_width[$key],"height"=>$video_height[$key],"embebido"=>$video_embebido[$key],
                               "mp4"=>$video_mp4[$key],"ogg"=>$video_ogg[$key],"active"=>$video_active[$key]);
           }
@@ -812,8 +811,6 @@ function woohv_my_plugin_options() {
                 <div class="options_group">
                   <div id="div_errores_add_video"> </div>
                   <dl>
-                    <dt><label for="wo_di_video_id"><?php  echo __("Name","html5_video")?></label></dt>
-                    <dd><input class="wo_di_form_input" id="wo_di_video_id" name="wo_di_video_id" type="text"   required='required' ></dd>
                     <dt><label for="wo_di_video_title"><?php echo __("Title for video","html5_video") ?></label></dt>
                     <dd><input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" ></dd>
                   </dl>
@@ -856,8 +853,6 @@ function woohv_my_plugin_options() {
               <fieldset>
                   <div class="options_group">
                     <dl>
-                      <dt><label for="wo_di_video_id_edit"><?php echo __("Name","html5_video") ?></label></dt>
-                      <dd><input class="wo_di_form_input" id="wo_di_video_id_edit" name="wo_di_video_id_edit" type="text"  value=""/></dd>
                       <dt><label for="wo_di_video_title_edit"><?php echo __("Title for video","html5_video")?></label></dt>
                       <dd><input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" /></dd>
                     </dl>

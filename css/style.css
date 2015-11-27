@@ -38,7 +38,11 @@ p.form-field._tab_video_field{
    width: 100%;
 }
 div#video_tab{
-   padding-bottom: 15px;
+   padding: 0 5px 15px 0;
+}
+div#video_tab > div{
+  box-sizing: border-box;
+  padding-left: 10px;
 }
 .plugin-copyright {
    font-size: 10px;
@@ -189,3 +193,19 @@ form.html5_video{
 }
 
 #woocommerce-product-data ul.product_data_tabs li.html5_video a:before{content:"\e600"; font-family: 'icomoon'}
+/*#woocommerce-product-data ul.product_data_tabs li.html5_video a:before{content:none;}*/
+
+.ui-icon{
+ cursor: pointer; 
+}
+
+.wohv-description-container .wohv-title{
+  margin: 0;
+}
+.wohv-description-container .wohv-description{
+  margin-bottom: 15px;
+  padding: 0;
+}
+#button_add_video{
+  margin-top: 10px;
+}
