@@ -3,8 +3,8 @@
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 3.0.1
-Tested up to: 4.0.1
-Stable tag: 1.5.2
+Tested up to: 4.4
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,3 +98,10 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 = 1.5.2 =
 * Fix of video icon in product addition and edition pages.
 * Creation of [Github repository with the plugin code](https://github.com/Webilop/woocommerce-html5-video).
+
+= 1.5.3 =
+* Deletion of useless name property in video management for products.
+* Replacement of HTML editor by tinymce editor with default WordPress settings in modal to add videos in products.
+* Now users can use a custom title for the video tab.
+* Replacement of action icons in video management for products.
+
