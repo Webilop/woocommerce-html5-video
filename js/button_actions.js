@@ -458,6 +458,9 @@ jQuery(document).ready(function()
         jQuery( "#dialog_form_add_video" ).dialog( "open" );
         return false;
       });
+      
+      jQuery( "#table-video-sortable" ).sortable();
+      jQuery( "#table-video-sortable" ).disableSelection();
     });
 
 

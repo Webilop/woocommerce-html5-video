@@ -326,6 +326,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         wp_enqueue_style('thickbox');
         wp_enqueue_script("jquery-ui-core");
         wp_enqueue_script("jquery-ui-dialog");
+        wp_enqueue_script("jquery-ui-sortable");
 
         wp_register_script('jquery-validate', plugins_url('js/jquery.validate.min.js', __FILE__));
         wp_enqueue_script('jquery-validate');
@@ -362,7 +363,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $type=$video->type;
             $name=$video->name;
             //$formats=get_post_meta($post->ID, 'wo_di_video_product_formats_'.$i, true);
-            $class=($i%2==0) ? "class='alternate'":"";
+            //$class=($i%2==0) ? "class='alternate ui-state-default'":"ui-state-default";
+            $class = "class='alternate ui-state-default'";
             if($type=="Embedded"){
               $videoEmbebido=$video->embebido;
               $height="-";
@@ -437,7 +439,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     <th>'.__("Actions").'</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="table-video-sortable">
                    '.$tableBody.'
                   </tbody>
                 </table>';
