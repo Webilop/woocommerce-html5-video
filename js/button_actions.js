@@ -415,10 +415,10 @@ jQuery(document).ready(function()
               }
               var number_of_videos=jQuery("#wo_di_number_of_videos").val();
               number_of_videos++;
-              var classColumn="";
-              if((number_of_videos%2)!=0){
+              var classColumn="class='alternate ui-state-default'";
+              /*if((number_of_videos%2)!=0){
                 classColumn="class='alternate'";
-              }
+              }*/
 
               var title=jQuery("#wo_di_video_title").val();
               var video="<tr id='wo_di_video_product_"+number_of_videos+"' "+classColumn+">";
