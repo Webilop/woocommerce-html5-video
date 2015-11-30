@@ -785,7 +785,9 @@ function woohv_my_plugin_options() {
   function enqueue_media_uploader()
   {
       wp_enqueue_media();
-      wp_enqueue_script("media-upload-demo", plugin_dir_url(__FILE__) . 'index.js', array("jquery"));
+      //wp_enqueue_script("media-upload-demo", plugin_dir_url(__FILE__) . 'index.js', array("jquery"));
+      wp_enqueue_script("media-upload-demo", plugins_url('js/jquery.validate.min.js', __FILE__), array("jquery"));
+      //wp_register_script('jquery-validate', plugins_url('js/jquery.validate.min.js', __FILE__));
   }
 
   add_action("admin_enqueue_scripts", "enqueue_media_uploader");
