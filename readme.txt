@@ -2,9 +2,9 @@
 
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
-Requires at least: 3.0.1
+Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 > #### IMPORTANT:
 > If your plugin has a version less than 1.5.0, then it is highly recommended to create a backup of your database before upgrade.
+> From version 1.5.4 of WooCommerce HTML5 Video, it is required WordPress 4.0 at least.
 
 > #### Collaboration
 > [The plugin is available in Github](https://github.com/Webilop/woocommerce-html5-video). We receive patches to fix bugs and translation files.
@@ -104,4 +105,8 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Replacement of HTML editor by tinymce editor with default WordPress settings in modal to add videos in products.
 * Now users can use a custom title for the video tab.
 * Replacement of action icons in video management for products.
+
+= 1.5.4 =
+* Sorting videos in products is now available.
+* Change of media uploader modal to link videos to products.
 
