@@ -475,7 +475,7 @@ jQuery(document).ready(function()
               video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
-              video+="<td><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span><span class='ui-icon ui-icon-circle-triangle-s' onclick='edit_row(this)'></span></td>";
+              video+="<td><span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
