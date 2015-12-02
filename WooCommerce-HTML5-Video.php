@@ -330,6 +330,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         wp_enqueue_style('thickbox');
         wp_enqueue_script("jquery-ui-core");
         wp_enqueue_script("jquery-ui-dialog");
+        wp_enqueue_script("jquery-ui-sortable");
 
         wp_register_script('jquery-validate', plugins_url('js/jquery.validate.min.js', __FILE__));
         wp_enqueue_script('jquery-validate');
@@ -365,7 +366,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $type=$video->type;
             //$name=$video->name;
             //$formats=get_post_meta($post->ID, 'wo_di_video_product_formats_'.$i, true);
-            $class=($i%2==0) ? "class='alternate'":"";
+            //$class=($i%2==0) ? "class='alternate ui-state-default'":"ui-state-default";
+            $class = "class='alternate ui-state-default'";
             if($type=="Embedded"){
               $videoEmbebido=$video->embebido;
               $height="-";
@@ -436,7 +438,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     <th>'.__("Actions").'</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="table-video-sortable">
                    '.$tableBody.'
                   </tbody>
                 </table>';
@@ -529,7 +531,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           <script type="text/javascript">
             /* <![CDATA[ */
             var win = window.dialogArguments || opener || parent || top;
-
+            
             win.jQuery( '#<?php echo $name_input; ?>' ).val('<?php echo $url; ?>');
             win.tb_remove();
             /* ]]> */
@@ -780,6 +782,16 @@ function woohv_my_plugin_options() {
     wp_enqueue_script( 'woohv-scripts' );
   }
   add_action( 'admin_enqueue_scripts', 'woohv_add_video_scripts' );
+  
+  function enqueue_media_uploader()
+  {
+      wp_enqueue_media();
+      //wp_enqueue_script("media-upload-demo", plugin_dir_url(__FILE__) . 'index.js', array("jquery"));
+      wp_enqueue_script("media-upload-demo", plugins_url('js/jquery.validate.min.js', __FILE__), array("jquery"));
+      //wp_register_script('jquery-validate', plugins_url('js/jquery.validate.min.js', __FILE__));
+  }
+
+  add_action("admin_enqueue_scripts", "enqueue_media_uploader");
 
   /**
   * Set up localization
@@ -835,7 +847,7 @@ function woohv_my_plugin_options() {
                     <dd><input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value=""></dd>
                     <dt><label for="video_text_ogg"> Ogg </label><img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?php echo __("Supported by", "html5_video")?>' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" /></dt>
                     <dd><input class="wo_di_form_input" type="text" id="video_text_ogg" name="video_text_ogg" value=""></dd>
-                    <dd><input id="wo_di_upload_video" type="button" value="<?php echo __("Upload video","html5_video")?>" class="button tagadd">
+                    <dd><!--input id="wo_di_upload_video" type="button" value="<?php //echo __("Upload video","html5_video")?>" class="button tagadd"-->
                     <input id="wo_di_select_video" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd"></dd>
                     <dt><label for="width_video_woocommerce"> <?php echo __("Width","html5_video")?>: </label></dt>
                     <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce" name="width_video_woocommerce" value=""> </dd>
