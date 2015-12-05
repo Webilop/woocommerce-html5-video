@@ -417,7 +417,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                               <input type=hidden name='wo_di_video_mp4[]' value='$videoMp4' />
                               <input type=hidden name='wo_di_video_ogg[]' value='$videoOGG' />
                           <td><input type=hidden name='wo_di_video_active[]' value='".$video->active."' /><input type='checkbox' value='active' $checked onchange='update_input_active(this)'/></td>
-                          <td><span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span> <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>  </td>
+                          <td><span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'></span> <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span> <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>  </td>
                         </tr>";
           }
         }else{
@@ -861,7 +861,7 @@ function woohv_my_plugin_options() {
 
 
           <div id="dialog_form_edit_video" title="<?php echo __("Edit Video", 'html5_video') ?> ">
-              <form id="wo_di_form_edit_video" action="<?php echo admin_url( 'admin-ajax.php' )?>" onsubmit="return false;" method="post">
+            <form id="wo_di_form_edit_video" action="<?php echo admin_url( 'admin-ajax.php' )?>" onsubmit="return false;" method="post">
               <fieldset>
                   <div class="options_group">
                     <dl>
@@ -900,6 +900,12 @@ function woohv_my_plugin_options() {
               </div>
             </fieldset>
           </form>
+        </div>
+        
+        <div id="dialog_preview_video" title="<?php echo __("Preview Video", 'html5_video') ?> ">
+          <span id="title_preview_video"></span>
+          <div id="contenedor_video">
+          </div>
         </div>
           <?php
       }

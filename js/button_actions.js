@@ -81,6 +81,41 @@ function edit_row(obj){
 
   //jQuery("#wo_di_table_videos_html").deleteRow(i);
 }
+
+function preview_video(obj){
+  tr_edit=obj.parentNode.parentNode;
+  
+  var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
+  var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
+  //var id=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']").val();
+  var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
+  var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+  var embebido;
+  
+  jQuery("#title_preview_video").html("<h3>"+title+"</h3>");
+  
+  if(type=="Embedded"){
+    embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
+    jQuery("#contenedor_video").html(embebido);
+  }
+  else{
+    if(mp4 != ""){
+      embebido='<video width="560" height="315" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
+    }
+    else{
+      embebido='<video width="560" height="315" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
+    }
+    
+    jQuery("#contenedor_video").html(embebido);
+    
+    var video = jQuery('#current_video').get(0);
+    video.load();
+    video.play();
+  }
+  
+  jQuery( "#dialog_preview_video" ).dialog( "open" );
+}
+
 var form_add_video;
 var form_edit_video;
 
@@ -506,4 +541,21 @@ jQuery(document).ready(function()
       
       jQuery( "#table-video-sortable" ).sortable();
       jQuery( "#table-video-sortable" ).disableSelection();
+      
+      //preview
+      jQuery( "#dialog_preview_video").dialog({
+        autoOpen: false,
+        draggable: false ,
+        height: 550,
+        width: 565,
+        modal: false,
+        buttons: [
+          {
+            text: text_cancel_button,
+            click: function() {
+            //clean_inputs_edit();
+            jQuery( this ).dialog( "close" );
+            }
+          }]
+        });
     });
