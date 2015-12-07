@@ -1,6 +1,7 @@
 var text_add_button;
 var text_edit_button;
 var text_cancel_button;
+var text_close_button;
 var text_error_min_html;
 var text_error_insert_html;
 var text_error_id;
@@ -81,6 +82,44 @@ function edit_row(obj){
 
   //jQuery("#wo_di_table_videos_html").deleteRow(i);
 }
+
+function preview_video(obj){
+  tr_edit=obj.parentNode.parentNode;
+  
+  var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
+  var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
+  //var id=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']").val();
+  var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
+  var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+  var embebido;
+  
+  //jQuery("#dialog_preview_video").attr('title', "Hola mundo cruel");
+  jQuery("#dialog_preview_video").dialog('option', 'title', 'Preview Video - '+title);
+  
+  //jQuery("#title_preview_video").html("<h3>"+title+"</h3>");
+  
+  if(type=="Embedded"){
+    embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
+    jQuery("#contenedor_video").html(embebido);
+  }
+  else{
+    if(mp4 != ""){
+      embebido='<video width="560" height="315" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
+    }
+    else{
+      embebido='<video width="560" height="315" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
+    }
+    
+    jQuery("#contenedor_video").html(embebido);
+    
+    var video = jQuery('#current_video').get(0);
+    video.load();
+    video.play();
+  }
+  
+  jQuery( "#dialog_preview_video" ).dialog( "open" );
+}
+
 var form_add_video;
 var form_edit_video;
 
@@ -475,7 +514,7 @@ jQuery(document).ready(function()
               video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
-              video+="<td><span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
+              video+="<td><span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'> </span> <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
@@ -506,4 +545,20 @@ jQuery(document).ready(function()
       
       jQuery( "#table-video-sortable" ).sortable();
       jQuery( "#table-video-sortable" ).disableSelection();
+      
+      //preview
+      jQuery( "#dialog_preview_video").dialog({
+        autoOpen: false,
+        draggable: false ,
+        width: 650,
+        modal: false,
+        buttons: [
+          {
+            text: text_close_button,
+            click: function() {
+            //clean_inputs_edit();
+            jQuery( this ).dialog( "close" );
+            }
+          }]
+        });
     });
