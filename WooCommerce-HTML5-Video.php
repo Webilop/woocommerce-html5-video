@@ -316,6 +316,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           var text_add_button = "<?php echo __("Add","html5_video"); ?>" ;
           var text_edit_button = "<?php echo __("Edit","html5_video"); ?>" ;
           var text_cancel_button = "<?php echo __("Cancel","html5_video"); ?>" ;
+          var text_close_button = "<?php echo __("Close","html5_video"); ?>" ;
           var text_error_min_html = "<?php echo __("It requires at least one video","html5_video"); ?>" ;
           var text_error_insert_html = "<?php echo __("Embedded code is required","html5_video"); ?>" ;
           var text_error_id = "<?php echo __("The Name is required","html5_video"); ?>" ;
@@ -903,7 +904,7 @@ function woohv_my_plugin_options() {
         </div>
         
         <div id="dialog_preview_video" title="<?php echo __("Preview Video", 'html5_video') ?> ">
-          <span id="title_preview_video"></span>
+          <!--span id="title_preview_video"></span-->
           <div id="contenedor_video">
           </div>
         </div>

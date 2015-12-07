@@ -209,3 +209,8 @@ form.html5_video{
 #button_add_video{
   margin-top: 10px;
 }
+#contenedor_video{
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
