@@ -556,8 +556,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
       public function product_save_data($post_id, $post) {
 
-        $tab_video = $_POST['_tab_video'];
-        $radio_video_embebido = $_POST['wo_di_tipo_video'];
         //update the videos
         $number_of_videos = $_POST['wo_di_number_of_videos'];
         //update he new videos
@@ -573,10 +571,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
           $video_ogg=$_POST['wo_di_video_ogg'];
           $video_width=$_POST['wo_di_video_widths'];
           $video_height=$_POST['wo_di_video_heights'];
-          $video_ids=$_POST['wo_di_video_ids'];
           $video_active=$_POST['wo_di_video_active'];
           foreach ($video_types as $key => $type) {
-            $arrayJson[]=array(//"name"=>$video_ids[$key],
+            $arrayJson[]=array(
                               "type"=>$type,"title"=>$video_titles[$key],
                               "width"=>$video_width[$key],"height"=>$video_height[$key],"embebido"=>$video_embebido[$key],
                               "mp4"=>$video_mp4[$key],"ogg"=>$video_ogg[$key],"active"=>$video_active[$key]);
