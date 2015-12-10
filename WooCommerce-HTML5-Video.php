@@ -45,6 +45,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             delete_option( 'wo_di_config_video_height' );
             delete_option( 'wo_di_config_video_width' );
             delete_option( 'wo_di_config_video_tab_name' );
+            delete_option( 'wo_di_video_size_forcing' );
           }
       }
 
@@ -383,6 +384,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
               $width=$video->width;
               if($height=="" && $width==""){
                  $dimension="Default";
+                 $width = get_option('wo_di_config_video_width');
+                 $height = get_option('wo_di_config_video_height');
               }else{
                $dimension=$height." X ".$width;
               }
@@ -651,6 +654,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
    register_setting( 'dimensions_group', 'wo_di_config_video_height', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_config_video_tab_name' );
    register_setting( 'dimensions_group', 'wo_di_video_hide_tab', 'intval' );
+   register_setting( 'dimensions_group', 'wo_di_video_size_forcing', 'intval' );
 
   }
   add_action( 'admin_init', 'woohv_register_my_setting' );
@@ -692,7 +696,7 @@ function woohv_my_plugin_options() {
       wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
    }?>
    <div class="wrap"><?php screen_icon(); ?><h2>WooCommerce Html5 Video Settings</h2>
-   <form class="html5_video" method="post" action="options.php">
+   <form class="html5_video" method="post" action="options.php" onsubmit="return check_form_settings();">
    <?php settings_fields( 'dimensions_group' );
    do_settings_fields( 'dimensions_group','html5-video-settings' )?>
    <p><strong><?php echo __('Configure the default video dimensions and the video tab name')?>:</strong></p>
@@ -703,17 +707,23 @@ function woohv_my_plugin_options() {
         </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Video Width')?>:</th>
-        <td><input type="text" name="wo_di_config_video_width" value="<?php echo get_option('wo_di_config_video_width'); ?>" /></td>
+        <td><input type="text" name="wo_di_config_video_width" id="wo_di_config_video_width" value="<?php echo get_option('wo_di_config_video_width'); ?>" /></td>
         </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Video Height')?>:</th>
-        <td><input type="text" name="wo_di_config_video_height" value="<?php echo get_option('wo_di_config_video_height'); ?>" /></td>
+        <td><input type="text" name="wo_di_config_video_height" id="wo_di_config_video_height" value="<?php echo get_option('wo_di_config_video_height'); ?>" /></td>
+        </tr>
+        <tr valign="top">
+        <th scope="row"><?php echo __('Force video dimensions (it does not work with iframes)','html5_video')?>:</th>
+        <td><input type="checkbox" name="wo_di_video_size_forcing" id="wo_di_video_size_forcing" <?php if(get_option('wo_di_video_size_forcing')==1){echo "checked";} ?> value="1" /></td>
         </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Show video tab if there is no video','html5_video')?>:</th>
         <td><input type="checkbox" name="wo_di_video_hide_tab" <?php if(get_option('wo_di_video_hide_tab')==1){echo "checked";} ?> value="1" /></td>
         </tr>
     </table>
+    <span id="span_errors"></span>
+    
    <?php submit_button(); ?>
    <span><a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/" target="_blank">WooCommerce Html5 Video Documentation</a></span>
    </form>
@@ -848,9 +858,9 @@ function woohv_my_plugin_options() {
                     <dd><!--input id="wo_di_upload_video" type="button" value="<?php //echo __("Upload video","html5_video")?>" class="button tagadd"-->
                     <input id="wo_di_select_video" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd"></dd>
                     <dt><label for="width_video_woocommerce"> <?php echo __("Width","html5_video")?>: </label></dt>
-                    <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce" name="width_video_woocommerce" value=""> </dd>
+                    <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce" name="width_video_woocommerce" placeholder="<?php echo get_option('wo_di_config_video_width'); ?>" <?php if(get_option('wo_di_video_size_forcing')==1) echo "value='".get_option('wo_di_config_video_width')."' readonly"; ?> > </dd>
                     <dt><label for="height_video_woocommerce"> <?php echo __("Height","html5_video")?>: </label></dt>
-                    <dd><input type="text" class="wo_di_form_input" id="height_video_woocommerce" name="height_video_woocommerce" value=""> </dd>
+                    <dd><input type="text" class="wo_di_form_input" id="height_video_woocommerce" name="height_video_woocommerce" placeholder="<?php echo get_option('wo_di_config_video_width'); ?>" <?php if(get_option('wo_di_video_size_forcing')==1) echo "value='".get_option('wo_di_config_video_height')."' readonly"; ?> > </dd>
                   </dl>
                 </div>
              </fieldset>
@@ -891,9 +901,9 @@ function woohv_my_plugin_options() {
                   <dd><input id="wo_di_upload_video_edit" type="button" value="<?php echo __("Upload video","html5_video")?>" class="button tagadd">
                   <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd"></dd>
                   <dt><label for="width_video_woocommerce_edit"> <?php echo __("Width","html5_video")?>: </label></dt>
-                  <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" value=""> </dd>
+                  <dd><input type="text" class="wo_di_form_input" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" placeholder="<?php echo get_option('wo_di_config_video_width'); ?>" <?php if(get_option('wo_di_video_size_forcing')==1) echo "value='".get_option('wo_di_config_video_width')."' readonly"; ?> > </dd>
                   <dt><label for="height_video_woocommerce_edit"> <?php echo __("Height","html5_video")?>: </label></dt>
-                  <dd><input type="text" class="wo_di_form_input" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" value=""> </dd>
+                  <dd><input type="text" class="wo_di_form_input" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" placeholder="<?php echo get_option('wo_di_config_video_width'); ?>" <?php if(get_option('wo_di_video_size_forcing')==1) echo "value='".get_option('wo_di_config_video_height')."' readonly"; ?> > </dd>
                 </dl>
               </div>
             </fieldset>
