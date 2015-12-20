@@ -555,8 +555,12 @@ jQuery(document).ready(function()
             text: text_close_button,
             click: function() {
             //clean_inputs_edit();
+            jQuery("#contenedor_video").html("");
             jQuery( this ).dialog( "close" );
             }
-          }]
+          }],
+         close: function(){
+           jQuery("#contenedor_video").html("");
+          }
         });
     });
