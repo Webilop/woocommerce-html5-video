@@ -88,15 +88,13 @@ function preview_video(obj){
   
   var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
-  //var id=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']").val();
   var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
   var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+  var width= jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
+  var height= jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
   var embebido;
   
-  //jQuery("#dialog_preview_video").attr('title', "Hola mundo cruel");
   jQuery("#dialog_preview_video").dialog('option', 'title', 'Preview Video - '+title);
-  
-  //jQuery("#title_preview_video").html("<h3>"+title+"</h3>");
   
   if(type=="Embedded"){
     embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
@@ -104,10 +102,10 @@ function preview_video(obj){
   }
   else{
     if(mp4 != ""){
-      embebido='<video width="560" height="315" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
+      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
     }
     else{
-      embebido='<video width="560" height="315" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
+      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
     }
     
     jQuery("#contenedor_video").html(embebido);

@@ -214,3 +214,7 @@ form.html5_video{
   margin-bottom: 20px;
   margin-top: 20px;
 }
+#span_errors{
+  color: red;
+  font-weight: bold;
+}
