@@ -139,10 +139,10 @@ form.html5_video{
     float: right;
 }
 
-.rating{
+/*.rating{
   overflow: hidden;
   display: inline-block;
-}
+}*/
 
 .rating-input{
   position: absolute;
