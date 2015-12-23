@@ -217,6 +217,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             $width_config = get_option('wo_di_config_video_width');
             $height_config = get_option('wo_di_config_video_height');
             $disable_iframe = get_option('wo_di_video_disable_iframe');
+            $size_forcing = get_option('wo_di_video_size_forcing');
             foreach ($videos as $video) {
               if($video->active==1){
                 if(!empty($video->title) && ($video->type!="Embedded" || ($video->type=="Embedded" && $disable_iframe==0))){
@@ -226,23 +227,32 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                   if($disable_iframe==0)
                     echo $video->embebido;
                 }else{
-                  if(empty($video->width)){
-                    if(!empty($width_config) && $width_config!=0){
-                     $width=$width_config;
-                    }else{
-                      $width=$this->width_video;
-                    }
-                  }else{
-                    $width=$video->width;
+                  $width = 0;
+                  $height = 0;
+                
+                  if($size_forcing == 1){
+                    $width = $width_config;
+                    $height = $height_config;
                   }
-                  if(empty($video->height)){
-                    if(!empty($height_config) && $height_config!=0){
-                     $height=$height_config;
+                  else{
+                    if(empty($video->width)){
+                      if(!empty($width_config) && $width_config!=0){
+                      $width=$width_config;
+                      }else{
+                        $width=$this->width_video;
+                      }
                     }else{
-                      $height='';
+                      $width=$video->width;
                     }
-                  }else{
-                    $height=$video->height;
+                    if(empty($video->height)){
+                      if(!empty($height_config) && $height_config!=0){
+                      $height=$height_config;
+                      }else{
+                        $height='';
+                      }
+                    }else{
+                      $height=$video->height;
+                    }
                   }
                   $cadena_tag_video_html5 = '<video width="' .  $width . '" height="' . $height . '" controls>';
                   if($video->mp4!=""){
