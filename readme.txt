@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.5.4
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,3 +110,7 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Sorting videos in products is now available.
 * Change of media uploader modal to link videos to products.
 
+= 1.6 =
+* Addition of preview option to watch videos in product management page.
+* Addition of feature to force size dimensions of all videos in products.
+* Fix of bug in placeholder of size values in product video addition.
