@@ -139,10 +139,10 @@ form.html5_video{
     float: right;
 }
 
-.rating{
+/*.rating{
   overflow: hidden;
   display: inline-block;
-}
+}*/
 
 .rating-input{
   position: absolute;
@@ -208,4 +208,13 @@ form.html5_video{
 }
 #button_add_video{
   margin-top: 10px;
+}
+#contenedor_video{
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+#span_errors{
+  color: red;
+  font-weight: bold;
 }
