@@ -47,6 +47,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             delete_option( 'wo_di_config_video_tab_name' );
             delete_option( 'wo_di_video_size_forcing' );
             delete_option( 'wo_di_video_disable_iframe' );
+            delete_option( 'wo_di_config_video_description' );
           }
       }
 
@@ -209,7 +210,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
       public function video_product_tabs_panel() {
         global $product;
         $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);
-        echo '<div> '.$cadena_editormce.'</div>';
+        $disable_desc = get_option('wo_di_config_video_description');
+        
+        if($disable_desc == 0)
+          echo '<div> '.$cadena_editormce.'</div>';
+          
         if ($this->product_has_video_tabs($product)) {
 
           $videos=  json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
@@ -359,6 +364,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
 
         $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
+        
+        $disable_desc = get_option('wo_di_config_video_description');
+        
+        if($disable_desc == 0):
         //tynimce editor descrption of product
         ?>
         <div class="options_group wohv-description-container">
@@ -371,6 +380,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             </div>
         </div>
         <?php
+        endif;
+        
         $number_of_videos=get_post_meta($thepostid, 'wo_di_number_of_videos', true);
         $tableBody="";
         if(!empty($number_of_videos)){
@@ -678,6 +689,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
    register_setting( 'dimensions_group', 'wo_di_video_hide_tab', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_video_size_forcing', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_video_disable_iframe', 'intval' );
+   register_setting( 'dimensions_group', 'wo_di_config_video_description', 'intval' );
 
   }
   add_action( 'admin_init', 'woohv_register_my_setting' );
@@ -748,7 +760,10 @@ function woohv_my_plugin_options() {
         <th scope="row"><?php echo __('Disable embedded videos with iframes','html5_video')?>:</th>
         <td><input type="checkbox" name="wo_di_video_disable_iframe" <?php if(get_option('wo_di_video_disable_iframe')==1){echo "checked";} ?> value="1" /></td>
         </tr>
-        
+        <tr valign="top">
+        <th scope="row"><?php echo __('Disable general video description','html5_video')?>:</th>
+        <td><input type="checkbox" name="wo_di_config_video_description" <?php if(get_option('wo_di_config_video_description')==1){echo "checked";} ?> value="1" /></td>
+        </tr>
         
     </table>
     <span id="span_errors"></span>
