@@ -47,6 +47,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             delete_option( 'wo_di_config_video_tab_name' );
             delete_option( 'wo_di_video_size_forcing' );
             delete_option( 'wo_di_video_disable_iframe' );
+            delete_option( 'wo_di_config_video_tab_position' );
           }
       }
 
@@ -181,6 +182,48 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        /** Add extra tabs to front end product page **/
         function video_product_tabs( $tabs ) {
           global $post, $product;
+          
+          $index = get_option('wo_di_config_video_tab_position');
+          
+          /* Due to it is unknown the priority of the other tabs, to locate tab video
+             according to the index specified by the user in the configuration, we order
+             the tasks according to their priority.*/
+          $aux = array();
+          
+          foreach ($tabs as $key => $row)
+            $aux[$key] = $row['priority'];
+          
+          array_multisort($aux, SORT_ASC, $tabs);
+          
+          /* Now, we assign a new priority to each tab according to the previous
+             priority. In this way, the element with less priority (the element to
+             appear first) is assigned to priority 0, and the next elemento to
+             priority 5. Finally, the tab video is assigned to a priority associated
+             to the index specified by the user in the configuration, i.e. 
+             5*wo_di_config_video_tab_position */
+          
+          $acum_priority = 0;
+          $priority_video = 0;
+          $current = 0;
+          
+          foreach ($tabs as $key => $row) {
+            if($current != $index){
+              $tabs[$key]["priority"] = $acum_priority;
+            }
+            else{
+              $tabs[$key]["priority"] = $acum_priority+5;
+              $priority_video = $acum_priority;
+              $acum_priority +=5;
+            }
+            
+            $acum_priority += 5;
+            $current++;
+          }
+          
+          if($index >= $current)
+            $priority_video = $acum_priority;
+          
+          
           if($this->product_has_video_tabs($product) || get_option("wo_di_video_hide_tab")==1){
             $tabname_config = strcmp(get_option('wo_di_config_video_tab_name'), "") ? get_option('wo_di_config_video_tab_name') : "Video";
           
@@ -192,14 +235,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
             if ( $custom_tab_options['enabled'] != 'no' ){
                     $tabs['html5_video'] = array(
-                        //'title'    => __('Video','html5_video'),
                         'title'    => __($tabname_config,'html5_video'),
-                        'priority' => 25,
+                        'priority' => $priority_video,
                         'callback' => 'woohv_htmlvideotabcontent',
                         'content'  => $custom_tab_options['content']
                       );
               }
           }
+          
           return $tabs;
         }
 
@@ -675,6 +718,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
    register_setting( 'dimensions_group', 'wo_di_config_video_width', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_config_video_height', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_config_video_tab_name' );
+   register_setting( 'dimensions_group', 'wo_di_config_video_tab_position', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_video_hide_tab', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_video_size_forcing', 'intval' );
    register_setting( 'dimensions_group', 'wo_di_video_disable_iframe', 'intval' );
@@ -739,6 +783,10 @@ function woohv_my_plugin_options() {
         <tr valign="top">
         <th scope="row"><?php echo __('Force video dimensions (it does not work with iframes)','html5_video')?>:</th>
         <td><input type="checkbox" name="wo_di_video_size_forcing" id="wo_di_video_size_forcing" <?php if(get_option('wo_di_video_size_forcing')==1){echo "checked";} ?> value="1" /></td>
+        </tr>
+        <tr valign="top">
+        <th scope="row"><?php echo __('Video Tab Position')?>:</th>
+        <td><input type="text" name="wo_di_config_video_tab_position" value="<?php if(strcmp(get_option('wo_di_config_video_tab_position'), "")) echo get_option('wo_di_config_video_tab_position'); else echo "1"; ?>" /></td>
         </tr>
         <tr valign="top">
         <th scope="row"><?php echo __('Show video tab if there is no video','html5_video')?>:</th>
