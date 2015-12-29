@@ -208,7 +208,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
        */
       public function video_product_tabs_panel() {
         global $product;
-        $cadena_editormce=get_post_meta($product->id, 'wo_di_editormce_video', true);
+        $cadena_editormce=htmlspecialchars_decode(get_post_meta($product->id, 'wo_di_editormce_video', true));
         echo '<div> '.$cadena_editormce.'</div>';
         if ($this->product_has_video_tabs($product)) {
 
@@ -366,8 +366,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             <p class="wohv-description"><?php echo __("It will appear above the videos in the video tab","html5_video"); ?></p>
             
             <div>
-              <?php wp_editor($cadena_editormce, "wo_di_editormce_video", array('textarea_name' => 'wo_di_editormce_video',
-                                                                                'textarea_rows' => 10)); ?>
+              <?php
+                wp_editor(htmlspecialchars_decode( $cadena_editormce ), "wo_di_editormce_video", 
+                          array('textarea_name' => 'wo_di_editormce_video',
+                                'wpautop'       => false,
+                                'textarea_rows' => 10));                                                             
+              ?>
             </div>
         </div>
         <?php
