@@ -183,7 +183,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         function video_product_tabs( $tabs ) {
           global $post, $product;
           
-          $index = get_option('wo_di_config_video_tab_position');
+          $index = ((get_option('wo_di_config_video_tab_position')==false && get_option('wo_di_config_video_tab_position') != 0) || get_option('wo_di_config_video_tab_position')=="") ? 1 : get_option('wo_di_config_video_tab_position');
           
           /* Due to it is unknown the priority of the other tabs, to locate tab video
              according to the index specified by the user in the configuration, we order
