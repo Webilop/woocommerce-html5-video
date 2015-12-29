@@ -364,13 +364,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
 
         $cadena_editormce=get_post_meta($thepostid, 'wo_di_editormce_video', true);
-        
         $disable_desc = get_option('wo_di_config_video_description');
         
-        if($disable_desc == 0):
         //tynimce editor descrption of product
         ?>
-        <div class="options_group wohv-description-container">
+        <div class="options_group wohv-description-container" <?php echo ($disable_desc==0) ? "" : "style='display:none;'"; ?> >
             <h4 class="wohv-title"><?php echo __("Description", "html5_video"); ?></h4>
             <p class="wohv-description"><?php echo __("It will appear above the videos in the video tab","html5_video"); ?></p>
             
@@ -380,7 +378,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             </div>
         </div>
         <?php
-        endif;
         
         $number_of_videos=get_post_meta($thepostid, 'wo_di_number_of_videos', true);
         $tableBody="";
