@@ -184,7 +184,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         function video_product_tabs( $tabs ) {
           global $post, $product;
           
-          $index = get_option('wo_di_config_video_tab_position');
+          $index = ((get_option('wo_di_config_video_tab_position')==false && get_option('wo_di_config_video_tab_position') != 0) || get_option('wo_di_config_video_tab_position')=="") ? 1 : get_option('wo_di_config_video_tab_position');
           
           /* Due to it is unknown the priority of the other tabs, to locate tab video
              according to the index specified by the user in the configuration, we order
@@ -792,7 +792,7 @@ function woohv_my_plugin_options() {
         <td><input type="checkbox" name="wo_di_video_size_forcing" id="wo_di_video_size_forcing" <?php if(get_option('wo_di_video_size_forcing')==1){echo "checked";} ?> value="1" /></td>
         </tr>
         <tr valign="top">
-        <th scope="row"><?php echo __('Video Tab Position')?>:</th>
+        <th scope="row"><?php echo __('Video Tab Position (0-index)')?>:</th>
         <td><input type="text" name="wo_di_config_video_tab_position" value="<?php if(strcmp(get_option('wo_di_config_video_tab_position'), "")) echo get_option('wo_di_config_video_tab_position'); else echo "1"; ?>" /></td>
         </tr>
         <tr valign="top">
