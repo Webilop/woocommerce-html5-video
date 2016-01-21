@@ -24,9 +24,11 @@ function clean_inputs_edit(){
   jQuery("#wo_di_video_title_edit").val("");
   jQuery("#height_video_woocommerce_edit").val("");
   jQuery("#width_video_woocommerce_edit").val("");
+  jQuery("#video_text_url_edit").val("");
   jQuery("#video_text_mp4_edit").val("");
   jQuery("#video_text_ogg_edit").val("");
   jQuery("#video_text_embebido_edit").val("");
+  jQuery("#_checkbox_url_edit").attr('checked', false);
   jQuery("#_checkbox_mp4_edit").attr('checked', false);
   jQuery("#_checkbox_OGG_edit").attr('checked', false);
   jQuery("#wo_di_video_embebido_edit").attr('checked', false);
@@ -45,42 +47,56 @@ function delete_row(obj){
 function edit_row(obj){
   clean_inputs_edit();
   tr_edit=obj.parentNode.parentNode;
-  
+
   var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
   var id=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']").val();
   jQuery("#wo_di_video_title_edit").val(title);
   jQuery("#wo_di_video_id_edit").val(id);
-  
-  add_flag=false;
-  
-  if(type=="Embedded"){
-    jQuery("#wo_di_video_embebido_edit").attr('checked', true);
-    var embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
-    jQuery("#video_text_embebido_edit").val(embebido);
-  }else{
-    jQuery("#wo_di_video_servidor_edit").attr('checked', true);
-    var height=jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
-    var width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
-    var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
-    var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
-    //var formats=jQuery(tr_edit).find("input[name='wo_di_video_formats[]']").val();
-    jQuery("#height_video_woocommerce_edit").val(height);
-    jQuery("#width_video_woocommerce_edit").val(width);
-    jQuery("#video_text_mp4_edit").val(mp4);
-    jQuery("#video_text_ogg_edit").val(ogg);
-    
-    if(mp4!=""){
-      jQuery("#_checkbox_mp4_edit").attr('checked', 'checked');
-    }
-    if(ogg!=""){
-      jQuery("#_checkbox_OGG_edit").attr('checked', 'checked');
-    }
-    //jQuery("#video_text_embebido_edit").val(embebido);
-  }
-  jQuery( "#dialog_form_edit_video" ).dialog( "open" );
 
-  //jQuery("#wo_di_table_videos_html").deleteRow(i);
+  add_flag=false;
+
+  switch (type) {
+    case 'Embedded':
+      jQuery("#wo_di_video_embebido_edit").attr('checked', true);
+      var embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
+      jQuery("#video_text_embebido_edit").val(embebido);
+      break;
+    case 'WP Library':
+      jQuery("#wo_di_video_servidor_edit").attr('checked', true);
+      var height=jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
+      var width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
+      var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
+      var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+      jQuery("#height_video_woocommerce_edit").val(height);
+      jQuery("#width_video_woocommerce_edit").val(width);
+
+      jQuery("#video_text_mp4_edit").val(mp4);
+      jQuery("#video_text_ogg_edit").val(ogg);
+
+      if(mp4!=""){
+        jQuery("#_checkbox_mp4_edit").attr('checked', 'checked');
+      }
+      if(ogg!=""){
+        jQuery("#_checkbox_OGG_edit").attr('checked', 'checked');
+      }
+      break;
+    case 'oEmbed':
+      jQuery('#wo_di_video_oembed_edit').attr('checked', true);
+      var height=jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
+      var width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
+      var url=jQuery(tr_edit).find("input[name='wo_di_video_url[]']").val();
+
+      jQuery('#height_video_woocommerce_edit').val(height);
+      jQuery('#width_video_woocommerce_edit').val(width);
+      jQuery('#video_text_url_edit').val(url);
+
+      if(url != '') {
+        jQuery('#_checkbox_url_edit').attr('checked', 'checked');
+      }
+      break;
+  }
+  jQuery('#dialog_form_edit_video').dialog('open');
 }
 
 function preview_video(obj){
@@ -153,6 +169,21 @@ function initiate_rules(){
         text_error_insert_html
     );
 
+  jQuery.validator.addMethod(
+    'insert_video_oembed_edit',
+    function(value, element) {
+      if(jQuery("#wo_di_video_oembed_edit").is(':checked')) {
+        if(jQuery("#video_text_url_edit").val() == '') {
+          return false;
+        }
+        jQuery("#video_text_url_edit").removeClass("error");
+        jQuery("#video_text_url_edit").siblings("p").remove();
+      }
+      return true;
+    },
+    text_error_insert_html
+  );
+
     jQuery.validator.addMethod(
         "insert_video_dimension_edit",
         function(value, element) {
@@ -188,6 +219,9 @@ function initiate_rules(){
       },
       video_text_ogg_edit:{
         insert_video_html_edit: true
+      },
+      video_text_url_edit:{
+        insert_video_oembed_edit: true
       },
       video_text_embebido_edit:{
         insert_video_embebido_edit:true
@@ -234,10 +268,25 @@ function initiate_rules(){
         text_error_insert_html
     );
 
+  jQuery.validator.addMethod(
+    'insert_video_oembed',
+    function(value, element) {
+      if(jQuery('#wo_di_video_oembed').is(':checked')) {
+        if(jQuery('#video_text_url').val() == '') {
+          return false;
+        }
+      }
+      jQuery('#video_text_url').removeClass('error');
+      jQuery('#video_text_url').siblings('p').remove();
+      return true;
+    },
+    text_error_insert_html
+  );
+
     jQuery.validator.addMethod(
         "insert_video_dimension",
         function(value, element) {
-          if(jQuery("#wo_di_video_servidor").is(':checked')){
+          if(jQuery("#wo_di_video_servidor").is(':checked') || jQuery('#wo_di_video_oembed').is(':checked')) {
             if(jQuery("#height_video_woocommerce").val()=="" && jQuery("#width_video_woocommerce").val()==""){
               jQuery("#height_video_woocommerce").removeClass("error");
               jQuery("#height_video_woocommerce").siblings("p").remove();
@@ -264,6 +313,9 @@ function initiate_rules(){
       },
     wo_di_tipo_video:{
       required: true
+      },
+      video_text_url: {
+        insert_video_oembed: true
       },
       video_text_mp4:{
         insert_video_html: true
@@ -299,10 +351,10 @@ function open_media_uploader_video()
         var video_icon = media_uploader.state().media.attachment.changed.icon;
         var video_title = media_uploader.state().media.attachment.changed.title;
         var video_desc = media_uploader.state().media.attachment.changed.description;
-        
+
         var extension = video_url.substring(video_url.lastIndexOf('.')+ 1, video_url.length);
         var win = window.dialogArguments || opener || parent || top;
-        
+
         if(extension=="mp4"){
           if(add_flag)
             win.jQuery('#video_text_mp4').val(video_url);
@@ -320,8 +372,9 @@ function open_media_uploader_video()
     media_uploader.open();
 }
 
+
 jQuery(document).ready(function()
-    { 
+    {
         initiate_rules();
         /*jQuery('#wo_di_upload_video_edit').click(function()
         {
@@ -333,7 +386,7 @@ jQuery(document).ready(function()
         {
             //tb_show('Select Video', 'media-upload.php?type=video&context=selectVideo&action_video=edit&tab=library&TB_iframe=true');
             open_media_uploader_video();
-            
+
             return false;
         });
 
@@ -368,71 +421,87 @@ jQuery(document).ready(function()
             text: text_edit_button,
             click: function() {
             jQuery('#wo_di_form_edit_video').submit();
-              if(form_edit_video.valid()){
-              var formats;
-              var height;
-              var width;
-              var dimension;
-              var video_embebido="";
-              var video_mp4="";
-              var video_ogg="";
-              if(jQuery('#wo_di_video_embebido_edit').is(':checked')){
-                type="Embedded";
-                formats="-";
-                height="-";
-                width="-";
-                dimension="-";
-                video_embebido=jQuery("#video_text_embebido_edit").val();
-              }else{
-                type="WP Library";
-                height=jQuery("#height_video_woocommerce_edit").val();
-                width=jQuery("#width_video_woocommerce_edit").val();
-                if(height=="" && width==""){
-                 dimension="Default";
-                }else{
-                 dimension=height+" X "+width;
+              if(form_edit_video.valid()) {
+                var formats;
+                var height;
+                var width;
+                var dimension;
+                var video_embebido="";
+                var video_url="";
+                var video_mp4="";
+                var video_ogg="";
+                if(jQuery('#wo_di_video_embebido_edit').is(':checked')) {
+                  type="Embedded";
+                  formats="-";
+                  height="-";
+                  width="-";
+                  dimension="-";
+                  video_embebido=jQuery("#video_text_embebido_edit").val();
                 }
-                video_mp4=jQuery("#video_text_mp4_edit").val();
-                video_ogg=jQuery("#video_text_ogg_edit").val();
-                var b_video=false;
-                if(video_mp4!=""){
-                  formats=" MP4";
-                  b_video=true;
-                }
-                if(video_ogg!=""){
-                  if(b_video){
-                    formats+=", OGG"
+                if(jQuery('#wo_di_video_servidor_edit').is(':checked')) {
+                  type="WP Library";
+                  height=jQuery("#height_video_woocommerce_edit").val();
+                  width=jQuery("#width_video_woocommerce_edit").val();
+                  if(height=="" && width==""){
+                   dimension="Default";
                   }else{
-                    formats=" OGG";
+                   dimension=height+" X "+width;
+                  }
+                  video_mp4=jQuery("#video_text_mp4_edit").val();
+                  video_ogg=jQuery("#video_text_ogg_edit").val();
+                  var b_video=false;
+                  if(video_mp4!=""){
+                    formats=" MP4";
+                    b_video=true;
+                  }
+                  if(video_ogg!=""){
+                    if(b_video){
+                      formats+=", OGG"
+                    }else{
+                      formats=" OGG";
+                    }
                   }
                 }
+                if(jQuery('#wo_di_video_oembed_edit').is(':checked')) {
+                  type = 'oEmbed';
+                  height = jQuery("#height_video_woocommerce_edit").val();
+                  width = jQuery("#width_video_woocommerce_edit").val();
+                  if( height == '' && width == '') {
+                   dimension = 'Default';
+                  }else{
+                   dimension = height + " X " + width;
+                  }
+                  video_url = jQuery('#video_text_url_edit').val();
+                  formats="-";
+                }
+                var title=jQuery("#wo_di_video_title_edit").val();
+                var id=jQuery("#wo_di_video_id_edit").val();
+                var input_ids=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']");
+                jQuery(input_ids).val(id);
+                jQuery(input_ids).next().html(id);
+                var input_titles=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']");
+                jQuery(input_titles).val(title);
+                jQuery(input_titles).next().html(title);
+                var input_types=jQuery(tr_edit).find("input[name='wo_di_video_types[]']");
+                jQuery(input_types).val(type);
+                jQuery(input_types).next().html(type);
+                jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val(video_embebido);
+                var input_formats=jQuery(tr_edit).find("input[name='wo_di_video_formats[]']");
+                jQuery(input_formats).val(formats);
+                jQuery(input_formats).next().html(formats);
+                jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val(height);
+                var input_width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']");
+                input_width.val(width);
+                jQuery(input_width).next().html(dimension);
+                jQuery(tr_edit).find("input[name='wo_di_video_url[]']").val(video_url);
+                jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val(video_mp4);
+                jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val(video_ogg);
+                jQuery( this ).dialog( "close" );
+              } else {
+                form_edit_video.showErrors();
               }
-              var title=jQuery("#wo_di_video_title_edit").val();
-              var id=jQuery("#wo_di_video_id_edit").val();
-              var input_ids=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']");
-              jQuery(input_ids).val(id);
-              jQuery(input_ids).next().html(id);
-              var input_titles=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']");
-              jQuery(input_titles).val(title);
-              jQuery(input_titles).next().html(title);
-              var input_types=jQuery(tr_edit).find("input[name='wo_di_video_types[]']");
-              jQuery(input_types).val(type);
-              jQuery(input_types).next().html(type);
-              jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val(video_embebido);
-              var input_formats=jQuery(tr_edit).find("input[name='wo_di_video_formats[]']");
-              jQuery(input_formats).val(formats);
-              jQuery(input_formats).next().html(formats);
-              jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val(height);
-              var input_width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']");
-              input_width.val(width);
-              jQuery(input_width).next().html(dimension);
-              jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val(video_mp4);
-              jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val(video_ogg);
-              jQuery( this ).dialog( "close" );
-            }else{
-              form_edit_video.showErrors();
             }
-          }},
+          },
           {
             text: text_cancel_button,
             click: function() {
@@ -452,15 +521,15 @@ jQuery(document).ready(function()
           {
           text : text_add_button,
           click: function() {
-              var id=jQuery("#wo_di_video_id").val();
-              //console.log("***"+id);
-              jQuery('#wo_di_form_add_video').submit();
-              if(form_add_video.valid()){
+            var id=jQuery("#wo_di_video_id").val();
+            jQuery('#wo_di_form_add_video').submit();
+            if(form_add_video.valid()) {
               var formats;
               var height;
               var width;
               var dimension;
               var video_embebido="";
+              var videoUrl = '';
               var video_mp4="";
               var video_ogg="";
               if(jQuery('#video_embebido').is(':checked')){
@@ -470,7 +539,8 @@ jQuery(document).ready(function()
                 width="-";
                 dimension="-";
                 video_embebido=jQuery("#video_text_embebido").val();
-              }else{
+              }
+              if(jQuery('#wo_di_video_servidor').is(':checked')) {
                 type="WP Library";
                 height=jQuery("#height_video_woocommerce").val();
                 width=jQuery("#width_video_woocommerce").val();
@@ -479,6 +549,7 @@ jQuery(document).ready(function()
                 }else{
                  dimension=height+" X "+width;
                 }
+                videoUrl = jQuery('#video_text_url').val();
                 video_mp4=jQuery("#video_text_mp4").val();
                 video_ogg=jQuery("#video_text_ogg").val();
                 var b_video=false;
@@ -493,6 +564,18 @@ jQuery(document).ready(function()
                     formats=" OGG";
                   }
                 }
+              }
+              if(jQuery('#wo_di_video_oembed').is(':checked')){
+                type = 'oEmbed';
+                height = jQuery("#height_video_woocommerce").val();
+                width = jQuery("#width_video_woocommerce").val();
+                if(height == '' && width == '') {
+                 dimension = 'Default';
+                }else{
+                 dimension= height +" X " + width;
+                }
+                videoUrl = jQuery('#video_text_url').val();
+                formats = '-';
               }
               var number_of_videos=jQuery("#wo_di_number_of_videos").val();
               number_of_videos++;
@@ -509,6 +592,7 @@ jQuery(document).ready(function()
               video+="<td> <input type=hidden name='wo_di_video_formats[]' value='"+formats+"' /><span>"+formats+"</span></td>";
               video+="<td> <input type=hidden name='wo_di_video_heights[]' value='"+height+"' /><input type=hidden name='wo_di_video_widths[]' value='"+width+"' /><span>"+dimension+"</span></td>";
               video+="<input type=hidden name='wo_di_video_embebido[]'/ value='"+video_embebido+"' >";
+              video+="<input type=hidden name='wo_di_video_url[]' value='" + videoUrl + "' />";
               video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
@@ -516,10 +600,12 @@ jQuery(document).ready(function()
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
-            }else{
+            } else {
               form_add_video.showErrors();
             }
-          }},
+          }
+        }
+        ,
         {
           text:text_cancel_button,
           click: function() {
@@ -540,7 +626,7 @@ jQuery(document).ready(function()
         add_flag=true;
         return false;
       });
-      
+
       jQuery( "#table-video-sortable" ).sortable();
       jQuery( "#table-video-sortable" ).disableSelection();
       
