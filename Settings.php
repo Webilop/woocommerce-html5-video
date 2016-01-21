@@ -35,7 +35,7 @@ class Settings {
    * Function to add settngs link in plugins page
    * attached to: plugin_action_links_<plugin> filter
    */
-  function woohv_plugin_add_settings_link( $links ) {
+  public static function add_settings_link( $links ) {
     ob_start();
     ?>
     <a href="options-general.php?page=html5-video-settings">Settings</a>
