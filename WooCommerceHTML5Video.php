@@ -212,7 +212,12 @@ class WooCommerceHTML5Video {
 /*                               Other settings                               */
 /******************************************************************************/
 
-  public static function admin_scripts() {
+  public static function admin_scripts($hook) {
+    //check if a product page is displayed
+    global $post;
+    if( $hook != 'edit.php' && $hook != 'post.php' && $hook != 'post-new.php' && empty($post->post_type) && 'product' != $post->post_type)
+      return;
+  
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
     wp_enqueue_style('thickbox');
