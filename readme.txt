@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,3 +119,6 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Ability to hide general descriptions of videos in video tab.
 * Allow to configure position of video tab between product tabs.
 * Code refactoring.
+
+= 1.7.1 =
+* Fix bug of scripts loading in invalid and not useful sections.

@@ -82,7 +82,7 @@ class WooCommerceIntegrationBackend {
       $disable_iframe = get_option('wo_di_video_disable_iframe');
       ?>
       <?php //When adding a video ?>
-      <div id="dialog_form_add_video" title="<?= __("Add Video", 'html5_video') ?>">
+      <div id="dialog_form_add_video" title="<?= __("Add Video", 'html5_video') ?>" style="display: none;">
         <form id="wo_di_form_add_video" action="<?= admin_url( 'admin-ajax.php' )?>" method="post" onsubmit="return false;">
           <fieldset>
             <div id="div_errores_add_video"></div>
@@ -199,7 +199,7 @@ class WooCommerceIntegrationBackend {
       </div>
 
       <?php //When editing a video ?>
-      <div id="dialog_form_edit_video" title="<?= __("Edit Video", 'html5_video') ?> ">
+      <div id="dialog_form_edit_video" title="<?= __("Edit Video", 'html5_video') ?>" style="display: none;">
       <form id="wo_di_form_edit_video" action="<?= admin_url( 'admin-ajax.php' )?>" onsubmit="return false;" method="post">
         <fieldset>
           <label for="wo_di_video_title_edit">
