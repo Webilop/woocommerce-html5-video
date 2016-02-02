@@ -5,7 +5,7 @@
  * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
  * Author: Webilop
  * Author URI: http://www.webilop.com
- * Version: 1.7.1
+ * Version: 1.7.2
  * License: GPLv2 or later
  */
 namespace WooCommerceHTML5Video;
@@ -213,9 +213,9 @@ class WooCommerceHTML5Video {
 /******************************************************************************/
 
   public static function admin_scripts($hook) {
-    //check if a product page is displayed
+    //check if a product page is displayed (creation or edition)
     global $post;
-    if( $hook != 'edit.php' && $hook != 'post.php' && $hook != 'post-new.php' && empty($post->post_type) && 'product' != $post->post_type)
+    if(empty($post->post_type) || 'product' != $post->post_type || ($hook != 'post.php' && $hook != 'post-new.php'))
       return;
   
     wp_enqueue_script('media-upload');

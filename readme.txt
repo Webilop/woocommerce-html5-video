@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,3 +122,7 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 
 = 1.7.1 =
 * Fix bug of scripts loading in invalid and not useful sections.
+
+= 1.7.2 =
+* Fix bug of scripts loading in list of posts, pages and custom post types.
+
