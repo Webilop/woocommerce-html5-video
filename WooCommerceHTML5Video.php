@@ -213,9 +213,9 @@ class WooCommerceHTML5Video {
 /******************************************************************************/
 
   public static function admin_scripts($hook) {
-    //check if a product page is displayed
+    //check if a product page is displayed (creation or edition)
     global $post;
-    if( $hook != 'edit.php' && $hook != 'post.php' && $hook != 'post-new.php' && empty($post->post_type) && 'product' != $post->post_type)
+    if(empty($post->post_type) || 'product' != $post->post_type || ($hook != 'post.php' && $hook != 'post-new.php'))
       return;
   
     wp_enqueue_script('media-upload');
