@@ -65,7 +65,7 @@ class WooCommerceIntegrationBackend {
         );
       }
     }
-    update_post_meta($post_id, 'wo_di_video_product_videos',json_encode($arrayJson));
+    update_post_meta($post_id, 'wo_di_video_product_videos',json_encode($arrayJson, JSON_UNESCAPED_UNICODE));
     //update text of tinymce editor
     $mce_editor_content = $_POST['wo_di_editormce_video'];
     update_post_meta($post_id, 'wo_di_editormce_video', $mce_editor_content);
