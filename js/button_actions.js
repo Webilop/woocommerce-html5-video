@@ -101,7 +101,7 @@ function edit_row(obj){
 
 function preview_video(obj){
   tr_edit=obj.parentNode.parentNode;
-  
+
   var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
   var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
@@ -109,11 +109,15 @@ function preview_video(obj){
   var width= jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
   var height= jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
   var embebido;
-  
+
   jQuery("#dialog_preview_video").dialog('option', 'title', 'Preview Video - '+title);
-  
+
   if(type=="Embedded"){
     embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
+    jQuery("#contenedor_video").html(embebido);
+  }
+  else if (type == "oEmbed") {
+    embebido=jQuery(tr_edit).find("input[name='wo_oembed[]']").val();
     jQuery("#contenedor_video").html(embebido);
   }
   else{
@@ -123,14 +127,14 @@ function preview_video(obj){
     else{
       embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
     }
-    
+
     jQuery("#contenedor_video").html(embebido);
-    
+
     var video = jQuery('#current_video').get(0);
     video.load();
     video.play();
   }
-  
+
   jQuery( "#dialog_preview_video" ).dialog( "open" );
 }
 
@@ -629,7 +633,7 @@ jQuery(document).ready(function()
 
       jQuery( "#table-video-sortable" ).sortable();
       jQuery( "#table-video-sortable" ).disableSelection();
-      
+
       //preview
       jQuery( "#dialog_preview_video").dialog({
         autoOpen: false,

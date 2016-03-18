@@ -442,6 +442,7 @@ class WooCommerceIntegrationBackend {
         if ($video->active == 1) {
          $checked = "checked='checked'";
         }
+        global $wp_embed;
         //Construct row for each video
         ob_start();
         ?>
@@ -465,6 +466,7 @@ class WooCommerceIntegrationBackend {
           </td>
           <input type=hidden name='wo_di_video_embebido[]' value='<?= $videoEmbebido ?>' />
           <input type=hidden name='wo_di_video_url[]' value='<?= $videoUrl ?>' />
+          <input type=hidden name='wo_oembed[]' value='<?= $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]") ?>' />
           <input type=hidden name='wo_di_video_mp4[]' value='<?= $videoMp4 ?>' />
           <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
           <td>
