@@ -3,8 +3,8 @@
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
-Tested up to: 4.4
-Stable tag: 1.7.3
+Tested up to: 4.4.2
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,4 +128,8 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 
 = 1.7.3 =
 * Fix encoding video titles on saving of products.
+
+= 1.7.4 =
+* Fix encoding video data on saving of products for PHP versiones under 5.4.0.
+* Fix on active checkbox in list of videos in products.
 

@@ -65,7 +65,9 @@ class WooCommerceIntegrationBackend {
         );
       }
     }
-    update_post_meta($post_id, 'wo_di_video_product_videos',json_encode($arrayJson, JSON_UNESCAPED_UNICODE));
+    //encode data
+    $data = '5.4.0' <= phpversion() ? json_encode($arrayJson, JSON_UNESCAPED_UNICODE) : json_encode($arrayJson);
+    update_post_meta($post_id, 'wo_di_video_product_videos', $data);
     //update text of tinymce editor
     $mce_editor_content = $_POST['wo_di_editormce_video'];
     update_post_meta($post_id, 'wo_di_editormce_video', $mce_editor_content);
@@ -400,7 +402,7 @@ class WooCommerceIntegrationBackend {
         if($height == '' && $width == '') {
           $dimension = 'Default';
           $width = get_option('wo_di_config_video_width');
-           $height = get_option('wo_di_config_video_height');
+          $height = get_option('wo_di_config_video_height');
         }
         else {
           $dimension = $height .' X ' . $width;
@@ -467,7 +469,7 @@ class WooCommerceIntegrationBackend {
           <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
           <td>
             <input type=hidden name='wo_di_video_active[]' value='<?= $video->active ?>' />
-            <input type='checkbox' value='active' $checked onchange='update_input_active(this)'/>
+            <input type='checkbox' value='active' <?php echo $checked; ?> onchange='update_input_active(this)'/>
           </td>
           <td>
             <?php if ($type != "Embedded" || ($type == "Embedded" && $disable_iframe == 0)): ?>
