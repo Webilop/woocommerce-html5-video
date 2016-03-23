@@ -22,6 +22,7 @@ class WooCommerceHTML5Video {
 
     //Verify dependencies
     add_action('admin_init', array(__CLASS__, 'check_plugin_activated'));
+    add_action('wp_head', array(__CLASS__, 'print_ajax_url'));
 
     //Woocommerce integration
     add_action('woocommerce_init', array(__CLASS__, 'init_woo_integration'));
@@ -29,6 +30,8 @@ class WooCommerceHTML5Video {
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'popups_add_edit_video'));
     add_action('admin_footer-post-new.php',
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'popups_add_edit_video'));
+    add_action('wp_ajax_oembed_video',
+      array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'oembed_video'));
 
     //Settings
     add_action('admin_init',
@@ -80,6 +83,14 @@ class WooCommerceHTML5Video {
     else {
       self::activate_plugin();
     }
+  }
+
+  public static function print_ajax_url() {
+    ?>
+    <script>
+      var ajaxurl = '<?= admin_url('admin-ajax.php'); ?>';
+    </script>
+    <?php
   }
 
   /**
@@ -217,7 +228,7 @@ class WooCommerceHTML5Video {
     global $post;
     if(empty($post->post_type) || 'product' != $post->post_type || ($hook != 'post.php' && $hook != 'post-new.php'))
       return;
-  
+
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
     wp_enqueue_style('thickbox');
