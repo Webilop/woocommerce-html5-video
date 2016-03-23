@@ -399,6 +399,33 @@ function urlParam(name){
   return 0;
 }
 
+function oEmbedVideo(url, height, width) {
+  var video = '';
+  jQuery.ajax({
+    url: ajaxurl,
+    data: {
+      action: 'oembed_video',
+      video_url: url,
+      height: height,
+      width: width,
+      post_id: urlParam('post')
+    },
+    method: 'POST',
+    async: false,
+    success: function (iframe) {
+      video = iframe;
+    }
+  });
+  return video;
+}
+
+function urlParam(name){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (null != results)
+    return results[1] || 0;
+  return 0;
+}
+
 
 jQuery(document).ready(function()
     {
