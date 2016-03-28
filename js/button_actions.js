@@ -53,6 +53,7 @@ function edit_row(obj){
   var id=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']").val();
   jQuery("#wo_di_video_title_edit").val(title);
   jQuery("#wo_di_video_id_edit").val(id);
+  jQuery('#wo_di_form_edit_video div.video-option').hide();
 
   add_flag=false;
 
@@ -61,6 +62,7 @@ function edit_row(obj){
       jQuery("#wo_di_video_embebido_edit").attr('checked', true);
       var embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
       jQuery("#video_text_embebido_edit").val(embebido);
+      jQuery("#wo_di_form_edit_video div.embebido-video").show();
       break;
     case 'WP Library':
       jQuery("#wo_di_video_servidor_edit").attr('checked', true);
@@ -80,6 +82,7 @@ function edit_row(obj){
       if(ogg!=""){
         jQuery("#_checkbox_OGG_edit").attr('checked', 'checked');
       }
+      jQuery("#wo_di_form_edit_video div.servidor-video").show();
       break;
     case 'oEmbed':
       jQuery('#wo_di_video_oembed_edit').attr('checked', true);
@@ -94,6 +97,7 @@ function edit_row(obj){
       if(url != '') {
         jQuery('#_checkbox_url_edit').attr('checked', 'checked');
       }
+      jQuery("#wo_di_form_edit_video div.oembed-video").show();
       break;
   }
   jQuery('#dialog_form_edit_video').dialog('open');
@@ -568,7 +572,7 @@ jQuery(document).ready(function()
         jQuery( "#dialog_form_add_video").dialog({
         autoOpen: false,
         draggable: false ,
-        height: 550,
+        height: 520,
         width: 565,
         modal: false,
         buttons: [

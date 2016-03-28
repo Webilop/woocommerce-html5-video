@@ -88,19 +88,12 @@ class WooCommerceIntegrationBackend {
         <form id="wo_di_form_add_video" action="<?= admin_url( 'admin-ajax.php' )?>" method="post" onsubmit="return false;">
           <fieldset>
             <div id="div_errores_add_video"></div>
-            <label for="wo_di_video_title">
-              <?= __("Title for video","html5_video") ?>
-            </label>
-            <hr/>
             <div class="options_group">
-              <dl>
-                <dd>
-                  <input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" >
-                </dd>
-              </dl>
+              <label for="wo_di_video_title">
+                <?= __("Title: ","html5_video") ?>
+              </label>
+              <input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" style="margin-left: 21px;">
             </div>
-            <label><?php echo __('Video dimensions:', 'html5_video') ?></label>
-            <hr/>
             <?php
             if (get_option('wo_di_video_size_forcing') == 1) {
               $width = "value='" . get_option('wo_di_config_video_width') . "' readonly";
@@ -115,85 +108,66 @@ class WooCommerceIntegrationBackend {
               <label for="width_video_woocommerce">
                 <?= __("Width","html5_video")?>:
               </label>
-              <input type="text" id="width_video_woocommerce" name="width_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_width'); ?>" <?= $width ?> >
+              <input type="text" id="width_video_woocommerce" name="width_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_width'); ?>" <?= $width ?> class="dimension-input">
               <label for="height_video_woocommerce">
                 <?php echo __("Height","html5_video")?>:
               </label>
-              <input type="text" id="height_video_woocommerce" name="height_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_height'); ?>" <?= $height ?> >
+              <input type="text" id="height_video_woocommerce" name="height_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_height'); ?>" <?= $height ?> class="dimension-input">
             </div>
-            <br/>
-            <label><?= __("Select video source:","html5_video") ?></label>
-            <hr/>
             <div class="options_group">
-              <dl>
-                <dt class="margin-bottom">
-                  <input class="radio" id="wo_di_video_oembed" type="radio" value="oembed" name="wo_di_tipo_video" checked="checked">
-                  <label class="radio" for="wo_di_video_oembed">
-                    <?php echo __('URL', 'html5_video') ?>
-                  </label>
-                </dt>
-                <dd>
-                  <span>
-                    <?= __('Type the URL of your video, supports URLs of videos in websites like Youtube or Vimeo.', 'html5_video')?>
-                  </span>
-                </dd>
-                <dd>
-                  <input class="wo_di_form_input" type="text" id="video_text_url" name="video_text_url" value="">
-                </dd>
-              </dl>
+              <label>
+                <?= __("Source:","html5_video") ?>
+              </label>
+              <input class="radio" id="wo_di_video_oembed" type="radio" value="oembed" name="wo_di_tipo_video" checked="checked">
+              <label class="radio" for="wo_di_video_oembed">
+                <?php echo __('URL', 'html5_video') ?>
+              </label>
+              <input class="radio" id="wo_di_video_servidor" type="radio" value="servidor" name="wo_di_tipo_video">
+              <label class="radio" for="wo_di_video_servidor">
+                <?= __("Select/Upload","html5_video") ?>
+              </label>
+              <?php if ($disable_iframe == 0): ?>
+                <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video">
+                <label class="radio" for="video_embebido">
+                  <?= __("Embedded code","html5_video") ?>
+                </label>
+              <?php endif; ?>
             </div>
             <hr/>
-            <div class="options_group">
-              <dl>
-                <dt class="margin-bottom">
-                  <input class="radio" id="wo_di_video_servidor" type="radio" value="servidor" name="wo_di_tipo_video">
-                  <label class="radio" for="wo_di_video_servidor">
-                    <?= __("Upload video","html5_video") ?>
-                  </label>
-                </dt>
-                <dd>
-                  <span>
-                    <?= __('You can upload a video to the Media Gallery or select a video from the Media Gallery.', 'html5_video')?>
-                  </span>
-                </dd>
-                <dt>
-                  <label for="video_text_mp4"> Mp4 </label>
-                  <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
-                </dt>
-                <dd>
-                  <input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value="">
-                </dd>
-                <dt>
-                  <label for="video_text_ogg"> Ogg </label>
-                  <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?>' Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
-                </dt>
-                <dd>
-                  <input class="wo_di_form_input" type="text" id="video_text_ogg" name="video_text_ogg" value="">
-                </dd>
-                <input id="wo_di_select_video" type="button" value="<?= __("Select video","html5_video")?>" class="button tagadd">
-              </dl>
+            <div class="video-option oembed-video">
+              <p>
+                <?= __('Type the URL of your video, supports URLs of videos in websites like Youtube or Vimeo.', 'html5_video')?>
+              </p>
+              <input class="wo_di_form_input" type="text" id="video_text_url" name="video_text_url" value="">
+            </div>
+            <div class="video-option servidor-video" hidden>
+              <p>
+                <?= __('You can upload a video to the Media Gallery or select a video from the Media Gallery.', 'html5_video')?>
+              </p>
+              <dt>
+                <label for="video_text_mp4"> Mp4 </label>
+                <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
+              </dt>
+              <dd>
+                <input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value="">
+              </dd>
+              <dt>
+                <label for="video_text_ogg"> Ogg </label>
+                <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
+              </dt>
+              <dd>
+                <input class="wo_di_form_input" type="text" id="video_text_ogg" name="video_text_ogg" value="">
+              </dd>
+              <input id="wo_di_select_video" type="button" value="<?= __("Select video","html5_video")?>" class="button tagadd">
             </div>
             <?php if ($disable_iframe == 0): ?>
-              <hr/>
-              <div class="options_group">
-                <dl>
-                  <dt>
-                    <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video" checked="checked">
-                    <label class="radio" for="video_text_embebido">
-                      <?= __("Embedded code","html5_video") ?>
-                    </label>
-                  </dt>
-                  <dd>
-                    <p>
-                      <textarea class="wo_di_form_textarea" name="video_text_embebido" id="video_text_embebido" placeholder="<?php echo  $placeholder ?>" rows="2" cols="20"></textarea>
-                    </p>
-                  </dd>
-                  <dd>
-                    <p>
-                      <?= __('The embedded code should be taken from a video page like Youtube', 'html5_video') ?>
-                    </p>
-                  </dd>
-                </dl>
+              <div class="video-option embebido-video" hidden>
+                <p>
+                  <textarea class="wo_di_form_textarea" name="video_text_embebido" id="video_text_embebido" placeholder="<?php echo  $placeholder ?>" rows="2" cols="20"></textarea>
+                </p>
+                <p>
+                  <?= __('The embedded code should be taken from a video page like Youtube', 'html5_video') ?>
+                </p>
               </div>
             <?php endif; ?>
           </fieldset>
@@ -202,128 +176,93 @@ class WooCommerceIntegrationBackend {
 
       <?php //When editing a video ?>
       <div id="dialog_form_edit_video" title="<?= __("Edit Video", 'html5_video') ?>" style="display: none;">
-      <form id="wo_di_form_edit_video" action="<?= admin_url( 'admin-ajax.php' )?>" onsubmit="return false;" method="post">
-        <fieldset>
-          <label for="wo_di_video_title_edit">
-            <?= __("Title for video","html5_video")?>
-          </label>
-          <div class="options_group">
-            <dl>
-              <dd>
-                <input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" />
-              </dd>
-            </dl>
-          </div>
-          <label>
-            <?php echo __('Video dimensions:', 'html5_video') ?>
-          </label>
-          <hr/>
-          <?php
-          if (get_option('wo_di_video_size_forcing') == 1) {
-            $width = "value='" . get_option('wo_di_config_video_width') . "' readonly";
-            $height = "value='" . get_option('wo_di_config_video_height') . "' readonly";
-          }
-          else {
-            $width = "";
-            $height = "";
-          }
-          ?>
-          <div class="options_group">
-            <label for="width_video_woocommerce_edit">
-              <?php echo __("Width","html5_video")?>:
-            </label>
-            <input type="text" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_width'); ?>" <?= $width ?> >
-            <label for="height_video_woocommerce_edit">
-              <?php echo __("Height","html5_video")?>:
-            </label>
-            <input type="text" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_height'); ?>" <?= $height ?> >
-          </div>
-          <label>
-            <?php echo __("Select video source:","html5_video") ?>
-          </label>
-          <hr/>
-          <div class="options_group">
-            <dl>
-              <dt class="margin-bottom">
-                <input class="radio" id="wo_di_video_oembed_edit" type="radio" value="oembed" name="wo_di_tipo_video_edit">
-                <label class="radio" for="wo_di_video_oembed_edit">
-                  <?php echo __('URL', 'html5_video') ?>
+        <form id="wo_di_form_edit_video" action="<?= admin_url( 'admin-ajax.php' )?>" onsubmit="return false;" method="post">
+          <fieldset>
+            <div class="options_group">
+              <label for="wo_di_video_title_edit">
+                <?= __("Title: ","html5_video") ?>
+              </label>
+              <input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" style="margin-left: 21px;" />
+            </div>
+            <?php
+            if (get_option('wo_di_video_size_forcing') == 1) {
+              $width = "value='" . get_option('wo_di_config_video_width') . "' readonly";
+              $height = "value='" . get_option('wo_di_config_video_height') . "' readonly";
+            }
+            else {
+              $width = "";
+              $height = "";
+            }
+            ?>
+            <div class="options_group">
+              <label for="width_video_woocommerce_edit">
+                <?= __("Width","html5_video")?>:
+              </label>
+              <input type="text" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_width'); ?>" <?= $width ?> class="dimension-input">
+              <label for="height_video_woocommerce_edit">
+                <?php echo __("Height","html5_video")?>:
+              </label>
+              <input type="text" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_height'); ?>" <?= $height ?> class="dimension-input">
+            </div>
+            <div class="options_group">
+              <label>
+                <?= __("Source:","html5_video") ?>
+              </label>
+              <input class="radio" id="wo_di_video_oembed_edit" type="radio" value="oembed" name="wo_di_tipo_video_edit">
+              <label class="radio" for="wo_di_video_oembed_edit">
+                <?php echo __('URL', 'html5_video') ?>
+              </label>
+              <input class="radio" class="margin-bottom" id="wo_di_video_servidor_edit" type="radio" value="servidor" name="wo_di_tipo_video_edit">
+              <label class="radio" for="wo_di_video_servidor_edit">
+                <?= __("Upload video","html5_video")?>
+              </label>
+              <?php if ($disable_iframe == 0): ?>
+                <input class="radio" id="wo_di_video_embebido_edit" type="radio"  value="embebido" name="wo_di_tipo_video_edit">
+                <label class="radio" for="wo_di_video_embebido_edit">
+                  <?= __("Embedded code","html5_video")?>
                 </label>
-              </dt>
-              <dd>
-                <span>
-                  <?= __('Type the URL of your video, supports URLs of videos in websites like Youtube or Vimeo.', 'html5_video')?>
-                </span>
-              </dd>
-              <dd>
-                <input class="wo_di_form_input" type="text" id="video_text_url_edit" name="video_text_url_edit" value="">
-              </dd>
-            </dl>
-          </div>
-          <hr/>
-          <div class="options_group">
-            <dl>
+              <?php endif; ?>
+            </div>
+            <hr/>
+            <div class="video-option oembed-video" hidden>
+              <p>
+                <?= __('Type the URL of your video, supports URLs of videos in websites like Youtube or Vimeo.', 'html5_video')?>
+              </p>
+              <input class="wo_di_form_input" type="text" id="video_text_url_edit" name="video_text_url_edit" value="">
+            </div>
+            <div class="video-option servidor-video" hidden>
+              <p>
+                <?= __('You can upload a video to the Media Gallery or select a video from the Media Gallery.', 'html5_video')?>
+              </p>
               <dt>
-                <input class="radio" class="margin-bottom" id="wo_di_video_servidor_edit" type="radio" value="servidor" name="wo_di_tipo_video_edit">
-                <label class="radio" for="wo_di_video_servidor_edit">
-                  <?= __("Upload video","html5_video")?>
-                </label>
-              </dt>
-              <dd>
-                <span>
-                  <?= __('You can upload a video to the Media Gallery, select a video from the Media Gallery or type the URL of your video. It also supports URLs of videos in websites like youtube or vimeo.', 'html5_video')?>
-                </span>
-              </dd>
-              <dd>
-                <span>
-                  <?php echo __("Supported video formats","html5_video")?>
-                </span>
-              </dd>
-              <dt>
-                <label class="check" for="video_text_mp4_edit"> Mp4 </label>
-                <img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video") ?> IE 9+, Chrome 6+, Safari 5+" alt="info" />
+                <label for="video_text_mp4_edit"> Mp4 </label>
+                <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
               </dt>
               <dd>
                 <input class="wo_di_form_input" type="text" id="video_text_mp4_edit" name="video_text_mp4_edit" value="">
               </dd>
               <dt>
                 <label for="video_text_ogg_edit"> Ogg </label>
-                <img src="<?php echo WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video") ?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
+                <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
               </dt>
               <dd>
                 <input class="wo_di_form_input" type="text" id="video_text_ogg_edit" name="video_text_ogg_edit" value="">
               </dd>
-              <dd>
-                <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd">
-              </dd>
-            </dl>
-          </div>
-          <?php if($disable_iframe==0): ?>
-            <hr/>
-            <div class="options_group">
-              <dl>
-                <dt>
-                  <input class="radio" id="wo_di_video_embebido_edit" type="radio"  value="embebido" name="wo_di_tipo_video_edit">
-                  <label class="radio" for="wo_di_video_text_embebido_edit">
-                    <?= __("Embedded code","html5_video")?>
-                  </label>
-                </dt>
-                <dd>
-                  <p>
-                    <textarea class="wo_di_form_textarea" class="wo_di_form_textarea" name="video_text_embebido_edit" id="video_text_embebido_edit" placeholder="<?php echo $placeholder ?> '" rows="2" cols="20"></textarea>
-                  </p>
-                </dd>
-                <dd>
-                  <p>
-                    <?= __('The embedded code should be taken from a video page like Youtube', 'html5_video') ?>
-                  </p>
-                </dd>
-              </dl>
+              <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd">
             </div>
-          <?php endif; ?>
-        </fieldset>
-      </form>
-    </div>
+            <?php if($disable_iframe==0): ?>
+              <div class="video-option embebido-video" hidden>
+                <p>
+                  <textarea class="wo_di_form_textarea" class="wo_di_form_textarea" name="video_text_embebido_edit" id="video_text_embebido_edit" placeholder="<?php echo $placeholder ?>" rows="2" cols="20"></textarea>
+                </p>
+                <p>
+                  <?= __('The embedded code should be taken from a video page like Youtube', 'html5_video') ?>
+                </p>
+              </div>
+            <?php endif; ?>
+          </fieldset>
+        </form>
+      </div>
 
       <div id="dialog_preview_video" title="<?= __("Preview Video", 'html5_video') ?> ">
         <div id="contenedor_video"></div>
