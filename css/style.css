@@ -101,8 +101,25 @@ form.html5_video{
    float: left;
 }
 
+.options_group {
+  margin: 20px 0;
+}
+
+.options_group > input.radio{
+  margin: 0 0 0 5px;
+}
+
+.video-option {
+  margin: 20px 0;
+}
+
 .wo_di_form_input{
-  width: 450px;
+  width: 462px;
+}
+
+.dimension-input {
+  width: 193px;
+  margin-left: 11px;
 }
 
 .wo_di_form_textarea{
@@ -111,7 +128,7 @@ form.html5_video{
 }
 
 .wo_di_table_videos{
- width: 100%; 
+ width: 100%;
 }
 
 .error{
@@ -152,7 +169,7 @@ form.html5_video{
 
 .rating-star{
   display: block;
-  float: right;        
+  float: right;
   width: 16px;
   height: 16px;
   background: url('../images/star.png') 0 0px;
@@ -196,7 +213,7 @@ form.html5_video{
 /*#woocommerce-product-data ul.product_data_tabs li.html5_video a:before{content:none;}*/
 
 .ui-icon{
- cursor: pointer; 
+ cursor: pointer;
 }
 
 .wohv-description-container .wohv-title{
