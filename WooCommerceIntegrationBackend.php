@@ -331,6 +331,24 @@ class WooCommerceIntegrationBackend {
     <?php
     endif;
   }
+
+  public static function oembed_video() {
+    $videoUrl = isset($_POST['video_url'])? $_POST['video_url'] : '';
+    $height = get_option('wo_di_config_video_height');
+    $height = (isset($_POST['height']) && !empty($_POST['height']))? $_POST['height'] : $height;
+    $width = get_option('wo_di_config_video_width');
+    $width = (isset($_POST['width']) && !empty($_POST['width']))? $_POST['width'] : $width;
+    global $wp_embed;
+    if (isset($_POST['post_id']) && 0 != $_POST['post_id']) {
+      global $post;
+      $post =  get_post($_POST['post_id']);
+      echo $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]");
+    }
+    else {
+      echo '';
+    }
+    wp_die();
+  }
 /******************************************************************************/
 /*                                  Auxiliar                                  */
 /******************************************************************************/
@@ -442,6 +460,7 @@ class WooCommerceIntegrationBackend {
         if ($video->active == 1) {
          $checked = "checked='checked'";
         }
+        global $wp_embed;
         //Construct row for each video
         ob_start();
         ?>
@@ -465,6 +484,7 @@ class WooCommerceIntegrationBackend {
           </td>
           <input type=hidden name='wo_di_video_embebido[]' value='<?= $videoEmbebido ?>' />
           <input type=hidden name='wo_di_video_url[]' value='<?= $videoUrl ?>' />
+          <input type=hidden name='wo_oembed[]' value='<?= $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]") ?>' />
           <input type=hidden name='wo_di_video_mp4[]' value='<?= $videoMp4 ?>' />
           <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
           <td>

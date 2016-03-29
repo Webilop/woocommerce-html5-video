@@ -101,7 +101,7 @@ function edit_row(obj){
 
 function preview_video(obj){
   tr_edit=obj.parentNode.parentNode;
-  
+
   var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
   var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
@@ -109,11 +109,15 @@ function preview_video(obj){
   var width= jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
   var height= jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
   var embebido;
-  
+
   jQuery("#dialog_preview_video").dialog('option', 'title', 'Preview Video - '+title);
-  
+
   if(type=="Embedded"){
     embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
+    jQuery("#contenedor_video").html(embebido);
+  }
+  else if (type == "oEmbed") {
+    embebido=jQuery(tr_edit).find("input[name='wo_oembed[]']").val();
     jQuery("#contenedor_video").html(embebido);
   }
   else{
@@ -123,14 +127,14 @@ function preview_video(obj){
     else{
       embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
     }
-    
+
     jQuery("#contenedor_video").html(embebido);
-    
+
     var video = jQuery('#current_video').get(0);
     video.load();
     video.play();
   }
-  
+
   jQuery( "#dialog_preview_video" ).dialog( "open" );
 }
 
@@ -372,6 +376,33 @@ function open_media_uploader_video()
     media_uploader.open();
 }
 
+function oEmbedVideo(url, height, width) {
+  var video = '';
+  jQuery.ajax({
+    url: ajaxurl,
+    data: {
+      action: 'oembed_video',
+      video_url: url,
+      height: height,
+      width: width,
+      post_id: urlParam('post')
+    },
+    method: 'POST',
+    async: false,
+    success: function (iframe) {
+      video = iframe;
+    }
+  });
+  return video;
+}
+
+function urlParam(name){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (null != results)
+    return results[1] || 0;
+  return 0;
+}
+
 
 jQuery(document).ready(function()
     {
@@ -531,6 +562,8 @@ jQuery(document).ready(function()
               var video_embebido="";
               var videoUrl = '';
               var video_mp4="";
+              var oEmbed="";
+              var noClick = false;
               var video_ogg="";
               if(jQuery('#video_embebido').is(':checked')){
                 type="Embedded";
@@ -575,7 +608,11 @@ jQuery(document).ready(function()
                  dimension= height +" X " + width;
                 }
                 videoUrl = jQuery('#video_text_url').val();
+                oEmbed = oEmbedVideo(videoUrl, height, width);
                 formats = '-';
+                if ('' == oEmbed) {
+                  noClick = true;
+                }
               }
               var number_of_videos=jQuery("#wo_di_number_of_videos").val();
               number_of_videos++;
@@ -594,9 +631,14 @@ jQuery(document).ready(function()
               video+="<input type=hidden name='wo_di_video_embebido[]'/ value='"+video_embebido+"' >";
               video+="<input type=hidden name='wo_di_video_url[]' value='" + videoUrl + "' />";
               video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
+              video+="<input type=hidden name='wo_oembed[]' value='"+oEmbed+"' />";
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
-              video+="<td><span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'> </span> <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
+              var previewButton ="<span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'>";
+              if (noClick) {
+                previewButton ="<span class='ui-icon ui-icon-circle-zoomout float-right' title='Preview available after saving the product for the first time'>";
+              }
+              video+="<td>" + previewButton + " </span> <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
@@ -629,7 +671,7 @@ jQuery(document).ready(function()
 
       jQuery( "#table-video-sortable" ).sortable();
       jQuery( "#table-video-sortable" ).disableSelection();
-      
+
       //preview
       jQuery( "#dialog_preview_video").dialog({
         autoOpen: false,
