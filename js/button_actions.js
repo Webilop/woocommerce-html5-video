@@ -344,36 +344,32 @@ function initiate_rules(){
 
 function open_media_uploader_video()
 {
-    media_uploader = wp.media({
-        frame:    "video",
-        state:    "video-details",
-    });
+  media_uploader = wp.media({
+    library: {type: 'video'},
+    title: 'Add Video Source'
+  });
 
-    media_uploader.on("update", function(){
-        var extension = media_uploader.state().media.extension;
-        var video_url = media_uploader.state().media.attachment.changed.url;
-        var video_icon = media_uploader.state().media.attachment.changed.icon;
-        var video_title = media_uploader.state().media.attachment.changed.title;
-        var video_desc = media_uploader.state().media.attachment.changed.description;
+  media_uploader.on("select", function(){
+    var file = media_uploader.state().get('selection').first();
+    var extension = file.changed.subtype;
+    var video_url = file.changed.url;
 
-        var extension = video_url.substring(video_url.lastIndexOf('.')+ 1, video_url.length);
-        var win = window.dialogArguments || opener || parent || top;
+    var win = window.dialogArguments || opener || parent || top;
 
-        if(extension=="mp4"){
-          if(add_flag)
-            win.jQuery('#video_text_mp4').val(video_url);
-          else
-            win.jQuery('#video_text_mp4_edit').val(video_url);
-        }
-        else{
-          if(add_flag)
-            win.jQuery('#video_text_ogg').val(video_url);
-          else
-            win.jQuery('#video_text_ogg_edit').val(video_url);
-        }
-    });
-
-    media_uploader.open();
+    if(extension == "mp4"){
+      if(add_flag)
+        win.jQuery('#video_text_mp4').val(video_url);
+      else
+        win.jQuery('#video_text_mp4_edit').val(video_url);
+    }
+    else{
+      if(add_flag)
+        win.jQuery('#video_text_ogg').val(video_url);
+      else
+        win.jQuery('#video_text_ogg_edit').val(video_url);
+    }
+  });
+  media_uploader.open();
 }
 
 function oEmbedVideo(url, height, width) {
