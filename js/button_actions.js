@@ -151,14 +151,10 @@ function initiate_rules(){
         "insert_video_html_edit",
         function(value, element) {
             if(jQuery("#wo_di_video_servidor_edit").is(':checked')){
-              if(jQuery("#video_text_mp4_edit").val()=="" && jQuery("#video_text_ogg_edit").val()==""){
+              if(jQuery("#video_text_mp4_edit").val() == "" && jQuery("#video_text_ogg_edit").val() == ""){
                 return false;
               }
             }
-            jQuery("#video_text_mp4_edit").removeClass("error");
-            jQuery("#video_text_mp4_edit").siblings("p").remove();
-            jQuery("#video_text_ogg_edit").removeClass("error");
-            jQuery("#video_text_ogg_edit").siblings("p").remove();
             return true;
         },
         text_error_min_html
@@ -184,8 +180,6 @@ function initiate_rules(){
         if(jQuery("#video_text_url_edit").val() == '') {
           return false;
         }
-        jQuery("#video_text_url_edit").removeClass("error");
-        jQuery("#video_text_url_edit").siblings("p").remove();
       }
       return true;
     },
@@ -250,14 +244,10 @@ function initiate_rules(){
         "insert_video_html",
         function(value, element) {
             if(jQuery("#wo_di_video_servidor").is(':checked')){
-              if(jQuery("#video_text_mp4").val()=="" && jQuery("#video_text_ogg").val()==""){
+              if(jQuery("#video_text_mp4").val() == "" && jQuery("#video_text_ogg").val() == ""){
                 return false;
               }
             }
-            jQuery("#video_text_mp4").removeClass("error");
-            jQuery("#video_text_mp4").siblings("p").remove();
-            jQuery("#video_text_ogg").removeClass("error");
-            jQuery("#video_text_ogg").siblings("p").remove();
             return true;
         },
         text_error_min_html
@@ -284,8 +274,6 @@ function initiate_rules(){
           return false;
         }
       }
-      jQuery('#video_text_url').removeClass('error');
-      jQuery('#video_text_url').siblings('p').remove();
       return true;
     },
     text_error_insert_html
@@ -669,6 +657,12 @@ jQuery(document).ready(function()
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
+
+              //Clean modal
+              jQuery('#wo_di_form_add_video').find("input[type=text], input[type=url], textarea").val("");
+              jQuery('#wo_di_video_oembed').attr('checked', true);
+              jQuery('#wo_di_form_add_video div.video-option').hide();
+              jQuery('#wo_di_form_add_video div.oembed-video').show();
             } else {
               form_add_video.showErrors();
             }
