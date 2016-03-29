@@ -136,7 +136,7 @@ class WooCommerceIntegrationBackend {
               <p>
                 <?= __('Type the URL of your video, supports URLs of videos in websites like Youtube or Vimeo.', 'html5_video')?>
               </p>
-              <input class="wo_di_form_input" type="text" id="video_text_url" name="video_text_url" value="">
+              <input class="wo_di_form_input" type="url" id="video_text_url" name="video_text_url" value="">
             </div>
             <div class="video-option servidor-video" hidden>
               <p>
@@ -147,14 +147,14 @@ class WooCommerceIntegrationBackend {
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
               </dt>
               <dd>
-                <input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value="">
+                <input class="wo_di_form_input" type="url" id="video_text_mp4" name="video_text_mp4" value="">
               </dd>
               <dt>
                 <label for="video_text_ogg"> Ogg </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
               </dt>
               <dd>
-                <input class="wo_di_form_input" type="text" id="video_text_ogg" name="video_text_ogg" value="">
+                <input class="wo_di_form_input" type="url" id="video_text_ogg" name="video_text_ogg" value="">
               </dd>
               <input id="wo_di_select_video" type="button" value="<?= __("Select video","html5_video")?>" class="button tagadd">
             </div>
@@ -226,7 +226,7 @@ class WooCommerceIntegrationBackend {
               <p>
                 <?= __('Type the URL of your video, supports URLs of videos in websites like Youtube or Vimeo.', 'html5_video')?>
               </p>
-              <input class="wo_di_form_input" type="text" id="video_text_url_edit" name="video_text_url_edit" value="">
+              <input class="wo_di_form_input" type="url" id="video_text_url_edit" name="video_text_url_edit" value="">
             </div>
             <div class="video-option servidor-video" hidden>
               <p>
@@ -237,14 +237,14 @@ class WooCommerceIntegrationBackend {
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
               </dt>
               <dd>
-                <input class="wo_di_form_input" type="text" id="video_text_mp4_edit" name="video_text_mp4_edit" value="">
+                <input class="wo_di_form_input" type="url" id="video_text_mp4_edit" name="video_text_mp4_edit" value="">
               </dd>
               <dt>
                 <label for="video_text_ogg_edit"> Ogg </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
               </dt>
               <dd>
-                <input class="wo_di_form_input" type="text" id="video_text_ogg_edit" name="video_text_ogg_edit" value="">
+                <input class="wo_di_form_input" type="url" id="video_text_ogg_edit" name="video_text_ogg_edit" value="">
               </dd>
               <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd">
             </div>
@@ -302,7 +302,7 @@ class WooCommerceIntegrationBackend {
       var text_edit_button = "<?= __('Edit','html5_video'); ?>";
       var text_cancel_button = "<?= __('Cancel','html5_video'); ?>";
       var text_close_button = "<?= __('Close','html5_video'); ?>";
-      var text_error_min_html = "<?= __('It requires at least one video','html5_video'); ?>";
+      var text_error_min_html = "<?= __('At least one video is required','html5_video'); ?>";
       var text_error_insert_html = "<?= __('Embedded code is required','html5_video'); ?>";
       var text_error_id = "<?= __('The Name is required','html5_video'); ?>";
       var text_error_dimension = "<?= __('height and width of the video is required','html5_video'); ?>";
