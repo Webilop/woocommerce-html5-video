@@ -167,7 +167,7 @@ class WooCommerceIntegrationBackend {
               <dd>
                 <input class="wo_di_form_input" type="url" id="video_text_webm" name="video_text_webm" value="">
               </dd>
-              <input id="wo_di_select_video" type="button" value="<?= __("Select video","html5_video")?>" class="button tagadd">
+              <input id="wo_di_select_video" type="button" value="<?= __("Select/Upload video","html5_video")?>" class="button tagadd">
             </div>
             <?php if ($disable_iframe == 0): ?>
               <div class="video-option embebido-video" hidden>
@@ -264,7 +264,7 @@ class WooCommerceIntegrationBackend {
               <dd>
                 <input class="wo_di_form_input" type="url" id="video_text_webm_edit" name="video_text_ogg_edit" value="">
               </dd>
-              <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd">
+              <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select/Upload video","html5_video")?>" class="button tagadd">
             </div>
             <?php if($disable_iframe==0): ?>
               <div class="video-option embebido-video" hidden>
