@@ -47,6 +47,7 @@ class WooCommerceIntegrationBackend {
       $videoUrl = $_POST['wo_di_video_url'];
       $video_mp4 = $_POST['wo_di_video_mp4'];
       $video_ogg = $_POST['wo_di_video_ogg'];
+      $video_webm = $_POST['wo_di_video_webm'];
       $video_width = $_POST['wo_di_video_widths'];
       $video_height = $_POST['wo_di_video_heights'];
       $video_active = $_POST['wo_di_video_active'];
@@ -61,6 +62,7 @@ class WooCommerceIntegrationBackend {
           'url'      => $videoUrl[$key],
           "mp4"      => $video_mp4[$key],
           "ogg"      => $video_ogg[$key],
+          "webm"      => $video_webm[$key],
           "active"   => $video_active[$key]
         );
       }
@@ -158,6 +160,13 @@ class WooCommerceIntegrationBackend {
               <dd>
                 <input class="wo_di_form_input" type="url" id="video_text_ogg" name="video_text_ogg" value="">
               </dd>
+              <dt>
+                <label for="video_text_webm"> WebM </label>
+                <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 43+, Opera 35+" alt="info" />
+              </dt>
+              <dd>
+                <input class="wo_di_form_input" type="url" id="video_text_webm" name="video_text_webm" value="">
+              </dd>
               <input id="wo_di_select_video" type="button" value="<?= __("Select video","html5_video")?>" class="button tagadd">
             </div>
             <?php if ($disable_iframe == 0): ?>
@@ -247,6 +256,13 @@ class WooCommerceIntegrationBackend {
               </dt>
               <dd>
                 <input class="wo_di_form_input" type="url" id="video_text_ogg_edit" name="video_text_ogg_edit" value="">
+              </dd>
+              <dt>
+                <label for="video_text_webm_edit"> WebM </label>
+                <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 43+, Opera 35+" alt="info" />
+              </dt>
+              <dd>
+                <input class="wo_di_form_input" type="url" id="video_text_webm_edit" name="video_text_ogg_edit" value="">
               </dd>
               <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select video","html5_video")?>" class="button tagadd">
             </div>
@@ -378,6 +394,7 @@ class WooCommerceIntegrationBackend {
           case 'WP Library':
             $videoMp4 = $video->mp4;
             $videoOGG = $video->ogg;
+            $videoWEBM = $video->webm;
             $formats = "";
             if ($videoMp4 != "")
               $formats = " MP4";
@@ -387,6 +404,13 @@ class WooCommerceIntegrationBackend {
                 $formats=" OGG";
               else
                 $formats.=", OGG";
+            }
+
+            if ($videoWEBM != "") {
+              if (empty($formats))
+                $formats=" WEBM";
+              else
+                $formats.=", WEBM";
             }
             break;
           case 'oEmbed':
@@ -426,6 +450,7 @@ class WooCommerceIntegrationBackend {
           <input type=hidden name='wo_oembed[]' value='<?= $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]") ?>' />
           <input type=hidden name='wo_di_video_mp4[]' value='<?= $videoMp4 ?>' />
           <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
+          <input type=hidden name='wo_di_video_webm[]' value='<?= $videoWEBM ?>' />
           <td>
             <input type=hidden name='wo_di_video_active[]' value='<?= $video->active ?>' />
             <input type='checkbox' value='active' <?php echo $checked; ?> onchange='update_input_active(this)'/>

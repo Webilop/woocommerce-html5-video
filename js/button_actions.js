@@ -27,6 +27,7 @@ function clean_inputs_edit(){
   jQuery("#video_text_url_edit").val("");
   jQuery("#video_text_mp4_edit").val("");
   jQuery("#video_text_ogg_edit").val("");
+  jQuery("#video_text_webm_edit").val("");
   jQuery("#video_text_embebido_edit").val("");
   jQuery("#_checkbox_url_edit").attr('checked', false);
   jQuery("#_checkbox_mp4_edit").attr('checked', false);
@@ -70,11 +71,13 @@ function edit_row(obj){
       var width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
       var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
       var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+      var webm=jQuery(tr_edit).find("input[name='wo_di_video_webm[]']").val();
       jQuery("#height_video_woocommerce_edit").val(height);
       jQuery("#width_video_woocommerce_edit").val(width);
 
       jQuery("#video_text_mp4_edit").val(mp4);
       jQuery("#video_text_ogg_edit").val(ogg);
+      jQuery("#video_text_webm_edit").val(webm);
 
       if(mp4!=""){
         jQuery("#_checkbox_mp4_edit").attr('checked', 'checked');
@@ -110,6 +113,7 @@ function preview_video(obj){
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
   var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
   var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+  var webm=jQuery(tr_edit).find("input[name='wo_di_video_webm[]']").val();
   var width= jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
   var height= jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
   var embebido;
@@ -128,8 +132,11 @@ function preview_video(obj){
     if(mp4 != ""){
       embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
     }
-    else{
+    else if(ogg != ""){
       embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
+    }
+    else {
+      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+webm+'" type="video/webm">Your browser does not support the video tag.</video>';
     }
 
     jQuery("#contenedor_video").html(embebido);
@@ -150,8 +157,10 @@ function initiate_rules(){
   jQuery.validator.addMethod(
         "insert_video_html_edit",
         function(value, element) {
-            if(jQuery("#wo_di_video_servidor_edit").is(':checked')){
-              if(jQuery("#video_text_mp4_edit").val() == "" && jQuery("#video_text_ogg_edit").val() == ""){
+            if (jQuery("#wo_di_video_servidor_edit").is(':checked')){
+              if (jQuery("#video_text_mp4_edit").val() == ""
+                  && jQuery("#video_text_ogg_edit").val() == ""
+                  && jQuery("#video_text_webm_edit").val() == ""){
                 return false;
               }
             }
@@ -222,6 +231,9 @@ function initiate_rules(){
       video_text_ogg_edit:{
         insert_video_html_edit: true
       },
+      video_text_webm_edit:{
+        insert_video_html_edit: true
+      },
       video_text_url_edit:{
         insert_video_oembed_edit: true
       },
@@ -243,8 +255,10 @@ function initiate_rules(){
   jQuery.validator.addMethod(
         "insert_video_html",
         function(value, element) {
-            if(jQuery("#wo_di_video_servidor").is(':checked')){
-              if(jQuery("#video_text_mp4").val() == "" && jQuery("#video_text_ogg").val() == ""){
+            if (jQuery("#wo_di_video_servidor").is(':checked')){
+              if (jQuery("#video_text_mp4").val() == ""
+                  && jQuery("#video_text_ogg").val() == ""
+                  && jQuery("#video_text_webm").val() == ""){
                 return false;
               }
             }
@@ -316,6 +330,9 @@ function initiate_rules(){
       video_text_mp4:{
         insert_video_html: true
       },
+      video_text_webm:{
+        insert_video_html: true
+      },
       video_text_ogg:{
         insert_video_html: true
       },
@@ -348,17 +365,23 @@ function open_media_uploader_video()
 
     var win = window.dialogArguments || opener || parent || top;
 
-    if(extension == "mp4"){
+    if (extension == "mp4"){
       if(add_flag)
         win.jQuery('#video_text_mp4').val(video_url);
       else
         win.jQuery('#video_text_mp4_edit').val(video_url);
     }
-    else{
+    else if(extension == "ogg"){
       if(add_flag)
         win.jQuery('#video_text_ogg').val(video_url);
       else
         win.jQuery('#video_text_ogg_edit').val(video_url);
+    }
+    else {
+      if(add_flag)
+        win.jQuery('#video_text_webm').val(video_url);
+      else
+        win.jQuery('#video_text_webm_edit').val(video_url);
     }
   });
   media_uploader.open();
@@ -476,6 +499,7 @@ jQuery(document).ready(function()
                 var video_url="";
                 var video_mp4="";
                 var video_ogg="";
+                var video_webm="";
                 if(jQuery('#wo_di_video_embebido_edit').is(':checked')) {
                   type="Embedded";
                   formats="-";
@@ -495,6 +519,7 @@ jQuery(document).ready(function()
                   }
                   video_mp4=jQuery("#video_text_mp4_edit").val();
                   video_ogg=jQuery("#video_text_ogg_edit").val();
+                  video_webm=jQuery("#video_text_webm_edit").val();
                   var b_video=false;
                   if(video_mp4!=""){
                     formats=" MP4";
@@ -505,6 +530,13 @@ jQuery(document).ready(function()
                       formats+=", OGG"
                     }else{
                       formats=" OGG";
+                    }
+                  }
+                  if(video_webm!=""){
+                    if(b_video){
+                      formats+=", WEBM"
+                    }else{
+                      formats=" WEBM";
                     }
                   }
                 }
@@ -542,6 +574,7 @@ jQuery(document).ready(function()
                 jQuery(tr_edit).find("input[name='wo_di_video_url[]']").val(video_url);
                 jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val(video_mp4);
                 jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val(video_ogg);
+                jQuery(tr_edit).find("input[name='wo_di_video_webm[]']").val(video_webm);
                 jQuery( this ).dialog( "close" );
               } else {
                 form_edit_video.showErrors();
@@ -600,6 +633,7 @@ jQuery(document).ready(function()
                 videoUrl = jQuery('#video_text_url').val();
                 video_mp4=jQuery("#video_text_mp4").val();
                 video_ogg=jQuery("#video_text_ogg").val();
+                video_webm=jQuery("#video_text_webm").val();
                 var b_video=false;
                 if(video_mp4!=""){
                   formats=" MP4";
@@ -610,6 +644,13 @@ jQuery(document).ready(function()
                     formats+=", OGG"
                   }else{
                     formats=" OGG";
+                  }
+                }
+                if(video_webm!=""){
+                  if(b_video){
+                    formats+=", WEBM"
+                  }else{
+                    formats=" WEBM";
                   }
                 }
               }
@@ -648,6 +689,7 @@ jQuery(document).ready(function()
               video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
               video+="<input type=hidden name='wo_oembed[]' value='"+oEmbed+"' />";
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
+              video+="<input type=hidden name='wo_di_video_webm[]' value='"+video_webm+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
               var previewButton ="<span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'>";
               if (noClick) {
