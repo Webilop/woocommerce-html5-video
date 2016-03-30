@@ -482,7 +482,7 @@ jQuery(document).ready(function()
          jQuery( "#dialog_form_edit_video").dialog({
         autoOpen: false,
         draggable: false ,
-        height: 550,
+        height: 560,
         width: 565,
         modal: false,
         buttons: [
@@ -593,7 +593,7 @@ jQuery(document).ready(function()
         jQuery( "#dialog_form_add_video").dialog({
         autoOpen: false,
         draggable: false ,
-        height: 520,
+        height: 560,
         width: 565,
         modal: false,
         buttons: [
