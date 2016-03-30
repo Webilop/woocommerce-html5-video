@@ -381,7 +381,7 @@ class WooCommerceIntegrationBackend {
           $dimension = $height .' X ' . $width;
         }
 
-        $class = "class='alternate ui-state-default'";
+        $class = "class=''";
         $disable_iframe = get_option('wo_di_video_disable_iframe');
         switch ($type) {
           case "Embedded":
@@ -428,6 +428,9 @@ class WooCommerceIntegrationBackend {
         ob_start();
         ?>
         <tr id='wo_di_video_product_<?= $i ?>' <?= $class ?>>
+          <td style="width:20px;">
+            <span class='sort-button dashicons dashicons-sort' style="font-size:18px;" title="move"></span>
+          </td>
           <td>
             <input type=hidden name='wo_di_video_titles[]' value='<?= $title ?>' />
             <span><?= $title ?></span>
@@ -457,9 +460,9 @@ class WooCommerceIntegrationBackend {
           </td>
           <td>
             <?php if ($type != "Embedded" || ($type == "Embedded" && $disable_iframe == 0)): ?>
-              <span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'></span>
-              <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span>
-              <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>
+              <span class='action-button dashicons dashicons-search float-right' onclick='preview_video(this)' title='preview'></span>
+              <span class='action-button dashicons dashicons-edit float-right' onclick='edit_row(this)' title='edit'></span>
+              <span class='action-button dashicons dashicons-trash float-right' onclick='delete_row(this)' title='delete'></span>
             <?php elseif ($type == "Embedded" && $disable_iframe == 1): ?>
               <span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)' style='visibility:hidden;'></span>
               <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'  style='visibility:hidden;'></span>
@@ -480,6 +483,7 @@ class WooCommerceIntegrationBackend {
       <table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
         <thead>
           <tr>
+            <th></th>
             <th><?= __('Title', 'html5_video') ?></th>
             <th><?= __('Type', 'html5_video') ?></th>
             <th><?= __('Formats', 'html5_video') ?></th>
