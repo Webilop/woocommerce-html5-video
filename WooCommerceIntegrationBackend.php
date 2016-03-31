@@ -144,7 +144,7 @@ class WooCommerceIntegrationBackend {
             </div>
             <div class="video-option servidor-video" hidden>
               <p>
-                <?= __('You can upload a video to the Media Gallery or select a video from the Media Gallery.', 'html5_video')?>
+                <?= __('You can upload a video to the Media Library or select a video from the Media Library.', 'html5_video')?>
               </p>
               <dt>
                 <label for="video_text_mp4"> Mp4 </label>
@@ -322,7 +322,7 @@ class WooCommerceIntegrationBackend {
       var text_close_button = "<?= __('Close','html5_video'); ?>";
       var text_error_min_html = "<?= __('At least one video is required','html5_video'); ?>";
       var text_error_insert_html = "<?= __('Embedded code is required','html5_video'); ?>";
-      var text_error_id = "<?= __('The Name is required','html5_video'); ?>";
+      var text_error_id = "<?= __('The name is required','html5_video'); ?>";
       var text_error_dimension = "<?= __('height and width of the video is required','html5_video'); ?>";
     </script>
     <?php
