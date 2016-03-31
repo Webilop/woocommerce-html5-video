@@ -3,8 +3,8 @@
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
-Tested up to: 4.4.2
-Stable tag: 1.7.5
+Tested up to: 4.5
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,7 +83,7 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Chinese localization was added. Special thanks to Jinlin Cui(崔金林) (cuijinlin@gmail.com) for this contribution.
 
 = 1.3.2 =
-* Fix of a bug that will always displays the video tab even if there is no video. 
+* Fix of a bug that will always displays the video tab even if there is no video.
 * Addition of the option in the video settings page to Show the video tab if there is no videos for the product.
 * Addition of description for the videos of a product. You can use a tinyMCE editor to save a description of the videos, it will show the description above the videos in the video tab.
 
