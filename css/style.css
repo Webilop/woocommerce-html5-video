@@ -97,6 +97,23 @@ a#clone_video{
    background: #f5f5f5;
    border-radius: 4px;
 }
+
+table#wo_di_table_videos_html tbody tr {
+  background-color: #ffffff;
+}
+
+table#wo_di_table_videos_html tbody tr:nth-child(2n+1) {
+  background-color: #f9f9f9;
+}
+
+table#wo_di_table_videos_html .action-button {
+  cursor: pointer
+}
+
+table#wo_di_table_videos_html .sort-button {
+  cursor: move;
+}
+
 form.html5_video{
    float: left;
 }

@@ -610,6 +610,7 @@ jQuery(document).ready(function()
               var video_embebido="";
               var videoUrl = '';
               var video_mp4="";
+              var video_webm="";
               var oEmbed="";
               var noClick = false;
               var video_ogg="";
@@ -672,7 +673,7 @@ jQuery(document).ready(function()
               }
               var number_of_videos=jQuery("#wo_di_number_of_videos").val();
               number_of_videos++;
-              var classColumn="class='alternate ui-state-default'";
+              var classColumn="class=''";
               /*if((number_of_videos%2)!=0){
                 classColumn="class='alternate'";
               }*/
@@ -680,6 +681,7 @@ jQuery(document).ready(function()
               var title=jQuery("#wo_di_video_title").val();
               var video="<tr id='wo_di_video_product_"+number_of_videos+"' "+classColumn+">";
               //video+="<td><input type=hidden name='wo_di_video_ids[]' value='"+id+"' /><span>"+id+"</span></td>";
+              video+="<td style='width:20px;'><span class='sort-button dashicons dashicons-sort' style='font-size:18px;' title='move'></span></td>";
               video+="<td><input type=hidden name='wo_di_video_titles[]' value='"+title+"' /><span>"+title+"</span></td>";
               video+="<td><input type=hidden name='wo_di_video_types[]' value='"+type+"' /><span>"+type+"</span></td>";
               video+="<td> <input type=hidden name='wo_di_video_formats[]' value='"+formats+"' /><span>"+formats+"</span></td>";
@@ -691,11 +693,11 @@ jQuery(document).ready(function()
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
               video+="<input type=hidden name='wo_di_video_webm[]' value='"+video_webm+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
-              var previewButton ="<span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'>";
+              var previewButton ="<span class='action-button dashicons dashicons-search float-right' onclick='preview_video(this)' title='preview'>";
               if (noClick) {
-                previewButton ="<span class='ui-icon ui-icon-circle-zoomout float-right' title='Preview available after saving the product for the first time'>";
+                previewButton ="<span class='action-button dashicons dashicons-search float-right' title='Preview available after saving the product for the first time'>";
               }
-              video+="<td>" + previewButton + " </span> <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
+              video+="<td>" + previewButton + " </span> <span class='action-button dashicons dashicons-edit float-right' onclick='edit_row(this)' title='edit'></span><span class='action-button dashicons dashicons-trash float-right' onclick='delete_row(this)' title='delete'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
