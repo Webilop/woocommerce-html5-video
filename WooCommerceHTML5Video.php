@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/woocommerce-html5-video/
- * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
+ * Description: Include videos in product pagess of your WooCommerce online store. This plugin uses HTML5 to render videos in your product pages. It supports video formats MP4, Ogg, Webm and embedded videos frome websites like youtube or vimeo.
  * Author: Webilop
  * Author URI: http://www.webilop.com
- * Version: 1.7.4
+ * Version: 1.7.5
  * License: GPLv2 or later
  */
 namespace WooCommerceHTML5Video;
@@ -22,6 +22,7 @@ class WooCommerceHTML5Video {
 
     //Verify dependencies
     add_action('admin_init', array(__CLASS__, 'check_plugin_activated'));
+    add_action('wp_head', array(__CLASS__, 'print_ajax_url'));
 
     //Woocommerce integration
     add_action('woocommerce_init', array(__CLASS__, 'init_woo_integration'));
@@ -29,6 +30,8 @@ class WooCommerceHTML5Video {
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'popups_add_edit_video'));
     add_action('admin_footer-post-new.php',
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'popups_add_edit_video'));
+    add_action('wp_ajax_oembed_video',
+      array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'oembed_video'));
 
     //Settings
     add_action('admin_init',
@@ -40,6 +43,9 @@ class WooCommerceHTML5Video {
       array('\\WooCommerceHTML5Video\\Settings', 'add_settings_link'));
     add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_scripts'));
     add_action('plugins_loaded', array(__CLASS__, 'plugin_textdomain'));
+
+    add_action('admin_notices', array(__CLASS__, 'review_notice'));
+    add_action('wp_ajax_save_review', array(__CLASS__, 'save_review'));
   }
 
 /******************************************************************************/
@@ -80,6 +86,14 @@ class WooCommerceHTML5Video {
     else {
       self::activate_plugin();
     }
+  }
+
+  public static function print_ajax_url() {
+    ?>
+    <script>
+      var ajaxurl = '<?= admin_url('admin-ajax.php'); ?>';
+    </script>
+    <?php
   }
 
   /**
@@ -213,11 +227,14 @@ class WooCommerceHTML5Video {
 /******************************************************************************/
 
   public static function admin_scripts($hook) {
+    wp_register_script('admin-notices', plugins_url('js/admin_notices.js', __FILE__), array('jquery'));
+    wp_enqueue_script('admin-notices');
+
     //check if a product page is displayed (creation or edition)
     global $post;
     if(empty($post->post_type) || 'product' != $post->post_type || ($hook != 'post.php' && $hook != 'post-new.php'))
       return;
-  
+
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
     wp_enqueue_style('thickbox');
@@ -250,6 +267,34 @@ class WooCommerceHTML5Video {
       false,
       dirname(plugin_basename(__FILE__)) . '/languages'
     );
+  }
+
+  /**
+   * Print admin notice to ask for plugin review
+   */
+  public static function review_notice() {
+    //verify option to check if user already dismiss or post the review
+    $userId = get_current_user_id();
+    $meta = get_user_meta($userId, 'woo_html5_review', true);
+    if (empty($meta) || false == $meta): ?>
+      <div id="review-notice" class="notice notice-info">
+        <p>
+          Help others to make good choices when they are seeking for plugins, please add a review in WooCommerce HTML5 Video and help us to create confidence in more people.
+        </p>
+        <p>
+          <a id="post-review" href="https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video#postform" class="button-primary" target="_blank">Post review</a>
+          <a id="skip-review" class="button-secondary" href="">Dismiss</a>
+        </p>
+      </div>
+    <?php endif;
+  }
+
+  /**
+   * Save that current user already made a review or doesn't want to make it
+   */
+  public static function save_review() {
+    $userId = get_current_user_id();
+    update_user_meta($userId, 'woo_html5_review', true);
   }
 }
 

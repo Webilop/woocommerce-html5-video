@@ -27,6 +27,7 @@ function clean_inputs_edit(){
   jQuery("#video_text_url_edit").val("");
   jQuery("#video_text_mp4_edit").val("");
   jQuery("#video_text_ogg_edit").val("");
+  jQuery("#video_text_webm_edit").val("");
   jQuery("#video_text_embebido_edit").val("");
   jQuery("#_checkbox_url_edit").attr('checked', false);
   jQuery("#_checkbox_mp4_edit").attr('checked', false);
@@ -53,6 +54,7 @@ function edit_row(obj){
   var id=jQuery(tr_edit).find("input[name='wo_di_video_ids[]']").val();
   jQuery("#wo_di_video_title_edit").val(title);
   jQuery("#wo_di_video_id_edit").val(id);
+  jQuery('#wo_di_form_edit_video div.video-option').hide();
 
   add_flag=false;
 
@@ -61,6 +63,7 @@ function edit_row(obj){
       jQuery("#wo_di_video_embebido_edit").attr('checked', true);
       var embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
       jQuery("#video_text_embebido_edit").val(embebido);
+      jQuery("#wo_di_form_edit_video div.embebido-video").show();
       break;
     case 'WP Library':
       jQuery("#wo_di_video_servidor_edit").attr('checked', true);
@@ -68,11 +71,13 @@ function edit_row(obj){
       var width=jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
       var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
       var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+      var webm=jQuery(tr_edit).find("input[name='wo_di_video_webm[]']").val();
       jQuery("#height_video_woocommerce_edit").val(height);
       jQuery("#width_video_woocommerce_edit").val(width);
 
       jQuery("#video_text_mp4_edit").val(mp4);
       jQuery("#video_text_ogg_edit").val(ogg);
+      jQuery("#video_text_webm_edit").val(webm);
 
       if(mp4!=""){
         jQuery("#_checkbox_mp4_edit").attr('checked', 'checked');
@@ -80,6 +85,7 @@ function edit_row(obj){
       if(ogg!=""){
         jQuery("#_checkbox_OGG_edit").attr('checked', 'checked');
       }
+      jQuery("#wo_di_form_edit_video div.servidor-video").show();
       break;
     case 'oEmbed':
       jQuery('#wo_di_video_oembed_edit').attr('checked', true);
@@ -94,6 +100,7 @@ function edit_row(obj){
       if(url != '') {
         jQuery('#_checkbox_url_edit').attr('checked', 'checked');
       }
+      jQuery("#wo_di_form_edit_video div.oembed-video").show();
       break;
   }
   jQuery('#dialog_form_edit_video').dialog('open');
@@ -101,36 +108,44 @@ function edit_row(obj){
 
 function preview_video(obj){
   tr_edit=obj.parentNode.parentNode;
-  
+
   var type=jQuery(tr_edit).find("input[name='wo_di_video_types[]']").val();
   var title=jQuery(tr_edit).find("input[name='wo_di_video_titles[]']").val();
   var mp4=jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val();
   var ogg=jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val();
+  var webm=jQuery(tr_edit).find("input[name='wo_di_video_webm[]']").val();
   var width= jQuery(tr_edit).find("input[name='wo_di_video_widths[]']").val();
   var height= jQuery(tr_edit).find("input[name='wo_di_video_heights[]']").val();
   var embebido;
-  
+
   jQuery("#dialog_preview_video").dialog('option', 'title', 'Preview Video - '+title);
-  
+
   if(type=="Embedded"){
     embebido=jQuery(tr_edit).find("input[name='wo_di_video_embebido[]']").val();
+    jQuery("#contenedor_video").html(embebido);
+  }
+  else if (type == "oEmbed") {
+    embebido=jQuery(tr_edit).find("input[name='wo_oembed[]']").val();
     jQuery("#contenedor_video").html(embebido);
   }
   else{
     if(mp4 != ""){
       embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
     }
-    else{
+    else if(ogg != ""){
       embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
     }
-    
+    else {
+      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+webm+'" type="video/webm">Your browser does not support the video tag.</video>';
+    }
+
     jQuery("#contenedor_video").html(embebido);
-    
+
     var video = jQuery('#current_video').get(0);
     video.load();
     video.play();
   }
-  
+
   jQuery( "#dialog_preview_video" ).dialog( "open" );
 }
 
@@ -142,15 +157,13 @@ function initiate_rules(){
   jQuery.validator.addMethod(
         "insert_video_html_edit",
         function(value, element) {
-            if(jQuery("#wo_di_video_servidor_edit").is(':checked')){
-              if(jQuery("#video_text_mp4_edit").val()=="" && jQuery("#video_text_ogg_edit").val()==""){
+            if (jQuery("#wo_di_video_servidor_edit").is(':checked')){
+              if (jQuery("#video_text_mp4_edit").val() == ""
+                  && jQuery("#video_text_ogg_edit").val() == ""
+                  && jQuery("#video_text_webm_edit").val() == ""){
                 return false;
               }
             }
-            jQuery("#video_text_mp4_edit").removeClass("error");
-            jQuery("#video_text_mp4_edit").siblings("p").remove();
-            jQuery("#video_text_ogg_edit").removeClass("error");
-            jQuery("#video_text_ogg_edit").siblings("p").remove();
             return true;
         },
         text_error_min_html
@@ -176,8 +189,6 @@ function initiate_rules(){
         if(jQuery("#video_text_url_edit").val() == '') {
           return false;
         }
-        jQuery("#video_text_url_edit").removeClass("error");
-        jQuery("#video_text_url_edit").siblings("p").remove();
       }
       return true;
     },
@@ -220,6 +231,9 @@ function initiate_rules(){
       video_text_ogg_edit:{
         insert_video_html_edit: true
       },
+      video_text_webm_edit:{
+        insert_video_html_edit: true
+      },
       video_text_url_edit:{
         insert_video_oembed_edit: true
       },
@@ -241,15 +255,13 @@ function initiate_rules(){
   jQuery.validator.addMethod(
         "insert_video_html",
         function(value, element) {
-            if(jQuery("#wo_di_video_servidor").is(':checked')){
-              if(jQuery("#video_text_mp4").val()=="" && jQuery("#video_text_ogg").val()==""){
+            if (jQuery("#wo_di_video_servidor").is(':checked')){
+              if (jQuery("#video_text_mp4").val() == ""
+                  && jQuery("#video_text_ogg").val() == ""
+                  && jQuery("#video_text_webm").val() == ""){
                 return false;
               }
             }
-            jQuery("#video_text_mp4").removeClass("error");
-            jQuery("#video_text_mp4").siblings("p").remove();
-            jQuery("#video_text_ogg").removeClass("error");
-            jQuery("#video_text_ogg").siblings("p").remove();
             return true;
         },
         text_error_min_html
@@ -276,8 +288,6 @@ function initiate_rules(){
           return false;
         }
       }
-      jQuery('#video_text_url').removeClass('error');
-      jQuery('#video_text_url').siblings('p').remove();
       return true;
     },
     text_error_insert_html
@@ -320,6 +330,9 @@ function initiate_rules(){
       video_text_mp4:{
         insert_video_html: true
       },
+      video_text_webm:{
+        insert_video_html: true
+      },
       video_text_ogg:{
         insert_video_html: true
       },
@@ -340,36 +353,92 @@ function initiate_rules(){
 
 function open_media_uploader_video()
 {
-    media_uploader = wp.media({
-        frame:    "video",
-        state:    "video-details",
-    });
+  media_uploader = wp.media({
+    library: {type: 'video'},
+    title: 'Add Video Source'
+  });
 
-    media_uploader.on("update", function(){
-        var extension = media_uploader.state().media.extension;
-        var video_url = media_uploader.state().media.attachment.changed.url;
-        var video_icon = media_uploader.state().media.attachment.changed.icon;
-        var video_title = media_uploader.state().media.attachment.changed.title;
-        var video_desc = media_uploader.state().media.attachment.changed.description;
+  media_uploader.on("select", function(){
+    var file = media_uploader.state().get('selection').first();
+    var extension = file.changed.subtype;
+    var video_url = file.changed.url;
 
-        var extension = video_url.substring(video_url.lastIndexOf('.')+ 1, video_url.length);
-        var win = window.dialogArguments || opener || parent || top;
+    var win = window.dialogArguments || opener || parent || top;
 
-        if(extension=="mp4"){
-          if(add_flag)
-            win.jQuery('#video_text_mp4').val(video_url);
-          else
-            win.jQuery('#video_text_mp4_edit').val(video_url);
-        }
-        else{
-          if(add_flag)
-            win.jQuery('#video_text_ogg').val(video_url);
-          else
-            win.jQuery('#video_text_ogg_edit').val(video_url);
-        }
-    });
+    if (extension == "mp4"){
+      if(add_flag)
+        win.jQuery('#video_text_mp4').val(video_url);
+      else
+        win.jQuery('#video_text_mp4_edit').val(video_url);
+    }
+    else if(extension == "ogg"){
+      if(add_flag)
+        win.jQuery('#video_text_ogg').val(video_url);
+      else
+        win.jQuery('#video_text_ogg_edit').val(video_url);
+    }
+    else {
+      if(add_flag)
+        win.jQuery('#video_text_webm').val(video_url);
+      else
+        win.jQuery('#video_text_webm_edit').val(video_url);
+    }
+  });
+  media_uploader.open();
+}
 
-    media_uploader.open();
+function oEmbedVideo(url, height, width) {
+  var video = '';
+  jQuery.ajax({
+    url: ajaxurl,
+    data: {
+      action: 'oembed_video',
+      video_url: url,
+      height: height,
+      width: width,
+      post_id: urlParam('post')
+    },
+    method: 'POST',
+    async: false,
+    success: function (iframe) {
+      video = iframe;
+    }
+  });
+  return video;
+}
+
+function urlParam(name){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (null != results)
+    return results[1] || 0;
+  return 0;
+}
+
+function oEmbedVideo(url, height, width) {
+  var video = '';
+  jQuery.ajax({
+    url: ajaxurl,
+    data: {
+      action: 'oembed_video',
+      video_url: url,
+      height: height,
+      width: width,
+      post_id: urlParam('post')
+    },
+    method: 'POST',
+    async: false,
+    success: function (iframe) {
+      video = iframe;
+    }
+  });
+  return video;
+}
+
+function urlParam(name){
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (null != results)
+    return results[1] || 0;
+  return 0;
 }
 
 
@@ -413,7 +482,7 @@ jQuery(document).ready(function()
          jQuery( "#dialog_form_edit_video").dialog({
         autoOpen: false,
         draggable: false ,
-        height: 550,
+        height: 560,
         width: 565,
         modal: false,
         buttons: [
@@ -430,6 +499,7 @@ jQuery(document).ready(function()
                 var video_url="";
                 var video_mp4="";
                 var video_ogg="";
+                var video_webm="";
                 if(jQuery('#wo_di_video_embebido_edit').is(':checked')) {
                   type="Embedded";
                   formats="-";
@@ -449,6 +519,7 @@ jQuery(document).ready(function()
                   }
                   video_mp4=jQuery("#video_text_mp4_edit").val();
                   video_ogg=jQuery("#video_text_ogg_edit").val();
+                  video_webm=jQuery("#video_text_webm_edit").val();
                   var b_video=false;
                   if(video_mp4!=""){
                     formats=" MP4";
@@ -459,6 +530,13 @@ jQuery(document).ready(function()
                       formats+=", OGG"
                     }else{
                       formats=" OGG";
+                    }
+                  }
+                  if(video_webm!=""){
+                    if(b_video){
+                      formats+=", WEBM"
+                    }else{
+                      formats=" WEBM";
                     }
                   }
                 }
@@ -496,6 +574,7 @@ jQuery(document).ready(function()
                 jQuery(tr_edit).find("input[name='wo_di_video_url[]']").val(video_url);
                 jQuery(tr_edit).find("input[name='wo_di_video_mp4[]']").val(video_mp4);
                 jQuery(tr_edit).find("input[name='wo_di_video_ogg[]']").val(video_ogg);
+                jQuery(tr_edit).find("input[name='wo_di_video_webm[]']").val(video_webm);
                 jQuery( this ).dialog( "close" );
               } else {
                 form_edit_video.showErrors();
@@ -514,7 +593,7 @@ jQuery(document).ready(function()
         jQuery( "#dialog_form_add_video").dialog({
         autoOpen: false,
         draggable: false ,
-        height: 550,
+        height: 560,
         width: 565,
         modal: false,
         buttons: [
@@ -531,6 +610,9 @@ jQuery(document).ready(function()
               var video_embebido="";
               var videoUrl = '';
               var video_mp4="";
+              var video_webm="";
+              var oEmbed="";
+              var noClick = false;
               var video_ogg="";
               if(jQuery('#video_embebido').is(':checked')){
                 type="Embedded";
@@ -552,6 +634,7 @@ jQuery(document).ready(function()
                 videoUrl = jQuery('#video_text_url').val();
                 video_mp4=jQuery("#video_text_mp4").val();
                 video_ogg=jQuery("#video_text_ogg").val();
+                video_webm=jQuery("#video_text_webm").val();
                 var b_video=false;
                 if(video_mp4!=""){
                   formats=" MP4";
@@ -562,6 +645,13 @@ jQuery(document).ready(function()
                     formats+=", OGG"
                   }else{
                     formats=" OGG";
+                  }
+                }
+                if(video_webm!=""){
+                  if(b_video){
+                    formats+=", WEBM"
+                  }else{
+                    formats=" WEBM";
                   }
                 }
               }
@@ -575,11 +665,15 @@ jQuery(document).ready(function()
                  dimension= height +" X " + width;
                 }
                 videoUrl = jQuery('#video_text_url').val();
+                oEmbed = oEmbedVideo(videoUrl, height, width);
                 formats = '-';
+                if ('' == oEmbed) {
+                  noClick = true;
+                }
               }
               var number_of_videos=jQuery("#wo_di_number_of_videos").val();
               number_of_videos++;
-              var classColumn="class='alternate ui-state-default'";
+              var classColumn="class=''";
               /*if((number_of_videos%2)!=0){
                 classColumn="class='alternate'";
               }*/
@@ -587,6 +681,7 @@ jQuery(document).ready(function()
               var title=jQuery("#wo_di_video_title").val();
               var video="<tr id='wo_di_video_product_"+number_of_videos+"' "+classColumn+">";
               //video+="<td><input type=hidden name='wo_di_video_ids[]' value='"+id+"' /><span>"+id+"</span></td>";
+              video+="<td style='width:20px;'><span class='sort-button dashicons dashicons-sort' style='font-size:18px;' title='move'></span></td>";
               video+="<td><input type=hidden name='wo_di_video_titles[]' value='"+title+"' /><span>"+title+"</span></td>";
               video+="<td><input type=hidden name='wo_di_video_types[]' value='"+type+"' /><span>"+type+"</span></td>";
               video+="<td> <input type=hidden name='wo_di_video_formats[]' value='"+formats+"' /><span>"+formats+"</span></td>";
@@ -594,12 +689,24 @@ jQuery(document).ready(function()
               video+="<input type=hidden name='wo_di_video_embebido[]'/ value='"+video_embebido+"' >";
               video+="<input type=hidden name='wo_di_video_url[]' value='" + videoUrl + "' />";
               video+="<input type=hidden name='wo_di_video_mp4[]' value='"+video_mp4+"' />";
+              video+="<input type=hidden name='wo_oembed[]' value='"+oEmbed+"' />";
               video+="<input type=hidden name='wo_di_video_ogg[]' value='"+video_ogg+"' />";
+              video+="<input type=hidden name='wo_di_video_webm[]' value='"+video_webm+"' />";
               video+="<td><input type=hidden name='wo_di_video_active[]' value='1' /><input type='checkbox' checked='checked' onchange='update_input_active(this)' /></td>";
-              video+="<td><span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)'> </span> <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'></span><span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span></td>";
+              var previewButton ="<span class='action-button dashicons dashicons-search float-right' onclick='preview_video(this)' title='preview'>";
+              if (noClick) {
+                previewButton ="<span class='action-button dashicons dashicons-search float-right' title='Preview available after saving the product for the first time'>";
+              }
+              video+="<td>" + previewButton + " </span> <span class='action-button dashicons dashicons-edit float-right' onclick='edit_row(this)' title='edit'></span><span class='action-button dashicons dashicons-trash float-right' onclick='delete_row(this)' title='delete'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
               jQuery( this ).dialog( "close" );
+
+              //Clean modal
+              jQuery('#wo_di_form_add_video').find("input[type=text], input[type=url], textarea").val("");
+              jQuery('#wo_di_video_oembed').attr('checked', true);
+              jQuery('#wo_di_form_add_video div.video-option').hide();
+              jQuery('#wo_di_form_add_video div.oembed-video').show();
             } else {
               form_add_video.showErrors();
             }
@@ -629,7 +736,7 @@ jQuery(document).ready(function()
 
       jQuery( "#table-video-sortable" ).sortable();
       jQuery( "#table-video-sortable" ).disableSelection();
-      
+
       //preview
       jQuery( "#dialog_preview_video").dialog({
         autoOpen: false,
