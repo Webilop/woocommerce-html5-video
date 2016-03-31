@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
 Tested up to: 4.4.2
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 WooCommerce HTML5 Video is a WooCommerce add-on which allows you to add videos to products in your online store. The plugin creates a new tab in the product description page where all videos related to the product are placed.
 
-This plugin uses HTML5 to render videos in your products. The supported video formats are MP4 and Ogg. It also support embedded videos from websites like [youtube](https://support.google.com/youtube/answer/171780?hl=en), [vimeo](https://vimeo.com/help/faq/sharing-videos/embedding-videos) and others.
+This plugin uses HTML5 to render videos in your products. The supported video formats are MP4, Ogg and Webm. It also support embedded videos from websites like [youtube](https://support.google.com/youtube/answer/171780?hl=en), [vimeo](https://vimeo.com/help/faq/sharing-videos/embedding-videos) and others.
 
 = Localization =
 
@@ -27,9 +27,9 @@ This plugin uses HTML5 to render videos in your products. The supported video fo
 
 *Spanish
 
-*Persian
+*Persian(Outdated)
 
-*Chinese 
+*Chinese(Outdated)
 
 If you want to contribute with the localization of this plugin, you can contribute in the [Github repository](https://github.com/Webilop/woocommerce-html5-video) or send us your .mo and .po files to contact[at]webilop.com
 
@@ -50,10 +50,10 @@ Select the video source: Embedded code or uploaded video.
 == Frequently Asked Questions ==
 
 = Which video format can I upload and use with the plugin? =
-The supported video formats are MP4 and Ogg.
+The supported video formats are MP4, Ogg and Webm.
 
 = Can I use embedded videos from websites like youtube or vimeo with the plugin? =
-Yes, you can. When you are including videos in your products, just select the option to include embedded videos.
+Yes, you can. When you are including videos in your products, just select the option to include embedded videos or use the option URL and paste the URL of the youtube or vimeo page.
 
 = I cannot see the video in the frontend =
 Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html5_video.asp).
@@ -133,3 +133,11 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Fix encoding video data on saving of products for PHP versiones under 5.4.0.
 * Fix on active checkbox in list of videos in products.
 
+= 1.7.5 =
+* Fix on active checkbox in table of videos attached to a product.
+* Support for preview mode for oEmbedded videos.
+* Addition of notice message about reviews of the plugin.
+* Change on modal window to select or upload videos in the media library.
+* Modification of styles and structure of modal window to add videos to a product.
+* Support for Webm video format.
+* Modifications of styles in table of videos attached to a product.

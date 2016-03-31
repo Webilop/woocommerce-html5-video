@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/woocommerce-html5-video/
- * Description: Include videos in products of your WooCommerce online store. This plugin uses HTML5 to render videos in your products and it supports the video formats: MP4, Ogg and embedded videos like youtube videos.
+ * Description: Include videos in product pagess of your WooCommerce online store. This plugin uses HTML5 to render videos in your product pages. It supports video formats MP4, Ogg, Webm and embedded videos frome websites like youtube or vimeo.
  * Author: Webilop
  * Author URI: http://www.webilop.com
- * Version: 1.7.4
+ * Version: 1.7.5
  * License: GPLv2 or later
  */
 namespace WooCommerceHTML5Video;
