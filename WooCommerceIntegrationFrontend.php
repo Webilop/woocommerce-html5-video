@@ -175,12 +175,25 @@ class WooCommerceIntegrationFrontend {
         endforeach;
       endif;
     endif;
-    ?>
-    <p style="font-size:10px;color:#999;">
-      <?= __("Video embedding powered by","html5_video") ?>
-      <a target="_blank" title="Web + mobile development" rel="nofollow" href="http://www.webilop.com/products/woocommerce-html5-video/">Webilop</a>
-    </p>
-    <?php
+    $option = get_option('webilop_pluigns_premium', array());
+    $plugin = isset($option['woocomerce-html5-video'])? $option['woocomerce-html5-video'] : '';
+    $premium = false;
+    if (!empty($plugin)) {
+      if (strtotime($plugin) < strtotime('-1 day')) {
+        $premium = Premium::check_premium();
+      }
+      else {
+        $premium = true;
+      }
+    }
+    if (!$premium) {
+      ?>
+      <p style="font-size:10px;color:#999;">
+        <?= __("Video embedding powered by","html5_video") ?>
+        <a target="_blank" title="Web + mobile development" rel="nofollow" href="http://www.webilop.com/products/woocommerce-html5-video/">Webilop</a>
+      </p>
+      <?php
+    }
   }
 
 /******************************************************************************/
