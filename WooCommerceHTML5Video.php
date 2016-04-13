@@ -45,6 +45,8 @@ class WooCommerceHTML5Video {
     add_action('plugins_loaded', array(__CLASS__, 'plugin_textdomain'));
 
     add_action('admin_notices', array(__CLASS__, 'review_notice'));
+    add_action('admin_notices',
+      array('\\WooCommerceHTML5Video\\Settings', 'paypal_notice'));
     add_action('wp_ajax_save_review', array(__CLASS__, 'save_review'));
   }
 

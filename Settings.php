@@ -15,6 +15,7 @@ class Settings {
     register_setting( 'dimensions_group', 'wo_di_video_size_forcing', 'intval' );
     register_setting( 'dimensions_group', 'wo_di_video_disable_iframe', 'intval' );
     register_setting( 'dimensions_group', 'wo_di_config_video_description', 'intval' );
+    register_setting( 'dimensions_group', 'wo_di_webilop_advertisement', 'intval' );
   }
 
   /**
@@ -22,13 +23,15 @@ class Settings {
    * attached to: admin_menu action
    */
   public static function settings_page() {
-    add_options_page(
+    $hook = add_options_page(
       'WooCommerce Html5 Video Settings',
       'WooCommerce Html5 Video',
       'manage_options',
       'html5-video-settings',
       array(__CLASS__, 'settings_page_content')
     );
+    add_action("load-$hook",
+      array('\\WooCommerceHTML5Video\\Premium', 'check_plugin'));
   }
 
   /**
@@ -68,7 +71,7 @@ class Settings {
       <form class="html5_video" method="post" action="options.php" onsubmit="return check_form_settings();">
         <?php
         settings_fields('dimensions_group');
-        do_settings_fields('dimensions_group','html5-video-settings')
+        do_settings_fields('dimensions_group','html5-video-settings');
         ?>
         <p>
           <strong>
@@ -156,6 +159,17 @@ class Settings {
               <input type="checkbox" name="wo_di_config_video_description" <?= $checked ?> value="1" />
             </td>
           </tr>
+          <?php if (isset($_SESSION['premium']) && true === $_SESSION['premium']): ?>
+            <tr valign="top">
+              <th scope="row">
+                <?= __('Hide Webilop\'s advertisement under videos','html5_video')?>:
+              </th>
+              <td>
+                <?php $checked = (get_option('wo_di_webilop_advertisement') == 1)? "checked" : ""; ?>
+                <input type="checkbox" name="wo_di_webilop_advertisement" <?= $checked ?> value="1" />
+              </td>
+            </tr>
+          <?php endif; ?>
         </table>
         <span id="span_errors"></span>
         <?php submit_button(); ?>
@@ -163,6 +177,27 @@ class Settings {
           <a title="WooCommerce HTML5 Video" href="http://www.webilop.com/products/woocommerce-html5-video/" target="_blank">WooCommerce Html5 Video Documentation</a>
         </span>
       </form>
+
+      <?php if (!isset($_SESSION['premium']) || false == $_SESSION['premium']): ?>
+        <h3>Get access to premium features by $XX</h3>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="top">
+          <input type="checkbox" name="terms" id="terms" value="accept" required> <label for="terms">Accept <a href="http://dev.webilop.com/webilop-3.0/" target="_blank">terms and conditions</a> </label><br/>
+          <input type="hidden" name="cmd" value="s-xclick">
+          <input type="hidden" name="hosted_button_id" value="D8SDYVG855UZ8">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <input type="hidden" name="notify_url" value="http://dev.webilop.com/webilop-3.0/?AngellEYE_Paypal_Ipn_For_Wordpress&action=ipn_handler">
+          <input type="hidden" name="return" value="<?= admin_url('options-general.php?page=html5-video-settings&paypal_status=success') ?>">
+          <input type="hidden" name="cancel_return" value="<?= admin_url('options-general.php?page=html5-video-settings&paypal_status=cancel') ?>">
+          <input type="hidden" name="on0" value="domain" />
+          <input type="hidden" name="os0" value="<?= home_url() ?>" />
+          <input type="hidden" name="on1" value="concept" />
+          <input type="hidden" name="os1" value="woocomerce-html5-video" />
+          <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+        </form>
+      <?php
+      endif;
+      unset($_SESSION['premium']);
+      ?>
 
       <table class="rate-about-table">
         <tr>
@@ -216,5 +251,26 @@ class Settings {
       </table>
     </div>
    <?php
+  }
+
+  public static function paypal_notice() {
+    $page = isset($_GET['page'])? $_GET['page'] : '';
+    $paypal_status = isset($_GET['paypal_status'])? $_GET['paypal_status'] : '';
+    if (!empty($page) && 'success' == $paypal_status) {
+      $class = "notice-success";
+      $message = "Payment successfully finished. Once it has been verified, premium features will be enabled";
+    }
+    elseif (!empty($page) && 'cancel' == $paypal_status) {
+      $class = "notice-error";
+      $message = "Payment canceled";
+    }
+
+    if (isset($class) && isset($message)) {
+      ?>
+      <div class="notice <?= $class ?>">
+        <p><?= $message ?></p>
+      </div>
+      <?php
+    }
   }
 }
