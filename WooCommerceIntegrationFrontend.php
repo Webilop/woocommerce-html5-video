@@ -161,6 +161,9 @@ class WooCommerceIntegrationFrontend {
                     <?php if ($video->ogg != "") { ?>
                       <source src="<?= $video->ogg ?>" type="video/ogg" />
                     <?php } ?>
+                    <?php if ($video->webm != "") { ?>
+                      <source src="<?= $video->webm ?>" type="video/webm" />
+                    <?php } ?>
                     <p>
                       <?= __("Your browser does not support HTML5","html5_video") ?>
                     </p>
