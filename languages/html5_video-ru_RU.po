@@ -1,0 +1,303 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: html5_video\n"
+"POT-Creation-Date: 2016-03-31 09:35-0500\n"
+"PO-Revision-Date: 2016-11-17 12:09+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-KeywordsList: __;_e;_;gettext;gettext_noop\n"
+"X-Poedit-Basepath: ..\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru_RU\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Settings.php:62
+msgid "You do not have sufficient permissions to access this page."
+msgstr "У вас нет разрешения для доступа к этой странице."
+
+#: Settings.php:75
+msgid "Configure the default video dimensions and the video tab name"
+msgstr "Редактировать размеры и название видео по умолчнию"
+
+#: Settings.php:81
+msgid "Video Tab Name"
+msgstr "Заголовок вкладки видео (Tab Name)"
+
+#: Settings.php:95
+msgid "Video Width"
+msgstr "Ширина видео"
+
+#: Settings.php:103
+msgid "Video Height"
+msgstr "Высота видео"
+
+#: Settings.php:111
+msgid "Force video dimensions (it does not work with iframes)"
+msgstr "Задать размеры видео (не работает плавающими фреймами)"
+
+#: Settings.php:120
+msgid "Video Tab Position (0-index)"
+msgstr "Позиция вкладки видео (0-index)"
+
+#: Settings.php:134
+msgid "Show video tab if there is no video"
+msgstr "Показывать вкладку видео если видео не загружено"
+
+#: Settings.php:143
+msgid "Disable embedded videos with iframes"
+msgstr "Деактивировать встроенные видео с плавающими фреймами"
+
+#: Settings.php:152
+msgid "Disable general video description"
+msgstr "Отключить общее описание видео"
+
+#: Settings.php:172
+msgid "Rate it!"
+msgstr "Оцени плагин!"
+
+#: Settings.php:175
+msgid "If you like this plugin please"
+msgstr "Если вам нравится это плагин, пожалуйста"
+
+#: Settings.php:196
+msgid "About"
+msgstr "О"
+
+#: Settings.php:200
+msgid "was developed by "
+msgstr "Разработан"
+
+#: Settings.php:203
+msgid ""
+"Webilop is a company focused on web and mobile solutions. We develop custom "
+"mobile applications and templates and plugins for CMSs such as Wordpress and "
+"Joomla!"
+msgstr ""
+"Webilop это компания которая занимается разработкой веб и мобильных "
+"приложений. \vМы разрабатываем на заказ мобильные приложения, шаблоны и "
+"плагины для таких CMS таких как Wordpress и Joomla!"
+
+#: Settings.php:206
+msgid "Follow us"
+msgstr "Подпишитесь на нас"
+
+#: WooCommerceHTML5Video.php:192
+msgid ""
+"WooCommerce HTML5 Video requires <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> activated in order to work. "
+"Please install and activate <a href=\""
+msgstr ""
+"WooCommerce HTML5 Video требует <a href=\"http://www.woothemes.com/"
+"woocommerce/\" target=\"_blank\">WooCommerce</a> активируйте для начала "
+"работы. Пожалуйста установите и активируйте <a href=\""
+
+#: WooCommerceIntegrationBackend.php:13
+msgid "Video"
+msgstr "Видео"
+
+#: WooCommerceIntegrationBackend.php:27
+msgid "Embed Code"
+msgstr "Код для вставки"
+
+#: WooCommerceIntegrationBackend.php:28 WooCommerceIntegrationBackend.php:85
+msgid "Place your embedded video code here."
+msgstr "Пожалуйста вставьте код для вставки видео тут."
+
+#: WooCommerceIntegrationBackend.php:89
+msgid "Add Video"
+msgstr "Добавить видео"
+
+#: WooCommerceIntegrationBackend.php:95 WooCommerceIntegrationBackend.php:192
+msgid "Title: "
+msgstr "Заголовок:"
+
+#: WooCommerceIntegrationBackend.php:111 WooCommerceIntegrationBackend.php:208
+msgid "Width"
+msgstr "Ширина"
+
+#: WooCommerceIntegrationBackend.php:115 WooCommerceIntegrationBackend.php:212
+msgid "Height"
+msgstr "Высота"
+
+#: WooCommerceIntegrationBackend.php:121 WooCommerceIntegrationBackend.php:218
+msgid "Source:"
+msgstr "Источник:"
+
+#: WooCommerceIntegrationBackend.php:125 WooCommerceIntegrationBackend.php:222
+msgid "URL"
+msgstr "URL"
+
+#: WooCommerceIntegrationBackend.php:129
+msgid "Select/Upload"
+msgstr "Выбрать/Загрузить"
+
+#: WooCommerceIntegrationBackend.php:134 WooCommerceIntegrationBackend.php:231
+msgid "Embedded code"
+msgstr "Код для вставки"
+
+#: WooCommerceIntegrationBackend.php:141 WooCommerceIntegrationBackend.php:238
+msgid ""
+"Type the URL of your video, supports URLs of videos in websites like Youtube "
+"or Vimeo."
+msgstr ""
+"Тип URL вашего видео, поддерживаемые типы URL-ов видео имеют такие сайты как "
+"Youtube или Vimeo."
+
+#: WooCommerceIntegrationBackend.php:147
+msgid ""
+"You can upload a video to the Media Library or select a video from the Media "
+"Library."
+msgstr ""
+"Вы можете загрузить видео в медиатеку сайта или выбрать видео из загруженных "
+"ранее."
+
+#: WooCommerceIntegrationBackend.php:151 WooCommerceIntegrationBackend.php:158
+#: WooCommerceIntegrationBackend.php:165 WooCommerceIntegrationBackend.php:248
+#: WooCommerceIntegrationBackend.php:255 WooCommerceIntegrationBackend.php:262
+msgid "Supported by"
+msgstr "Поддерживается"
+
+#: WooCommerceIntegrationBackend.php:170 WooCommerceIntegrationBackend.php:267
+msgid "Select/Upload video"
+msgstr "Выбрать/Загрузить видео"
+
+#: WooCommerceIntegrationBackend.php:178 WooCommerceIntegrationBackend.php:275
+msgid "The embedded code should be taken from a video page like Youtube"
+msgstr "Встраиваемый код нужно брать на таких сайтах как Youtube"
+
+#: WooCommerceIntegrationBackend.php:187
+msgid "Edit Video"
+msgstr "Редактировать видео"
+
+#: WooCommerceIntegrationBackend.php:226
+msgid "Upload video"
+msgstr "Загрузить видео"
+
+#: WooCommerceIntegrationBackend.php:244
+msgid ""
+"You can upload a video to the Media Gallery or select a video from the Media "
+"Gallery."
+msgstr ""
+"Вы можете загрузить видео в медиатеку сайта или выбрать видео из загруженных "
+"ранее."
+
+#: WooCommerceIntegrationBackend.php:283
+msgid "Preview Video"
+msgstr "Превью видео"
+
+#: WooCommerceIntegrationBackend.php:319 WooCommerceIntegrationBackend.php:499
+msgid "Add"
+msgstr "Добавить"
+
+#: WooCommerceIntegrationBackend.php:320
+msgid "Edit"
+msgstr "Исправить"
+
+#: WooCommerceIntegrationBackend.php:321
+msgid "Cancel"
+msgstr "Отменить"
+
+#: WooCommerceIntegrationBackend.php:322
+msgid "Close"
+msgstr "Закрыть"
+
+#: WooCommerceIntegrationBackend.php:323
+msgid "At least one video is required"
+msgstr "Необходимо как минимум одно видео "
+
+#: WooCommerceIntegrationBackend.php:324
+msgid "Embedded code is required"
+msgstr "Требуется встроенный код"
+
+#: WooCommerceIntegrationBackend.php:325
+msgid "The name is required"
+msgstr "Требуется имя"
+
+#: WooCommerceIntegrationBackend.php:326
+msgid "height and width of the video is required"
+msgstr "Высота и ширина видео не обязательна"
+
+#: WooCommerceIntegrationBackend.php:341
+msgid "Description"
+msgstr "Описание"
+
+#: WooCommerceIntegrationBackend.php:343
+msgid "It will appear above the videos in the video tab"
+msgstr "Оно появится над видео в вкладке видео"
+
+#: WooCommerceIntegrationBackend.php:481
+msgid "Attached videos"
+msgstr "Прикрепленные видео"
+
+#: WooCommerceIntegrationBackend.php:487
+msgid "Title"
+msgstr "Заголовок"
+
+#: WooCommerceIntegrationBackend.php:488
+msgid "Type"
+msgstr "Тип"
+
+#: WooCommerceIntegrationBackend.php:489
+msgid "Formats"
+msgstr "Форматы"
+
+#: WooCommerceIntegrationBackend.php:490
+msgid "Dimensions"
+msgstr "Размеры"
+
+#: WooCommerceIntegrationBackend.php:491
+msgid "Active"
+msgstr "Активно"
+
+#: WooCommerceIntegrationBackend.php:492
+msgid "Actions"
+msgstr "Действия"
+
+#: WooCommerceIntegrationFrontend.php:165
+msgid "Your browser does not support HTML5"
+msgstr "Ваш браузер не поддерживает HTML5"
+
+#: WooCommerceIntegrationFrontend.php:180
+msgid "Video embedding powered by"
+msgstr "Встроенное видео работает на"
+
+msgid "It requires at least one video"
+msgstr "Требуется как минимум одно видео"
+
+msgid "Id"
+msgstr "Айди"
+
+msgid "Title for video"
+msgstr "Заголовок видео"
+
+msgid "Select video source:"
+msgstr "Укажите расположение видео:"
+
+msgid "Select video"
+msgstr "Выбрать видео"
+
+msgid "Supported video formats"
+msgstr "Поддерживаемые форматы видео"
+
+msgid "Video dimensions"
+msgstr "Размеры видео"
+
+msgid "Clear"
+msgstr "Отчистить"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Generated code"
+msgstr "Сгенерированный код"
+
+msgid "This product contains videos in the following formats: "
+msgstr "Данный продукт содержит видео в следующих форматах:"
+
+msgid ", which can be seen in: "
+msgstr ", который можно увидеть в: "
