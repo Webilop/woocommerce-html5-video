@@ -4,7 +4,7 @@ Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
 Tested up to: 4.5
-Stable tag: 1.7.4
+Stable tag: 1.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,11 +24,9 @@ This plugin uses HTML5 to render videos in your products. The supported video fo
 = Localization =
 
 *English (default).
-
 *Spanish
-
+*Russian
 *Persian(Outdated)
-
 *Chinese(Outdated)
 
 If you want to contribute with the localization of this plugin, you can contribute in the [Github repository](https://github.com/Webilop/woocommerce-html5-video) or send us your .mo and .po files to contact[at]webilop.com
@@ -141,3 +139,8 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Modification of styles and structure of modal window to add videos to a product.
 * Support for Webm video format.
 * Modifications of styles in table of videos attached to a product.
+
+= 1.7.6 =
+* Fix in webm video support.
+* Addition of Russian translations. Thanks to Alex Verd by this contribution.
+
