@@ -148,8 +148,32 @@ class WooCommerceIntegrationFrontend {
                 break;
 
               case 'oEmbed':
-                global $wp_embed;
-                echo $wp_embed->run_shortcode('[embed width="' . $width . '" height="' . $height . '"]' . $video->url . '[/embed]');
+                //global $wp_embed;
+                //echo $wp_embed->run_shortcode('[embed width="' . $width . '" height="' . $height . '"]' . $video->url . '[/embed]');
+                $video_html = wp_oembed_get($video->url, compact($width, $height));
+                if(false == $video_html){
+                  //get video extension
+                  $extension = false;
+                  $url_path = parse_url($video->url, PHP_URL_PATH);
+                  if(!empty($url_path))
+                    $extension = pathinfo($url_path, PATHINFO_EXTENSION);
+                  
+                  //check if extension is valid
+                  if(in_array($extension, array('mp4', 'ogg', 'webm'))):
+                    ?>
+                    <video width="<?= $width ?>" height="<?= $height ?>" controls>
+                      <source src="<?= $video->url ?>" type="video/<?= $extension ?>" />
+                      <p>
+                        <?= __("Your browser does not support HTML5","html5_video") ?>
+                      </p>
+                    </video>
+                    <?php
+                  else:
+                    echo __("Video URL not supported", "html5_video");
+                  endif;
+                }
+                else
+                  echo $video_html;
                 break;
 
               case 'WP Library':

@@ -293,11 +293,38 @@ class WooCommerceIntegrationBackend {
     $height = (isset($_POST['height']) && !empty($_POST['height']))? $_POST['height'] : $height;
     $width = get_option('wo_di_config_video_width');
     $width = (isset($_POST['width']) && !empty($_POST['width']))? $_POST['width'] : $width;
-    global $wp_embed;
+    //global $wp_embed;
     if (isset($_POST['post_id']) && 0 != $_POST['post_id']) {
-      global $post;
-      $post =  get_post($_POST['post_id']);
-      echo $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]");
+      //global $post;
+      //$post =  get_post($_POST['post_id']);
+      //echo $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]");
+      $oembed_video = wp_oembed_get($videoUrl, compact($width, $height));
+      if(false == $oembed_video){
+        //get video extension
+        $extension = false;
+        $url_path = parse_url($videoUrl, PHP_URL_PATH);
+        if(!empty($url_path))
+          $extension = pathinfo($url_path, PATHINFO_EXTENSION);
+        
+        //check if extension is valid
+        if(in_array($extension, array('mp4', 'ogg', 'webm'))):
+          ob_start();
+          ?>
+          <video width="<?= $width ?>" height="<?= $height ?>" controls>
+            <source src="<?= $videoUrl ?>" type="video/<?= $extension ?>" />
+            <p>
+              <?= __("Your browser does not support HTML5","html5_video") ?>
+            </p>
+          </video>
+          <?php
+          $oembed_video = ob_get_contents();
+          ob_end_clean();
+        else:
+          $oembed_video = __("Video URL not supported", "html5_video");
+        endif;
+      }
+        
+      echo $oembed_video;
     }
     else {
       echo '';
@@ -423,7 +450,33 @@ class WooCommerceIntegrationBackend {
         if ($video->active == 1) {
          $checked = "checked='checked'";
         }
-        global $wp_embed;
+        //global $wp_embed;
+        $oembed_video = wp_oembed_get($videoUrl, compact($width, $height));
+        if(false == $oembed_video){
+          //get video extension
+          $extension = false;
+          $url_path = parse_url($videoUrl, PHP_URL_PATH);
+          if(!empty($url_path))
+            $extension = pathinfo($url_path, PATHINFO_EXTENSION);
+          
+          //check if extension is valid
+          if(in_array($extension, array('mp4', 'ogg', 'webm'))):
+            ob_start();
+            ?>
+            <video width="<?= $width ?>" height="<?= $height ?>" controls>
+              <source src="<?= $videoUrl ?>" type="video/<?= $extension ?>" />
+              <p>
+                <?= __("Your browser does not support HTML5","html5_video") ?>
+              </p>
+            </video>
+            <?php
+            $oembed_video = ob_get_contents();
+            ob_end_clean();
+          else:
+            $oembed_video = __("Video URL not supported", "html5_video");
+          endif;
+        }
+
         //Construct row for each video
         ob_start();
         ?>
@@ -450,7 +503,7 @@ class WooCommerceIntegrationBackend {
           </td>
           <input type=hidden name='wo_di_video_embebido[]' value='<?= $videoEmbebido ?>' />
           <input type=hidden name='wo_di_video_url[]' value='<?= $videoUrl ?>' />
-          <input type=hidden name='wo_oembed[]' value='<?= $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]") ?>' />
+          <input type=hidden name='wo_oembed[]' value='<?= $oembed_video ?>' />
           <input type=hidden name='wo_di_video_mp4[]' value='<?= $videoMp4 ?>' />
           <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
           <input type=hidden name='wo_di_video_webm[]' value='<?= $videoWEBM ?>' />
