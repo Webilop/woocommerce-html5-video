@@ -97,7 +97,7 @@ class WooCommerceIntegrationFrontend {
 
     if (self::product_has_video_tabs($product)):
       $videos = json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
-      if (!is_null($videos)):
+      if (!is_null($videos) && is_array($videos)):
         $width_config = get_option('wo_di_config_video_width');
         $height_config = get_option('wo_di_config_video_height');
         $disable_iframe = get_option('wo_di_video_disable_iframe');
@@ -159,7 +159,7 @@ class WooCommerceIntegrationFrontend {
                     $extension = pathinfo($url_path, PATHINFO_EXTENSION);
                   
                   //check if extension is valid
-                  if(in_array($extension, array('mp4', 'ogg', 'webm'))):
+                  if(in_array($extension, WooCommerceIntegrationBackend::$supportedVideoFormats)):
                     ?>
                     <video width="<?= $width ?>" height="<?= $height ?>" controls>
                       <source src="<?= $video->url ?>" type="video/<?= $extension ?>" />
@@ -222,11 +222,11 @@ class WooCommerceIntegrationFrontend {
     $number_videos = get_post_meta($product->id, 'wo_di_number_of_videos', true);
     if ($number_videos > 0) {
       $videos = json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
-      foreach ($videos as $video) {
-        if ($video->active == 1) {
-          return true;
-        }
-      }
+      if(is_array($videos))
+        foreach ($videos as $video)
+          if ($video->active == 1)
+            return true;
+          
       return false;
     }
     else {

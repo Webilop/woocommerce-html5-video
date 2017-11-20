@@ -3,6 +3,8 @@ namespace WooCommerceHTML5Video;
 
 class WooCommerceIntegrationBackend {
 
+  public static $supportedVideoFormats = array('mp4', 'ogg', 'webm');
+
   /**
    * Creates tab in the product creation/edition page
    * attached to: woocommerce_product_write_panel_tabs action
@@ -10,7 +12,7 @@ class WooCommerceIntegrationBackend {
   public static function product_tab() {
     ?>
     <li class='html5_video'>
-      <a href='#video_tab'><?= __('Video','html5_video') ?></a>
+      <a href='#video_tab'><span><?= __('Video','html5_video') ?></span></a>
     </li>
     <?php
   }
@@ -307,7 +309,7 @@ class WooCommerceIntegrationBackend {
           $extension = pathinfo($url_path, PATHINFO_EXTENSION);
         
         //check if extension is valid
-        if(in_array($extension, array('mp4', 'ogg', 'webm'))):
+        if(in_array($extension, self::$supportedVideoFormats)):
           ob_start();
           ?>
           <video width="<?= $width ?>" height="<?= $height ?>" controls>
@@ -407,6 +409,10 @@ class WooCommerceIntegrationBackend {
         else {
           $dimension = $height .' X ' . $width;
         }
+        if(empty($width))
+          $width = 'auto';
+        if(empty($height))
+          $height = 'auto';
 
         $class = "class=''";
         $disable_iframe = get_option('wo_di_video_disable_iframe');
@@ -460,7 +466,7 @@ class WooCommerceIntegrationBackend {
             $extension = pathinfo($url_path, PATHINFO_EXTENSION);
           
           //check if extension is valid
-          if(in_array($extension, array('mp4', 'ogg', 'webm'))):
+          if(in_array($extension, self::$supportedVideoFormats)):
             ob_start();
             ?>
             <video width="<?= $width ?>" height="<?= $height ?>" controls>
