@@ -97,7 +97,7 @@ class WooCommerceIntegrationFrontend {
 
     if (self::product_has_video_tabs($product)):
       $videos = json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
-      if (!is_null($videos)):
+      if (!is_null($videos) && is_array($videos)):
         $width_config = get_option('wo_di_config_video_width');
         $height_config = get_option('wo_di_config_video_height');
         $disable_iframe = get_option('wo_di_video_disable_iframe');
@@ -148,8 +148,32 @@ class WooCommerceIntegrationFrontend {
                 break;
 
               case 'oEmbed':
-                global $wp_embed;
-                echo $wp_embed->run_shortcode('[embed width="' . $width . '" height="' . $height . '"]' . $video->url . '[/embed]');
+                //global $wp_embed;
+                //echo $wp_embed->run_shortcode('[embed width="' . $width . '" height="' . $height . '"]' . $video->url . '[/embed]');
+                $video_html = wp_oembed_get($video->url, compact($width, $height));
+                if(false == $video_html){
+                  //get video extension
+                  $extension = false;
+                  $url_path = parse_url($video->url, PHP_URL_PATH);
+                  if(!empty($url_path))
+                    $extension = pathinfo($url_path, PATHINFO_EXTENSION);
+                  
+                  //check if extension is valid
+                  if(in_array($extension, WooCommerceIntegrationBackend::$supportedVideoFormats)):
+                    ?>
+                    <video width="<?= $width ?>" height="<?= $height ?>" controls>
+                      <source src="<?= $video->url ?>" type="video/<?= $extension ?>" />
+                      <p>
+                        <?= __("Your browser does not support HTML5","html5_video") ?>
+                      </p>
+                    </video>
+                    <?php
+                  else:
+                    echo __("Video URL not supported", "html5_video");
+                  endif;
+                }
+                else
+                  echo $video_html;
                 break;
 
               case 'WP Library':
@@ -198,11 +222,11 @@ class WooCommerceIntegrationFrontend {
     $number_videos = get_post_meta($product->id, 'wo_di_number_of_videos', true);
     if ($number_videos > 0) {
       $videos = json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
-      foreach ($videos as $video) {
-        if ($video->active == 1) {
-          return true;
-        }
-      }
+      if(is_array($videos))
+        foreach ($videos as $video)
+          if ($video->active == 1)
+            return true;
+          
       return false;
     }
     else {

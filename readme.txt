@@ -3,8 +3,8 @@
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 1.7.6
+Tested up to: 4.9
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 > #### IMPORTANT:
 > If your plugin has a version less than 1.5.0, then it is highly recommended to create a backup of your database before upgrade.
 > From version 1.5.4 of WooCommerce HTML5 Video, it is required WordPress 4.0 at least.
-
-> #### Collaboration
-> [The plugin is available in Github](https://github.com/Webilop/woocommerce-html5-video). We receive patches to fix bugs and translation files.
 
 WooCommerce HTML5 Video is a WooCommerce add-on which allows you to add videos to products in your online store. The plugin creates a new tab in the product description page where all videos related to the product are placed.
 
@@ -34,6 +31,10 @@ If you want to contribute with the localization of this plugin, you can contribu
 = Documentation =
 
 The plugin has [documentation available in English](http://www.webilop.com/products/woocommerce-html5-video/) and the [documentation in Spanish](http://www.webilop.com/es_ES/productos/woocommerce-html5-video-2/) is also available.
+
+= Collaboration =
+[The plugin is available in Github](https://wordpress.org/plugins/woocommerce-html5-video/). We receive patches to fix bugs and translation files.
+You can also add bug reports in [Github issues page](https://github.com/Webilop/woocommerce-html5-video/issues).
 
 == Installation ==
 
@@ -143,4 +144,12 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 = 1.7.6 =
 * Fix in webm video support.
 * Addition of Russian translations. Thanks to Alex Verd by this contribution.
+
+= 1.7.7 =
+* Fix loading videos when direct to video URLs are used without the media library.
+
+= 1.7.8 =
+* Fixes on warning log messages. Thanks to an user's report.
+* Fix on preview of videos with no dimensions.
+* Fix on video icon in edition page of products.
 
