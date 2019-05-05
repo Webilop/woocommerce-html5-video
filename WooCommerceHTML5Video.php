@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WooCommerce HTML5 Video
  * Plugin URI: http://www.webilop.com/products/woocommerce-html5-video/
- * Description: Show videos in product pages of your WooCommerce store using HTML5. It supports Mp4, Ogg, Webm and embedded videos from websites like youtube or vimeo
+ * Description: Show videos in product pages of your WooCommerce store using HTML5. It supports Mp4, Ogg, Webm and embedded videos from websites like youtube or vimeo.
  * Author: Webilop
  * Author URI: http://www.webilop.com
- * Version: 1.7.8
+ * Version: 1.7.9
  * License: GPLv2 or later
  */
 namespace WooCommerceHTML5Video;
@@ -30,7 +30,7 @@ class WooCommerceHTML5Video {
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'popups_add_edit_video'));
     add_action('admin_footer-post-new.php',
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'popups_add_edit_video'));
-    add_action('wp_ajax_oembed_video',
+    add_action('wp_ajax_whv_oembed_video',
       array('\\WooCommerceHTML5Video\\WooCommerceIntegrationBackend', 'oembed_video'));
 
     //Settings
@@ -188,9 +188,7 @@ class WooCommerceHTML5Video {
     if ($current_screen->parent_base == 'plugins'):
       ?>
       <div class="error" style="padding: 8px 8px;">
-        <strong>
-          <?= __('WooCommerce HTML5 Video requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> activated in order to work. Please install and activate <a href="' . admin_url('plugin-install.php?tab=search&type=term&s=WooCommerce') . '" target="_blank">WooCommerce</a> first.','html5_video') ?>
-        </strong>
+        <?php printf(__('WooCommerce HTML5 Video requires <a href="%s" target="_blank">WooCommerce</a> activated in order to work. Please install and activate WooCommerce plugin first.','html5_video'), 'https://wordpress.org/plugins/woocommerce/') ?>
       </div>
       <?php
     endif;
@@ -276,16 +274,11 @@ class WooCommerceHTML5Video {
     //verify option to check if user already dismiss or post the review
     $userId = get_current_user_id();
     $meta = get_user_meta($userId, 'woo_html5_review', true);
-    if (empty($meta) || false == $meta): ?>
-      <div id="review-notice" class="notice notice-info">
-        <p>
-          Help others to make good choices when they are seeking for plugins, please add a review in WooCommerce HTML5 Video and help us to create confidence in more people.
-        </p>
-        <p>
-          <a id="post-review" href="https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video#postform" class="button-primary" target="_blank">Post review</a>
-          <a id="skip-review" class="button-secondary" href="">Dismiss</a>
-        </p>
-      </div>
+    //do not show the alert always to not be too annoying
+    if ((empty($meta) || false == $meta) && 1 == rand(1,5)): ?>
+    <div id="review-notice" class="notice notice-info">
+      <p><?php printf(__('Please consider adding a <a id="post-review" href="%s" target="_blank">review for WooCommerce HTML5 Video</a> and helps us to create confidence in more people to use this plugin.', 'html5_video'), 'https://wordpress.org/support/view/plugin-reviews/woocommerce-html5-video#postform') ?></p>
+    </div>
     <?php endif;
   }
 

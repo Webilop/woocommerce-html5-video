@@ -40,10 +40,6 @@ p.form-field._tab_video_field{
 div#video_tab{
    padding: 0 5px 15px 0;
 }
-div#video_tab > div{
-  box-sizing: border-box;
-  padding-left: 10px;
-}
 .plugin-copyright {
    font-size: 10px;
    color: #CCC;
@@ -61,26 +57,17 @@ a#clone_video{
 }
 /*DL, DT, DD TAGS LIST DATA*/
 #video_tab dl {
-    float: left;
-    margin-bottom:10px;
-    margin-top: 0px;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px 0;
 }
 #video_tab dl dt {
-    float:left;
-    padding:5px 0px;
-
+  flex-grow: 0;
 }
 #video_tab dl dd {
-    margin:2px 0;
-    padding:5px 0;
-}
-#video_tab dt{
-   width: 16%;
-}
-#video_tab dd{
-   width: 83%;
-   float: left;
+  flex-grow: 1;
+  margin: 0;
+  padding-left: 10px;
 }
 #video_tab textarea{
   clear: both;
@@ -159,44 +146,6 @@ form.html5_video{
   float: left;
 }
 
-.rate-div {
-   float: right;
-   width: 100%;
-   border: 1px solid #CCC;
-   padding: 0px 7px 7px;
-   background: #f5f5f5;
-   border-radius: 4px;
-}
-
-.rate-about-table{
-    width: 28%;
-    float: right;
-}
-
-/*.rating{
-  overflow: hidden;
-  display: inline-block;
-}*/
-
-.rating-input{
-  position: absolute;
-  left: 0;
-  top: -50px;
-}
-
-.rating-star{
-  display: block;
-  float: right;
-  width: 16px;
-  height: 16px;
-  background: url('../images/star.png') 0 0px;
-}
-
-/*.rating-star:hover,
-.rating-star:hover ~ .rating-star {
-    background-position: 0 0;
-}*/
-
 @font-face {
   font-family: 'icomoon';
   src:url('../fonts/icomoon.eot?rpefh2');
@@ -233,12 +182,30 @@ form.html5_video{
  cursor: pointer;
 }
 
+.wohv-description-container,
+.wohv-videos-container {
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0;
+}
+
 .wohv-description-container .wohv-title{
   margin: 0;
 }
+.wohv-videos-container .wohv-title{
+  margin: 0;
+  padding-bottom: 7px;
+}
 .wohv-description-container .wohv-description{
-  margin-bottom: 15px;
+  margin: 0;
   padding: 0;
+}
+.wohv-videos-container .no-videos-message{
+  text-align: center;
+  display: none;
+}
+.wohv-videos-container .no-videos-message.videos-0{
+  display: block;
 }
 #button_add_video{
   margin-top: 10px;
@@ -251,4 +218,16 @@ form.html5_video{
 #span_errors{
   color: red;
   font-weight: bold;
+}
+.video-option.servidor-video label + img{
+  position: relative;
+  top: 4px;
+}
+.video-option.servidor-video div input{
+  width: 100%;
+  margin-bottom: 5px;
+}
+.video-option.servidor-video > input{
+  display: block;
+  margin: 10px auto 0px;
 }
