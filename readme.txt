@@ -3,10 +3,11 @@
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: 1.7.8
+Tested up to: 5.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Show videos in product pages of your WooCommerce store using HTML5. It supports Mp4, Ogg, Webm and embedded videos from websites like youtube or vimeo.
 
 == Description ==
 
@@ -22,7 +23,7 @@ This plugin uses HTML5 to render videos in your products. The supported video fo
 
 *English (default).
 *Spanish
-*Russian
+*Russian(Outdated)
 *Persian(Outdated)
 *Chinese(Outdated)
 
@@ -153,3 +154,6 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 * Fix on preview of videos with no dimensions.
 * Fix on video icon in edition page of products.
 
+= 1.7.9 =
+* Fixes of bug with default sizes for videos.
+* Adjustemnts in styles and some few changes in UI.

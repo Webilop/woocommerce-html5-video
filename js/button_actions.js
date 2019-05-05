@@ -10,6 +10,10 @@ var type_of_action="";
 var tr_edit;
 var media_uploader = null;
 var add_flag;
+var default_width;
+var default_height;
+var force_size;
+var browser_not_supported;
 
 function update_input_active(obj){
   var input=jQuery(obj.parentNode).find("input[name='wo_di_video_active[]']");
@@ -43,6 +47,8 @@ function delete_row(obj){
   number_of_videos--;
   jQuery("#wo_di_number_of_videos").val(number_of_videos);
   //jQuery("#wo_di_table_videos_html").deleteRow(i);
+  if(number_of_videos == 0)
+    jQuery("#whvNoVideosMsg").show();
 }
 
 function edit_row(obj){
@@ -129,15 +135,32 @@ function preview_video(obj){
     jQuery("#contenedor_video").html(embebido);
   }
   else{
+    var sources = [];
     if(mp4 != ""){
-      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+mp4+'" type="video/mp4">Your browser does not support the video tag.</video>';
+      sources.push({
+        src: mp4,
+        type: 'video/mp4'
+      });
     }
-    else if(ogg != ""){
-      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+ogg+'" type="video/ogg">Your browser does not support the video tag.</video>';
+    if(ogg != ""){
+      sources.push({
+        src: ogg,
+        type: 'video/ogg'
+      });
     }
-    else {
-      embebido='<video width="'+width+'" height="'+height+'" id="current_video" controls><source src="'+webm+'" type="video/webm">Your browser does not support the video tag.</video>';
+    if(webm != ""){
+      sources.push({
+        src: webm,
+        type: 'video/webm'
+      });
     }
+    
+    width = (force_size || !width) ? default_width : width;
+    height = (force_size || !height) ? default_height : height;
+    embebido = '<video id="current_video"' + (width ? ' width="' + width + '"' : '') + (width ? ' height="' + height + '"' : '') +' control>';
+    for(var i in sources)
+      embebido += '<source src="' + sources[i].src + '" type="' + sources[i].type + '">';
+    embebido += browser_not_supported + '</video>';
 
     jQuery("#contenedor_video").html(embebido);
 
@@ -392,7 +415,7 @@ function oEmbedVideo(url, height, width) {
   jQuery.ajax({
     url: ajaxurl,
     data: {
-      action: 'oembed_video',
+      action: 'whv_oembed_video',
       video_url: url,
       height: height,
       width: width,
@@ -413,34 +436,6 @@ function urlParam(name){
     return results[1] || 0;
   return 0;
 }
-
-function oEmbedVideo(url, height, width) {
-  var video = '';
-  jQuery.ajax({
-    url: ajaxurl,
-    data: {
-      action: 'oembed_video',
-      video_url: url,
-      height: height,
-      width: width,
-      post_id: urlParam('post')
-    },
-    method: 'POST',
-    async: false,
-    success: function (iframe) {
-      video = iframe;
-    }
-  });
-  return video;
-}
-
-function urlParam(name){
-  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-  if (null != results)
-    return results[1] || 0;
-  return 0;
-}
-
 
 jQuery(document).ready(function()
     {
@@ -472,12 +467,6 @@ jQuery(document).ready(function()
             return false;
         });
 
-        tinyMCE.init({
-        mode : "specific_textareas",
-        editor_selector : "mceEditorVideoHtml",
-        width : "100%",
-        height : "300px"
-        });
         //edit
          jQuery( "#dialog_form_edit_video").dialog({
         autoOpen: false,
@@ -700,7 +689,9 @@ jQuery(document).ready(function()
               video+="<td>" + previewButton + " </span> <span class='action-button dashicons dashicons-edit float-right' onclick='edit_row(this)' title='edit'></span><span class='action-button dashicons dashicons-trash float-right' onclick='delete_row(this)' title='delete'></span></td>";
               jQuery("#wo_di_table_videos_html").append(video);
               jQuery("#wo_di_number_of_videos").val(number_of_videos);
+              jQuery("#whvNoVideosMsg").hide();
               jQuery( this ).dialog( "close" );
+              
 
               //Clean modal
               jQuery('#wo_di_form_add_video').find("input[type=text], input[type=url], textarea").val("");

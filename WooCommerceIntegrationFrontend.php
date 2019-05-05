@@ -3,8 +3,6 @@ namespace WooCommerceHTML5Video;
 
 class WooCommerceIntegrationFrontend {
 
-  const VIDEO_WIDTH = '100%';
-
   /**
    * creates the tab if the product has an associated video.
    * Add extra tabs to front end product page
@@ -98,8 +96,8 @@ class WooCommerceIntegrationFrontend {
     if (self::product_has_video_tabs($product)):
       $videos = json_decode(get_post_meta($product->id, 'wo_di_video_product_videos', true));
       if (!is_null($videos) && is_array($videos)):
-        $width_config = get_option('wo_di_config_video_width');
-        $height_config = get_option('wo_di_config_video_height');
+        $width_config = intval(get_option('wo_di_config_video_width', 0));
+        $height_config = intval(get_option('wo_di_config_video_height', 0));
         $disable_iframe = get_option('wo_di_video_disable_iframe');
         $size_forcing = get_option('wo_di_video_size_forcing');
         foreach ($videos as $video):
@@ -110,37 +108,22 @@ class WooCommerceIntegrationFrontend {
               <h3><?= $video->title ?></h3>
               <?php
             }
-            $width = 0;
-            $height = 0;
-
+            
+            $width = intval($video->width);
+            $height = intval($video->height);
             if ($size_forcing == 1) {
               $width = $width_config;
               $height = $height_config;
             }
             else {
-              if (empty($video->width)) {
-                if (!empty($width_config) && $width_config != 0) {
-                  $width = $width_config;
-                }
-                else {//REVIEW
-                  $width = self::VIDEO_WIDTH;
-                }
+              if (empty($width)) {
+                $width = $width_config;
               }
-              else {
-                $width = $video->width;
-              }
-              if (empty($video->height)) {
-                if (!empty($height_config) && $height_config != 0) {
-                  $height = $height_config;
-                }
-                else {
-                  $height = '';
-                }
-              }
-              else {
-                $height = $video->height;
+              if (empty($height)) {
+                $height = $height_config;
               }
             }
+            
             switch ($video->type) {
               case 'Embedded':
                 if ($disable_iframe == 0)
@@ -148,9 +131,7 @@ class WooCommerceIntegrationFrontend {
                 break;
 
               case 'oEmbed':
-                //global $wp_embed;
-                //echo $wp_embed->run_shortcode('[embed width="' . $width . '" height="' . $height . '"]' . $video->url . '[/embed]');
-                $video_html = wp_oembed_get($video->url, compact($width, $height));
+                $video_html = wp_oembed_get($video->url, compact('width', 'height'));
                 if(false == $video_html){
                   //get video extension
                   $extension = false;
@@ -178,7 +159,10 @@ class WooCommerceIntegrationFrontend {
 
               case 'WP Library':
                 ?>
-                  <video width="<?= $width ?>" height="<?= $height ?>" controls>
+                  <video
+                    <?php if(0 < $width) printf('width="%s"', $width); ?>
+                    <?php if(0 < $height) printf('height="%s"', $height); ?>
+                  controls>
                     <?php if ($video->mp4 != "") { ?>
                       <source src="<?= $video->mp4 ?>" type="video/mp4" />
                     <?php } ?>
@@ -189,7 +173,7 @@ class WooCommerceIntegrationFrontend {
                       <source src="<?= $video->webm ?>" type="video/webm" />
                     <?php } ?>
                     <p>
-                      <?= __("Your browser does not support HTML5","html5_video") ?>
+                      <?= __("Your browser does not support HTML5 video","html5_video") ?>
                     </p>
                   </video>
                 <?php

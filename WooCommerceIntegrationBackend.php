@@ -98,25 +98,15 @@ class WooCommerceIntegrationBackend {
               </label>
               <input class="wo_di_form_input" id="wo_di_video_title" type="text"  value="" name="wo_di_video_title" style="margin-left: 21px;">
             </div>
-            <?php
-            if (get_option('wo_di_video_size_forcing') == 1) {
-              $width = "value='" . get_option('wo_di_config_video_width') . "' readonly";
-              $height = "value='" . get_option('wo_di_config_video_height') . "' readonly";
-            }
-            else {
-              $width = "";
-              $height = "";
-            }
-            ?>
             <div class="options_group">
               <label for="width_video_woocommerce">
                 <?= __("Width","html5_video")?>:
               </label>
-              <input type="text" id="width_video_woocommerce" name="width_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_width'); ?>" <?= $width ?> class="dimension-input">
+              <input type="text" id="width_video_woocommerce" name="width_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_width'); ?>" class="dimension-input">
               <label for="height_video_woocommerce">
                 <?php echo __("Height","html5_video")?>:
               </label>
-              <input type="text" id="height_video_woocommerce" name="height_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_height'); ?>" <?= $height ?> class="dimension-input">
+              <input type="text" id="height_video_woocommerce" name="height_video_woocommerce" placeholder="<?= get_option('wo_di_config_video_height'); ?>" class="dimension-input">
             </div>
             <div class="options_group">
               <label>
@@ -128,7 +118,7 @@ class WooCommerceIntegrationBackend {
               </label>
               <input class="radio" id="wo_di_video_servidor" type="radio" value="servidor" name="wo_di_tipo_video">
               <label class="radio" for="wo_di_video_servidor">
-                <?= __("Select/Upload","html5_video") ?>
+                <?= __("Media Library","html5_video") ?>
               </label>
               <?php if ($disable_iframe == 0): ?>
                 <input class="radio" id="video_embebido" type="radio"  value="embebido" name="wo_di_tipo_video">
@@ -148,28 +138,28 @@ class WooCommerceIntegrationBackend {
               <p>
                 <?= __('You can upload a video to the Media Library or select a video from the Media Library.', 'html5_video')?>
               </p>
-              <dt>
+              <div>
                 <label for="video_text_mp4"> Mp4 </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
-              </dt>
-              <dd>
-                <input class="wo_di_form_input" type="url" id="video_text_mp4" name="video_text_mp4" value="">
-              </dd>
-              <dt>
+              </div>
+              <div>
+                <input class="wo_di_form_input" type="text" id="video_text_mp4" name="video_text_mp4" value="">
+              </div>
+              <div>
                 <label for="video_text_ogg"> Ogg </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
-              </dt>
-              <dd>
-                <input class="wo_di_form_input" type="url" id="video_text_ogg" name="video_text_ogg" value="">
-              </dd>
-              <dt>
+              </div>
+              <div>
+                <input class="wo_di_form_input" type="text" id="video_text_ogg" name="video_text_ogg" value="">
+              </div>
+              <div>
                 <label for="video_text_webm"> WebM </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 43+, Opera 35+" alt="info" />
-              </dt>
-              <dd>
-                <input class="wo_di_form_input" type="url" id="video_text_webm" name="video_text_webm" value="">
-              </dd>
-              <input id="wo_di_select_video" type="button" value="<?= __("Select/Upload video","html5_video")?>" class="button tagadd">
+              </div>
+              <div>
+                <input class="wo_di_form_input" type="text" id="video_text_webm" name="video_text_webm" value="">
+              </div>
+              <input id="wo_di_select_video" type="button" value="<?= __('Select Video','html5_video')?>" class="button tagadd">
             </div>
             <?php if ($disable_iframe == 0): ?>
               <div class="video-option embebido-video" hidden>
@@ -195,25 +185,15 @@ class WooCommerceIntegrationBackend {
               </label>
               <input class="wo_di_form_input" id="wo_di_video_title_edit" type="text"  value="" name="wo_di_video_title_edit" style="margin-left: 21px;" />
             </div>
-            <?php
-            if (get_option('wo_di_video_size_forcing') == 1) {
-              $width = "value='" . get_option('wo_di_config_video_width') . "' readonly";
-              $height = "value='" . get_option('wo_di_config_video_height') . "' readonly";
-            }
-            else {
-              $width = "";
-              $height = "";
-            }
-            ?>
             <div class="options_group">
               <label for="width_video_woocommerce_edit">
                 <?= __("Width","html5_video")?>:
               </label>
-              <input type="text" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_width'); ?>" <?= $width ?> class="dimension-input">
+              <input type="number" min="0" id="width_video_woocommerce_edit" name="width_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_width'); ?>" class="dimension-input">
               <label for="height_video_woocommerce_edit">
                 <?php echo __("Height","html5_video")?>:
               </label>
-              <input type="text" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_height'); ?>" <?= $height ?> class="dimension-input">
+              <input type="number" min="0" id="height_video_woocommerce_edit" name="height_video_woocommerce_edit" placeholder="<?= get_option('wo_di_config_video_height'); ?>" class="dimension-input">
             </div>
             <div class="options_group">
               <label>
@@ -243,29 +223,29 @@ class WooCommerceIntegrationBackend {
             </div>
             <div class="video-option servidor-video" hidden>
               <p>
-                <?= __('You can upload a video to the Media Gallery or select a video from the Media Gallery.', 'html5_video')?>
+                <?= __('You can upload a video to the Media Library or select a video from the Media Library.', 'html5_video')?>
               </p>
-              <dt>
+              <div>
                 <label for="video_text_mp4_edit"> Mp4 </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> IE 9+, Chrome 6+, Safari 5" alt="info" />
-              </dt>
-              <dd>
-                <input class="wo_di_form_input" type="url" id="video_text_mp4_edit" name="video_text_mp4_edit" value="">
-              </dd>
-              <dt>
+              </div>
+              <div>
+                <input class="wo_di_form_input" type="text" id="video_text_mp4_edit" name="video_text_mp4_edit" value="">
+              </div>
+              <div>
                 <label for="video_text_ogg_edit"> Ogg </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 3.6+, Opera 10.6+" alt="info" />
-              </dt>
-              <dd>
-                <input class="wo_di_form_input" type="url" id="video_text_ogg_edit" name="video_text_ogg_edit" value="">
-              </dd>
-              <dt>
+              </div>
+              <div>
+                <input class="wo_di_form_input" type="text" id="video_text_ogg_edit" name="video_text_ogg_edit" value="">
+              </div>
+              <div>
                 <label for="video_text_webm_edit"> WebM </label>
                 <img src="<?= WP_PLUGIN_URL.'/woocommerce-html5-video/images/info.png' ?>" title="<?= __("Supported by", "html5_video")?> Chrome 6+, Firefox 43+, Opera 35+" alt="info" />
-              </dt>
-              <dd>
-                <input class="wo_di_form_input" type="url" id="video_text_webm_edit" name="video_text_ogg_edit" value="">
-              </dd>
+              </div>
+              <div>
+                <input class="wo_di_form_input" type="text" id="video_text_webm_edit" name="video_text_ogg_edit" value="">
+              </div>
               <input id="wo_di_select_video_edit" type="button" value="<?php echo __("Select/Upload video","html5_video")?>" class="button tagadd">
             </div>
             <?php if($disable_iframe==0): ?>
@@ -291,16 +271,14 @@ class WooCommerceIntegrationBackend {
 
   public static function oembed_video() {
     $videoUrl = isset($_POST['video_url'])? $_POST['video_url'] : '';
-    $height = get_option('wo_di_config_video_height');
-    $height = (isset($_POST['height']) && !empty($_POST['height']))? $_POST['height'] : $height;
-    $width = get_option('wo_di_config_video_width');
-    $width = (isset($_POST['width']) && !empty($_POST['width']))? $_POST['width'] : $width;
+    $height = (isset($_POST['height']) && !empty($_POST['height']))? $_POST['height'] : get_option('wo_di_config_video_height');
+    $width = (isset($_POST['width']) && !empty($_POST['width']))? $_POST['width'] : get_option('wo_di_config_video_width');
     //global $wp_embed;
     if (isset($_POST['post_id']) && 0 != $_POST['post_id']) {
       //global $post;
       //$post =  get_post($_POST['post_id']);
       //echo $wp_embed->run_shortcode("[embed width='{$width}' height='{$height}']{$videoUrl}[/embed]");
-      $oembed_video = wp_oembed_get($videoUrl, compact($width, $height));
+      $oembed_video = wp_oembed_get($videoUrl, compact('width', 'height'));
       if(false == $oembed_video){
         //get video extension
         $extension = false;
@@ -343,6 +321,9 @@ class WooCommerceIntegrationBackend {
   private static function video_tab_form($field) {
     //$thepostid is created by woocommerce
     global $thepostid, $post;
+    $default_width = intval(get_option('wo_di_config_video_width', 0));
+    $default_height = intval(get_option('wo_di_config_video_height', 0));
+    $force_video_size = get_option('wo_di_video_size_forcing', false);
     ?>
     <script type="text/javascript">
       var text_add_button = "<?= __('Add','html5_video'); ?>";
@@ -353,6 +334,10 @@ class WooCommerceIntegrationBackend {
       var text_error_insert_html = "<?= __('Embedded code is required','html5_video'); ?>";
       var text_error_id = "<?= __('The name is required','html5_video'); ?>";
       var text_error_dimension = "<?= __('height and width of the video is required','html5_video'); ?>";
+      var default_width = <?= $default_width ?>;
+      var default_height = <?= $default_height ?>;
+      var force_size = <?= $force_video_size ? 1 : 0; ?>;
+      var browser_not_supported = "<?= __('Your browser does not support HTML5 video', 'html5_video') ?>";
     </script>
     <?php
 
@@ -366,10 +351,10 @@ class WooCommerceIntegrationBackend {
     $disable_desc = get_option('wo_di_config_video_description');
     //tinymce editor description of product
     ?>
-    <div class="options_group wohv-description-container" <?= ($disable_desc == 0) ? "" : "style='display:none;'"; ?> >
+    <div class="wohv-description-container" <?= ($disable_desc == 0) ? "" : "style='display:none;'"; ?> >
       <h4 class="wohv-title"><?= __("Description", "html5_video"); ?></h4>
       <p class="wohv-description">
-        <?= __("It will appear above the videos in the video tab","html5_video"); ?>
+        <?= __("This description will appear above the videos in the video tab.","html5_video"); ?>
       </p>
       <div>
         <?php wp_editor(
@@ -378,7 +363,7 @@ class WooCommerceIntegrationBackend {
           array(
             'textarea_name' => 'wo_di_editormce_video',
             'wpautop'       => false,
-            'textarea_rows' => 10
+            'textarea_rows' => 5
           )
         ); ?>
       </div>
@@ -386,158 +371,19 @@ class WooCommerceIntegrationBackend {
     <?php
     $number_of_videos = get_post_meta($thepostid, 'wo_di_number_of_videos', true);
     $tableBody = '';
-    if (empty($number_of_videos)):
+    if (empty($number_of_videos))
       $number_of_videos = 0;
-    else:
-      $videos = json_decode(get_post_meta($thepostid, 'wo_di_video_product_videos', true));
-      //Set every video information
-      for($i = 0; $i < $number_of_videos; $i++):
-        $video = $videos[$i];
-        $title = $video->title;
-        $type = $video->type;
-        $videoEmbebido = '';
-        $videoMp4 = '';
-        $videoOGG = '';
-        $videoUrl = '';
-        $height = $video->height;
-        $width = $video->width;
-        if($height == '' && $width == '') {
-          $dimension = 'Default';
-          $width = get_option('wo_di_config_video_width');
-          $height = get_option('wo_di_config_video_height');
-        }
-        else {
-          $dimension = $height .' X ' . $width;
-        }
-        if(empty($width))
-          $width = 'auto';
-        if(empty($height))
-          $height = 'auto';
 
-        $class = "class=''";
-        $disable_iframe = get_option('wo_di_video_disable_iframe');
-        switch ($type) {
-          case "Embedded":
-            $videoEmbebido = $video->embebido;
-            $height = "-";
-            $width = "-";
-            $dimension = "-";
-            $formats = "-";
-            break;
-          case 'WP Library':
-            $videoMp4 = $video->mp4;
-            $videoOGG = $video->ogg;
-            $videoWEBM = $video->webm;
-            $formats = "";
-            if ($videoMp4 != "")
-              $formats = " MP4";
-
-            if ($videoOGG != "") {
-              if (empty($formats))
-                $formats=" OGG";
-              else
-                $formats.=", OGG";
-            }
-
-            if ($videoWEBM != "") {
-              if (empty($formats))
-                $formats=" WEBM";
-              else
-                $formats.=", WEBM";
-            }
-            break;
-          case 'oEmbed':
-            $videoUrl = $video->url;
-            $dimension = '-';
-            $formats = '-';
-            break;
-        }
-        $checked = "";
-        if ($video->active == 1) {
-         $checked = "checked='checked'";
-        }
-        //global $wp_embed;
-        $oembed_video = wp_oembed_get($videoUrl, compact($width, $height));
-        if(false == $oembed_video){
-          //get video extension
-          $extension = false;
-          $url_path = parse_url($videoUrl, PHP_URL_PATH);
-          if(!empty($url_path))
-            $extension = pathinfo($url_path, PATHINFO_EXTENSION);
-          
-          //check if extension is valid
-          if(in_array($extension, self::$supportedVideoFormats)):
-            ob_start();
-            ?>
-            <video width="<?= $width ?>" height="<?= $height ?>" controls>
-              <source src="<?= $videoUrl ?>" type="video/<?= $extension ?>" />
-              <p>
-                <?= __("Your browser does not support HTML5","html5_video") ?>
-              </p>
-            </video>
-            <?php
-            $oembed_video = ob_get_contents();
-            ob_end_clean();
-          else:
-            $oembed_video = __("Video URL not supported", "html5_video");
-          endif;
-        }
-
-        //Construct row for each video
-        ob_start();
-        ?>
-        <tr id='wo_di_video_product_<?= $i ?>' <?= $class ?>>
-          <td style="width:20px;">
-            <span class='sort-button dashicons dashicons-sort' style="font-size:18px;" title="move"></span>
-          </td>
-          <td>
-            <input type=hidden name='wo_di_video_titles[]' value='<?= $title ?>' />
-            <span><?= $title ?></span>
-          </td>
-          <td>
-            <input type=hidden name='wo_di_video_types[]' value='<?= $type ?>' />
-            <span><?= $type ?></span>
-          </td>
-          <td>
-            <input type=hidden name='wo_di_video_formats[]' value='<?= $formats ?>' />
-            <span><?= $formats ?></span>
-          </td>
-          <td>
-            <input type=hidden name='wo_di_video_heights[]' value='<?= $height ?>' />
-            <input type=hidden name='wo_di_video_widths[]' value='<?= $width ?>' />
-            <span><?= $dimension ?></span>
-          </td>
-          <input type=hidden name='wo_di_video_embebido[]' value='<?= $videoEmbebido ?>' />
-          <input type=hidden name='wo_di_video_url[]' value='<?= $videoUrl ?>' />
-          <input type=hidden name='wo_oembed[]' value='<?= $oembed_video ?>' />
-          <input type=hidden name='wo_di_video_mp4[]' value='<?= $videoMp4 ?>' />
-          <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
-          <input type=hidden name='wo_di_video_webm[]' value='<?= $videoWEBM ?>' />
-          <td>
-            <input type=hidden name='wo_di_video_active[]' value='<?= $video->active ?>' />
-            <input type='checkbox' value='active' <?php echo $checked; ?> onchange='update_input_active(this)'/>
-          </td>
-          <td>
-            <?php if ($type != "Embedded" || ($type == "Embedded" && $disable_iframe == 0)): ?>
-              <span class='action-button dashicons dashicons-search float-right' onclick='preview_video(this)' title='preview'></span>
-              <span class='action-button dashicons dashicons-edit float-right' onclick='edit_row(this)' title='edit'></span>
-              <span class='action-button dashicons dashicons-trash float-right' onclick='delete_row(this)' title='delete'></span>
-            <?php elseif ($type == "Embedded" && $disable_iframe == 1): ?>
-              <span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)' style='visibility:hidden;'></span>
-              <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'  style='visibility:hidden;'></span>
-              <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>
-            <?php endif;?>
-          </td>
-        </tr>
-        <?php
-        $tableBody .= ob_get_contents();
-        ob_end_clean();
-      endfor;
-    endif;
     //Print table with all the videos for the current product
     ?>
-    <div class='options_group'>
-      <h4 class='wohv-title'><?= __("Attached videos") ?></h4>
+    <div class="wohv-videos-container">
+      <h4 class="wohv-title"><?= __("Attached videos", 'html5_video') ?></h4>
+      <dl>
+        <dt><?= __('Default size(h x w):', 'html5_video') ?></dt>
+        <dd><?php printf('%s x %s', $default_height ? $default_height : 'auto', $default_width ? $default_width : 'auto'); ?></dd>
+        <dt><?= __('Allow overriding size:') ?></dt>
+        <dd><?= $force_video_size ? __('No', 'html5_video') : __('Yes', 'html5_video') ?></dd>
+      </dl>
       <input id='wo_di_number_of_videos' name='wo_di_number_of_videos' type='hidden' value='<?= $number_of_videos ?>'/>
       <table id="wo_di_table_videos_html" class="wp-list-table widefat wo_di_table_videos">
         <thead>
@@ -552,9 +398,154 @@ class WooCommerceIntegrationBackend {
           </tr>
         </thead>
         <tbody id="table-video-sortable">
-         <?= $tableBody ?>
+        <?php      
+        $videos = json_decode(get_post_meta($thepostid, 'wo_di_video_product_videos', true));
+        //Set every video information
+        for($i = 0; $i < $number_of_videos; $i++):
+          $video = $videos[$i];
+          $title = $video->title;
+          $type = $video->type;
+          $videoEmbebido = '';
+          $videoMp4 = '';
+          $videoOGG = '';
+          $videoUrl = '';
+          $height = empty($video->height) ? '' : $video->height;
+          $width = empty($video->width) ? '' : $video->width;
+          if($height == '' && $width == '') {
+            $dimension = __('Default', 'html5_video');
+            //$width = get_option('wo_di_config_video_width');
+            //$height = get_option('wo_di_config_video_height');
+          }
+          else {
+            $dimension = ($height ? $height : __('Default', 'html5_video')) .' x ' . ($width ? $width : __('Default', 'html5_video'));
+          }
+
+          $class = "class=''";
+          $disable_iframe = get_option('wo_di_video_disable_iframe');
+          switch ($type) {
+            case "Embedded":
+              $videoEmbebido = $video->embebido;
+              $height = "-";
+              $width = "-";
+              $dimension = "-";
+              $formats = "-";
+              break;
+            case 'WP Library':
+              $videoMp4 = $video->mp4;
+              $videoOGG = $video->ogg;
+              $videoWEBM = $video->webm;
+              $formats = "";
+              if ($videoMp4 != "")
+                $formats = " MP4";
+
+              if ($videoOGG != "") {
+                if (empty($formats))
+                  $formats=" OGG";
+                else
+                  $formats.=", OGG";
+              }
+
+              if ($videoWEBM != "") {
+                if (empty($formats))
+                  $formats=" WEBM";
+                else
+                  $formats.=", WEBM";
+              }
+              break;
+            case 'oEmbed':
+              $videoUrl = $video->url;
+              $formats = '-';
+              break;
+          }
+          $checked = "";
+          if ($video->active == 1) {
+           $checked = "checked='checked'";
+          }
+          //global $wp_embed;
+          $oembed_video = wp_oembed_get($videoUrl, compact('width', 'height'));
+          if(false == $oembed_video){
+            //get video extension
+            $extension = false;
+            $url_path = parse_url($videoUrl, PHP_URL_PATH);
+            if(!empty($url_path))
+              $extension = pathinfo($url_path, PATHINFO_EXTENSION);
+            
+            //check if extension is valid
+            if(in_array($extension, self::$supportedVideoFormats)):
+              ob_start();
+              ?>
+              <video
+                <?php if(0 < $width) printf('width="%s"', $width); ?>
+                <?php if(0 < $height) printf('height="%s"', $height); ?>
+              controls>
+                <source src="<?= $videoUrl ?>" type="video/<?= $extension ?>" />
+                <p>
+                  <?= __("Your browser does not support HTML5","html5_video") ?>
+                </p>
+              </video>
+              <?php
+              $oembed_video = ob_get_contents();
+              ob_end_clean();
+            else:
+              $oembed_video = __("Video URL not supported", "html5_video");
+            endif;
+          }
+
+          //Construct row for each video
+          ?>
+          <tr id='wo_di_video_product_<?= $i ?>' <?= $class ?>>
+            <td style="width:20px;">
+              <span class='sort-button dashicons dashicons-sort' style="font-size:18px;" title="move"></span>
+            </td>
+            <td>
+              <input type=hidden name='wo_di_video_titles[]' value='<?= $title ?>' />
+              <span><?= $title ?></span>
+            </td>
+            <td>
+              <input type=hidden name='wo_di_video_types[]' value='<?= $type ?>' />
+              <span><?= $type ?></span>
+            </td>
+            <td>
+              <input type=hidden name='wo_di_video_formats[]' value='<?= $formats ?>' />
+              <span><?= $formats ?></span>
+            </td>
+            <td>
+              <input type=hidden name='wo_di_video_heights[]' value='<?= $height ?>' />
+              <input type=hidden name='wo_di_video_widths[]' value='<?= $width ?>' />
+              <span><?= $dimension ?></span>
+            </td>
+            <input type=hidden name='wo_di_video_embebido[]' value='<?= $videoEmbebido ?>' />
+            <input type=hidden name='wo_di_video_url[]' value='<?= $videoUrl ?>' />
+            <input type=hidden name='wo_oembed[]' value='<?= $oembed_video ?>' />
+            <input type=hidden name='wo_di_video_mp4[]' value='<?= $videoMp4 ?>' />
+            <input type=hidden name='wo_di_video_ogg[]' value='<?= $videoOGG ?>' />
+            <input type=hidden name='wo_di_video_webm[]' value='<?= $videoWEBM ?>' />
+            <td>
+              <input type=hidden name='wo_di_video_active[]' value='<?= $video->active ?>' />
+              <input type='checkbox' value='active' <?php echo $checked; ?> onchange='update_input_active(this)'/>
+            </td>
+            <td>
+              <?php if ($type != "Embedded" || ($type == "Embedded" && $disable_iframe == 0)): ?>
+                <span class='action-button dashicons dashicons-search float-right' onclick='preview_video(this)' title='preview'></span>
+                <span class='action-button dashicons dashicons-edit float-right' onclick='edit_row(this)' title='edit'></span>
+                <span class='action-button dashicons dashicons-trash float-right' onclick='delete_row(this)' title='delete'></span>
+              <?php elseif ($type == "Embedded" && $disable_iframe == 1): ?>
+                <span class='ui-icon ui-icon-circle-zoomout float-right' onclick='preview_video(this)' style='visibility:hidden;'></span>
+                <span class='ui-icon ui-icon-pencil float-right' onclick='edit_row(this)'  style='visibility:hidden;'></span>
+                <span class='ui-icon ui-icon-trash float-right' onclick='delete_row(this)'></span>
+              <?php endif;?>
+            </td>
+          </tr>
+          <?php
+        endfor;
+        ?>
         </tbody>
       </table>
+      
+      <p id="whvNoVideosMsg" class="no-videos-message videos-<?= $number_of_videos ?>">
+        <?= __("No videos added", 'html5_video') ?>
+      </p>
+      
       <button id="button_add_video"><?= __("Add", 'html5_video') ?></button>
     </div>
     <?php
