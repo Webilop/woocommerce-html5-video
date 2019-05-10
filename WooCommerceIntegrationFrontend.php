@@ -19,7 +19,11 @@ class WooCommerceIntegrationFrontend {
        according to the index specified by the user in the configuration, we order
        the tasks according to their priority.*/
     $aux = array();
-
+    
+    //sanitize tabs
+    if(!is_array($tabs))
+      $tabs = [];
+    
     foreach ($tabs as $key => $row)
       $aux[$key] = $row['priority'];
 
