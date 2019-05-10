@@ -3,7 +3,7 @@
 Contributors: webilop
 Tags: woocommerce, woocommerce video, woocommerce add-on, online store, product video, html5 video, mp4, ogg
 Requires at least: 4.0
-Tested up to: 5.1.1
+Tested up to: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,3 +157,6 @@ Make sure your [browser supports HTML5 video](http://www.w3schools.com/html/html
 = 1.7.9 =
 * Fixes of bug with default sizes for videos.
 * Adjustemnts in styles and some few changes in UI.
+
+= 1.7.10 =
+* Fix of PHP warning when there are no tabs in products.
