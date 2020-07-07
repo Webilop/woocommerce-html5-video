@@ -10,17 +10,28 @@
 namespace Webilop\WooHtmlVideo;
 defined('ABSPATH') or die("No script kiddies please!");
 
+use DI\ContainerBuilder;
+
 class Core {
 
     /** Singleton instance */
     private static $instance = null;
+
+    /** DI container */
+    private $container;
 
     /**
      * Private constructor of the singleton class.
      */
     private function __construct()
     {
-
+        // create a container for dependency injection
+        // it uses autowiring based on type-hint. Interfaces need to be specified.
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions([
+            PluginSettingsInterface::class => \DI\create(Settings::class),
+        ]);
+        $this->container = $builder->build();
     }
 
     /**
@@ -43,6 +54,11 @@ class Core {
     {
         // create the singleton instance
         self::create();
+
+        // create the settings page
+        $settings_page = self::$instance->container->get(SettingsPage::class);
+        add_action('admin_init', [$settings_page, 'registerSettings']);
+        add_action('admin_menu', [$settings_page, 'registerPage']);
 
         return self::$instance;
     }

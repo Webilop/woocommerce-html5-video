@@ -1,5 +1,9 @@
 {
     "autoload": {
         "psr-4": {"Webilop\\": "src/"}
+    },
+    "require": {
+        "domnikl/design-patterns-php": "dev-php7",
+        "php-di/php-di": "^6.2"
     }
 }

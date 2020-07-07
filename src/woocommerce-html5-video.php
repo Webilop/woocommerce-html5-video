@@ -12,7 +12,8 @@
 namespace Webilop\WooHtmlVideo;
 defined('ABSPATH') or die("No script kiddies please!");
 
-define('WOOHV_VERSION', '2.0.0');
+define('WH5V_VERSION', '2.0.0');
+define('WH5V_PLUGIN_URL', plugins_url('', dirname(__FILE__)));
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 

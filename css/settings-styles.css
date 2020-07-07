@@ -1,12 +1,20 @@
 @media (min-width: 992px){
-  .settings_page_html5-video-settings .woh5v-general-settings-container,
-  .settings_page_html5-video-settings .wohv5-right-sidebar{
+  .settings_page_html5-video-settings .wh5v-general-settings-container,
+  .settings_page_html5-video-settings .whv5-right-sidebar{
     padding: 0 20px;
     width: 50%;
     float: left;
     box-sizing: border-box;
   }
+  .settings_page_html5-video-settings .wrap::after {
+    clear: both;
+    content: " ";
+    display: table;
+  }
 }
-.settings_page_html5-video-settings .wohv5-right-sidebar .rate-div .stars-rating-link{
+.settings_page_html5-video-settings .whv5-right-sidebar .rate-div .stars-rating-link{
   text-decoration: none;
+}
+.settings_page_html5-video-settings .whv5-right-sidebar .about-webilop {
+  margin-top: 50px;
 }
