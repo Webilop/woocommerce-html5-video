@@ -61,11 +61,11 @@ class SettingsPage {
                 'name' => 'show_empty_tab',
                 'type' => 'checkbox'
             ],
-            [
-                'label' => __('Disable video tab description', 'html5_video'),
-                'name' => 'disable_video_tab_description',
-                'type' => 'checkbox'
-            ],
+            // [
+            //     'label' => __('Disable video tab description', 'html5_video'),
+            //     'name' => 'disable_video_tab_description',
+            //     'type' => 'checkbox'
+            // ],
             [
                 'label' => __('Default video width', 'html5_video'),
                 'name' => 'default_video_width',
@@ -83,11 +83,11 @@ class SettingsPage {
                 'name' => '',
                 'type' => ''
             ],*/
-            [
-                'label' => __('Disable videos through iframes', 'html5_video'),
-                'name' => 'disable_iframe_videos',
-                'type' => 'checkbox'
-            ]
+            // [
+            //     'label' => __('Disable videos through iframes', 'html5_video'),
+            //     'name' => 'disable_iframe_videos',
+            //     'type' => 'checkbox'
+            // ]
         ];
 
         // add the fields to the settings page

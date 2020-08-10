@@ -1,0 +1,17 @@
+/** Hide buttons in header toolbar **/
+#editor .edit-post-header > a,
+#editor .edit-post-header .edit-post-header__settings .block-editor-post-preview__dropdown,
+#editor .edit-post-header .edit-post-header__settings .editor-post-publish-button__button {
+    display: none;
+}
+
+/** Hide document tab in sidebar **/
+#editor .interface-interface-skeleton__body .interface-interface-skeleton__sidebar .edit-post-sidebar__panel-tabs li > button[data-label="Document"],
+#editor .interface-interface-skeleton__body .interface-interface-skeleton__sidebar .components-panel .edit-post-post-status {
+    display: none;
+}
+
+/** Hide button to deactivate fullscreen mode **/
+#editor .popover-slot .components-dropdown-menu__menu .components-menu-group button:nth-child(3) {
+    display: none;
+}

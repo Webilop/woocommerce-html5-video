@@ -14,6 +14,9 @@ defined('ABSPATH') or die("No script kiddies please!");
 
 define('WH5V_VERSION', '2.0.0');
 define('WH5V_PLUGIN_URL', plugins_url('', dirname(__FILE__)));
+define('WH5V_PLUGIN_DIR', dirname(__DIR__));
+define('WH5V_PLUGIN_TEMPLATES', dirname(__DIR__) . '/src/WooHtmlVideo/templates');
+define('WH5V_PLUGIN_ASSETS_URL', WH5V_PLUGIN_URL . '/src/WooHtmlVideo/assets');
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 

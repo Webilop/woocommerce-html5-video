@@ -1,0 +1,6 @@
+.ui-dialog {
+    z-index: 10001;
+}
+.ui-widget-overlay {
+    z-index: 10000 !important;
+}
